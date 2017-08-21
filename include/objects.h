@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/20 19:06:44 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/21 15:11:21 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ typedef struct	s_cam
 	cl_uint		w;
 	cl_uint		h;
 }				t_cam;
+
+/*
+**	i correspond to light intensity:
+**	- i.x = ambient
+**	- i.y = diffuse
+**	- i.z = specular
+*/
+
+typedef struct	s_light
+{
+	cl_float3	pos;
+	cl_uchar4	col;
+	cl_float3	i;
+}				t_light;
 
 /*
 **	for reflection vector:
