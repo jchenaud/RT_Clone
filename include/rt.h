@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/21 15:05:59 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/21 16:25:25 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 
 # include <mlx.h>
 # include <OpenCL/cl.h>
+# include "libxml/parser.h"
+# include "libxml/tree.h"
+# include "libft.h"
 # include "objects.h"
-
 
 /*
 **	type: 7 bits for the object, the last for hitbox type
@@ -32,19 +34,19 @@
 # define HITBOX		1
 # define HITMODE	2
 
-# define get_sphere(x)		x.obj.sphere
-# define get_plan(x)		x.obj.plan
-# define get_pave(x)		x.obj.pave
-# define get_cone(x)		x.obj.cone
-# define get_cylinder(x)	x.obj.cylinder
+# define GET_SPHERE(x)		x.obj.sphere
+# define GET_PLAN(x)		x.obj.plan
+# define GET_PAVE(x)		x.obj.pave
+# define GET_CONE(x)		x.obj.cone
+# define GET_CYLINDER(x)	x.obj.cylinder
 
 typedef struct	s_win
 {
 	void		*mlx;
 	void		*win;
 	char		*name;
-	t_uint16	w;
-	t_uint16	h;
+	cl_uint16	w;
+	cl_uint16	h;
 }				t_win;
 
 typedef struct	s_env
