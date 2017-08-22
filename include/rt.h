@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 15:49:27 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 18:12:54 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,32 @@ typedef struct	s_win
 	void		*mlx;
 	void		*win;
 	char		*name;
-	cl_uint16	w;
-	cl_uint16	h;
+	t_uint16	w;
+	t_uint16	h;
 }				t_win;
+
+/*
+**	file is the .xml to open
+*/
 
 typedef struct	s_env
 {
 	t_win		win;
+	char		*file;
 	t_list		*obj;
 	t_list		*cam;
 	t_list		*light;
 }				t_env;
 
-void	parser(t_env *env, char *file);
+/*
+**	error:
+**	- error: error code
+**	- state: 1=exit 0=continue
+**	- param: param needed for print complete error
+*/
+
+void			error(int error, char state, void *param);
+
+void			get_flags(t_env *env, int argc, char **argv);
 
 #endif
