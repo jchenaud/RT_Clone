@@ -6,14 +6,12 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/21 16:25:25 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 15:49:27 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_H
 # define RT_H
-
-# pragma pack(1)
 
 # include <mlx.h>
 # include <OpenCL/cl.h>
@@ -30,6 +28,7 @@
 # define CONE		2
 # define PLAN		3
 # define CYLINDER	4
+# define PAVE		5
 
 # define HITBOX		1
 # define HITMODE	2
@@ -56,5 +55,7 @@ typedef struct	s_env
 	t_list		*cam;
 	t_list		*light;
 }				t_env;
+
+void	parser(t_env *env, char *file);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 12:24:17 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 15:10:12 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define OBJECTS_H
 
 # include "types.h"
+
+# pragma pack(1)
 
 typedef struct	s_hitbox
 {
