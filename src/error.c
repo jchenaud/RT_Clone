@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 18:09:33 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 19:57:42 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ void	print_usage(void)
 	ft_putstr("./rt <flags> <file>\n");
 	ft_putstr("  -title <title>\n");
 	ft_putstr("  -size <width> <height>");
+}
+
+void	error_2(int error, char state, void *param)
+{
+	if (error == 34)
+		ft_putstr("cannot create mlx image");
+	else if (error == 35)
+		ft_putstr("computer to old, please buy one newer");
+	else
+		ft_putstr("unknown error");
 }
 
 void	error(int error, char state, void *param)
@@ -36,8 +46,12 @@ void	error(int error, char state, void *param)
 		ft_putstr("title need 1 argument");
 	else if (error == 19)
 		ft_putstr("size need 2 arguments");
+	else if (error == 32)
+		ft_putstr("cannot init mlx");
+	else if (error == 33)
+		ft_putstr("cannot create mlx window");
 	else
-		ft_putstr("unknown error");
+		error_2(error, state, param);
 	ft_putstr("\033[0m\n");
 	if (state)
 		exit(1);

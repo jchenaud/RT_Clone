@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 18:12:54 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 19:01:27 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,29 @@
 # define HITBOX		1
 # define HITMODE	2
 
+# define PRINT_KEYS	1
+
 # define GET_SPHERE(x)		x.obj.sphere
 # define GET_PLAN(x)		x.obj.plan
 # define GET_PAVE(x)		x.obj.pave
 # define GET_CONE(x)		x.obj.cone
 # define GET_CYLINDER(x)	x.obj.cylinder
+
+typedef struct	s_color
+{
+	cl_uchar	r;
+	cl_uchar	g;
+	cl_uchar	b;
+	cl_uchar	a;
+}				t_color;
+
+typedef struct	s_img
+{
+	void		*ptr;
+	t_color		*img;
+	int			w;
+	int			h;
+}				t_img;
 
 typedef struct	s_win
 {
@@ -56,6 +74,8 @@ typedef struct	s_env
 {
 	t_win		win;
 	char		*file;
+	t_img		*img;
+	t_uchar		opt;
 	t_list		*obj;
 	t_list		*cam;
 	t_list		*light;
@@ -71,5 +91,10 @@ typedef struct	s_env
 void			error(int error, char state, void *param);
 
 void			get_flags(t_env *env, int argc, char **argv);
+
+void			key_pressed(int k, t_env *env);
+void			key_released(int k, t_env *env);
+
+void			loop(t_env *env);
 
 #endif

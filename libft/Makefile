@@ -115,9 +115,9 @@ $(NAME): newline $(OBJS)
 newline:
 	@echo "\033[38;5;166mlibft\033[0m\n"
 
-%.o: %.c
+%.o: %.c include/libft.h
 	@echo "\033[1A\033[K\033[38;5;226mmaking $@\033[0m"
-	@$(CC) $(FLAGS) -fPIC -I $(INCLUDE) -o $@ -c $^
+	@$(CC) $(FLAGS) -fPIC -I $(INCLUDE) -o $@ -c $<
 
 clean: newline
 	@rm -f $(OBJS)
