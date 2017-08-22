@@ -6,12 +6,14 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/21 16:23:00 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/22 12:18:25 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECTS_H
 # define OBJECTS_H
+
+# include "types.h"
 
 typedef struct	s_hitbox
 {
