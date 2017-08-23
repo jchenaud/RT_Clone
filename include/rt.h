@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 19:01:27 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:37:49 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define RT_H
 
 # include <mlx.h>
-# include <OpenCL/cl.h>
 # include "libxml/parser.h"
 # include "libxml/tree.h"
 # include "libft.h"
@@ -40,22 +39,6 @@
 # define GET_PAVE(x)		x.obj.pave
 # define GET_CONE(x)		x.obj.cone
 # define GET_CYLINDER(x)	x.obj.cylinder
-
-typedef struct	s_color
-{
-	cl_uchar	r;
-	cl_uchar	g;
-	cl_uchar	b;
-	cl_uchar	a;
-}				t_color;
-
-typedef struct	s_img
-{
-	void		*ptr;
-	t_color		*img;
-	int			w;
-	int			h;
-}				t_img;
 
 typedef struct	s_win
 {

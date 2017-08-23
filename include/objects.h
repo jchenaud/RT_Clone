@@ -6,14 +6,14 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 15:10:12 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:37:13 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECTS_H
 # define OBJECTS_H
 
-# include "types.h"
+# include "images.h"
 
 # pragma pack(1)
 
@@ -72,6 +72,7 @@ typedef struct	s_cam
 	cl_float	dis;
 	cl_uint		w;
 	cl_uint		h;
+	t_img		*img;
 }				t_cam;
 
 /*

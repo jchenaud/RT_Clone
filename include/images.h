@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   images.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/21 17:34:10 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:36:37 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/23 12:35:38 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/23 12:36:39 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef IMAGES_H
+# define IMAGES_H
 
-typedef unsigned char		t_uchar;
-typedef unsigned char		t_uint8;
-typedef short unsigned int	t_uint16;
-typedef unsigned int		t_uint;
-typedef unsigned int		t_uint32;
+# include <OpenCL/cl.h>
+# include "types.h"
+
+typedef struct	s_color
+{
+	cl_uchar	r;
+	cl_uchar	g;
+	cl_uchar	b;
+	cl_uchar	a;
+}				t_color;
+
+typedef struct	s_img
+{
+	void		*ptr;
+	t_color		*img;
+	int			w;
+	int			h;
+}				t_img;
 
 #endif

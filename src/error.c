@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 19:57:42 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:38:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_usage(void)
 	ft_putstr("  -size <width> <height>");
 }
 
-void	error_2(int error, char state, void *param)
+void	error_2(int error, void *param)
 {
 	if (error == 34)
 		ft_putstr("cannot create mlx image");
@@ -51,7 +51,7 @@ void	error(int error, char state, void *param)
 	else if (error == 33)
 		ft_putstr("cannot create mlx window");
 	else
-		error_2(error, state, param);
+		error_2(error, param);
 	ft_putstr("\033[0m\n");
 	if (state)
 		exit(1);
