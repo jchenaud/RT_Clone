@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 18:48:07 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:21:41 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 			error(19, 0, NULL);
 	}
 	else if (!ft_strcmp(argv[*i], "-print_keys"))
-		env->opt += (env->opt & PRINT_KEYS) ? PRINT_KEYS : 0;
+		env->opt += (!env->opt & PRINT_KEYS) ? PRINT_KEYS : 0;
 	else
 		error(17, 0, argv[*i]);
 }

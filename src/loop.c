@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/22 18:50:39 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:23:04 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void	loop(t_env *env)
 {
-	ft_printf("\033[1A\033[KI'm running :)\n");
+	ft_printf("I'm running :)\n");
+	sleep(1);
 }

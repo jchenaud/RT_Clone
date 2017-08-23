@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<scene>
+	<sphere>
+		<pos pos_x = "10" pos_y = "10" pos_z = "10" ></pos>
+		<rot rot_x = "0" rot_y = "10" rot_z = "15"> </rot>
+		<rad rad = "21.55"> </rad>
+	</sphere>
+
+	<pave>
+		<pos pos_x = "1000" pos_y = "0.1" pos_z = "42" ></pos>
+		<rot rot_x = "0" rot_y = "10" rot_z = "15"> </rot>
+		<size size_x = "150" size_y = "150" size_z = "150"> </size>
+	</pave>
+
+	<plan>
+		<pos pos_x = "1000" pos_y = "0.1" pos_z = "42" ></pos>
+		<rot rot_x = "0" rot_y = "10" rot_z = "150"> </rot>
+		<norm norm_x = "1500" norm_y = "10" norm_z = "10"> </norm>
+	</plan>
+
+	<cone>
+		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
+		<rot rot_x = "2" rot_y = "2" rot_z = "2"> </rot>
+		<norm norm_x = "3" norm_y = "3" norm_z = "3"> </norm>
+		<angle angle = "60"> </angle>
+	</cone>
+
+	<cylinder>
+		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
+		<rot rot_x = "2" rot_y = "2" rot_z = "2"> </rot>
+		<norm norm_x = "3" norm_y = "3" norm_z = "3"> </norm>
+		<rad rad = "60"> </rad>
+	</cylinder>
+
+	<cam>
+		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
+		<dir dir_x = "2" dir_y = "2" dir_z = "2"> </dir>
+		<rot rot_x = "3" rot_y = "3" rot_z = "3"> </rot>
+		<fov fov_x = "30" fov_y = "30"> </fov>
+		<dis dis = "2503" ></dis>
+		<w w = "60"> </w>
+		<h h = "60"> </h>
+
+	</cam>
+</scene>
