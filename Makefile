@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra
 FLAGS2 = -Llibmath -lmath -L libft -lft -lmlx -lxml2 -lm -framework AppKit -framework OpenGL -framework OpenCL
 INC = rt.h objects.h types.h images.h cl_struct.h
 INCLUDE = $(INC:%.h=include/%.h)
-SRC =	rt.c error.c flags.c hooks.c loop.c window.c
+SRC =	rt.c error.c flags.c hooks.c loop.c window.c parsing/parsing.c
 OBJ = $(SRC:%.c=src/%.o)
 
 .PHONY: all clean fclean re norme push

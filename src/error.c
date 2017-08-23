@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:38:06 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 14:11:42 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	error_2(int error, void *param)
 		ft_putstr("cannot create mlx image");
 	else if (error == 35)
 		ft_putstr("computer to old, please buy one newer");
+	else if (error == 64)
+		ft_putstr("parsing error");
 	else
 		ft_putstr("unknown error");
 }

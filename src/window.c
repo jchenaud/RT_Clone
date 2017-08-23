@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 13:22:11 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 14:44:09 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_img		*new_img(t_win *win, int w, int h)
 	int		size_l;
 	int		endian;
 
+	ft_printf("creating camera of size %dx%d\n", w, h);
 	if (!(new = (t_img*)malloc(sizeof(t_img))))
 		error(1, 1, NULL);
 	new->w = w;
@@ -30,7 +31,6 @@ t_img		*new_img(t_win *win, int w, int h)
 		error(34, 1, NULL);
 	if (bpp != 32 || endian != 0)
 		error(35, 1, NULL);
-	ft_printf("bpp=%d endian=%d\n", bpp, endian);
 	return (new);
 }
 
