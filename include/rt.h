@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:37:49 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 12:40:17 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct	s_env
 {
 	t_win		win;
 	char		*file;
-	t_img		*img;
 	t_uchar		opt;
 	t_list		*obj;
 	t_list		*cam;
