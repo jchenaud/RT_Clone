@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 14:24:24 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 16:08:13 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ typedef struct			s_cl
 	cl_device_id		device;
 	t_uint				n_obj;
 	t_obj				*obj;
-	t_uint				n_cam;
-	t_cam				*cam;
 	t_uint				n_light;
 	t_light				*light;
+	cl_mem				img_mem;
+	cl_mem				cam_mem;
+	cl_mem				n_obj_mem;
+	cl_mem				obj_mem;
+	cl_mem				n_light_mem;
+	cl_mem				light_mem;
+	cl_int				error;
 }						t_cl;
 
 #endif

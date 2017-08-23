@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 14:10:22 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 16:19:29 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct	s_env
 	t_list		*obj;
 	t_list		*cam;
 	t_list		*light;
+	t_cam		*current;
 }				t_env;
 
 /*
@@ -83,6 +84,8 @@ t_img			*new_img(t_win *win, int w, int h);
 
 void			key_pressed(int k, t_env *env);
 void			key_released(int k, t_env *env);
+
+void			launch_kernel(t_env *env);
 
 void			loop(t_env *env);
 

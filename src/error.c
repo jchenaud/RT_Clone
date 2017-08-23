@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 14:11:42 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 15:53:41 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ void	error_2(int error, void *param)
 		ft_putstr("cannot create mlx image");
 	else if (error == 35)
 		ft_putstr("computer to old, please buy one newer");
+	else if (error == 48)
+		ft_printf("openCL error creating buffer: code %d",
+		*((t_uint*)param));
+	else if (error == 49)
+		ft_printf("openCL error setting arg: code %d",
+		*((t_uint*)param));
+	else if (error == 50)
+		ft_putstr("raytracer need objects to raytrace");
+	else if (error == 51)
+		ft_putstr("raytracer need lights");
 	else if (error == 64)
 		ft_putstr("parsing error");
 	else

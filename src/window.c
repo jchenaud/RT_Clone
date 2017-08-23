@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 14:44:09 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 15:05:00 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_img		*new_img(t_win *win, int w, int h)
 	return (new);
 }
 
-cl_kernel	create_kernel(t_cl *cl, cl_device_id *device, char *file,
-			char *name)
+cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 {
 	cl_program	program;
 	cl_int		tmp;
@@ -48,11 +47,11 @@ cl_kernel	create_kernel(t_cl *cl, cl_device_id *device, char *file,
 	ft_get_all_lines(fd, &line);
 	program = clCreateProgramWithSource(cl->context, 1, (const char**)&line,
 	NULL, NULL);
-	tmp = clBuildProgram(program, 1, device, NULL, NULL, NULL);
+	tmp = clBuildProgram(program, 1, &cl->device, NULL, NULL, NULL);
 	if (tmp != CL_SUCCESS)
 	{
 		ft_printf("\033[38;5;124mkernel error %d\n", tmp);
-		clGetProgramBuildInfo(program, *device, CL_PROGRAM_BUILD_LOG, 4096,
+		clGetProgramBuildInfo(program, cl->device, CL_PROGRAM_BUILD_LOG, 4096,
 		log, NULL);
 		ft_printf("log: %s\n\033[0m", log);
 	}
@@ -73,6 +72,7 @@ void		init_opencl(t_cl *cl)
 	cl->context = clCreateContext(NULL, 1, &cl->device, NULL, NULL, NULL);
 	cl->queue = clCreateCommandQueue(cl->context, cl->device, 0, NULL);
 	clGetDeviceInfo(cl->device, CL_DEVICE_NAME, 128, name, NULL);
+	cl->raytracer = create_kernel(cl, "kernel/raytracer.cl", "raytracer");
 	ft_printf("device: %s\n", name);
 }
 
