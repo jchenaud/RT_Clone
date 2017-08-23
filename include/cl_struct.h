@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   cl_struct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 13:08:50 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/23 13:20:41 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#ifndef CL_STRUCT_H
+# define CL_STRUCT_H
 
-void	loop(t_env *env)
+# include <OpenCL/cl.h>
+
+typedef struct			s_cl
 {
-	ft_printf("\033[1A\033[KI'm running :)\n");
-}
+	cl_command_queue	queue;
+	cl_context			context;
+	cl_kernel			raytracer;
+	cl_platform_id		platform;
+	cl_device_id		device;
+}						t_cl;
+
+#endif

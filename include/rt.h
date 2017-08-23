@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:40:17 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 13:22:34 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "libxml/tree.h"
 # include "libft.h"
 # include "objects.h"
+# include "cl_struct.h"
 
 /*
 **	type: 7 bits for the object, the last for hitbox type
@@ -55,6 +56,7 @@ typedef struct	s_win
 
 typedef struct	s_env
 {
+	t_cl		cl;
 	t_win		win;
 	char		*file;
 	t_uchar		opt;
@@ -73,6 +75,10 @@ typedef struct	s_env
 void			error(int error, char state, void *param);
 
 void			get_flags(t_env *env, int argc, char **argv);
+
+void			init_opencl(t_cl *cl);
+void			create_window(t_env *env, t_win *win);
+t_img			*new_img(t_win *win, int w, int h);
 
 void			key_pressed(int k, t_env *env);
 void			key_released(int k, t_env *env);
