@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 15:05:00 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 22:33:15 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void		create_window(t_env *env, t_win *win)
 		error(33, 1, NULL);
 	mlx_hook(win->win, 2, (1L << 0), (void*)&key_pressed, env);
 	mlx_hook(win->win, 3, (1L << 1), (void*)&key_released, env);
-	mlx_loop_hook(win->win, (void*)&loop, env);
+	mlx_loop_hook(win->mlx, &loop, env);
 }

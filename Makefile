@@ -1,7 +1,7 @@
 NAME = rt
 CC = gcc
 FLAGS = -Wall -Wextra
-FLAGS2 = -Llibmath -lmath -L libft -lft -lmlx -lxml2 -lm -framework AppKit -framework OpenGL -framework OpenCL
+FLAGS2 = -L libmath -lmath -L libft -lft -lxml2 -lmlx -lm -framework AppKit -framework OpenGL -framework OpenCL
 INC = rt.h objects.h types.h images.h cl_struct.h
 INCLUDE = $(INC:%.h=include/%.h)
 SRC =	rt.c error.c flags.c hooks.c loop.c window.c parsing/parsing.c

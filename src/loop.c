@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 16:26:53 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 22:34:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ void	launch_kernel(t_env *env)
 	size_t	n;
 
 	if (!env->cl.n_obj || !env->cl.n_light)
+	{
+		ft_printf("n_obj=%d\n", env->cl.n_obj);
 		error((!env->cl.n_obj) ? 50 : 51, 1, NULL);
+	}
 	create_buffers(&env->cl);
 	set_kernel_args(&env->cl);
 	cam = env->cam;
@@ -82,17 +85,22 @@ void	launch_kernel(t_env *env)
 		n = ((t_cam*)cam->content)->w * ((t_cam*)cam->content)->h;
 		clEnqueueNDRangeKernel(env->cl.queue, env->cl.raytracer, 1, NULL, &n,
 		NULL, 0, NULL, NULL);
-		clFinish(env->cl.queue);
+		if (clFinish(env->cl.queue) != CL_SUCCESS)
+			error(52, 1, NULL);
 		clEnqueueReadBuffer(env->cl.queue, env->cl.img_mem, CL_TRUE, 0,
 		n * sizeof(t_color), ((t_cam*)cam->content)->img->img, 0, NULL, NULL);
+		if (clFinish(env->cl.queue) != CL_SUCCESS)
+			error(52, 1, NULL);
 		cam = cam->next;
 	}
 }
 
-void	loop(t_env *env)
+int		loop(t_env *env)
 {
-	ft_printf("\033[1A\033[Khere\n");
-	mlx_put_image_to_window(env->win.mlx, env->win.win,
-	env->current->img->ptr, 0, 0);
+	// ft_printf("\033[1A\033[Khere\n");
+	if (env->current)
+		mlx_put_image_to_window(env->win.mlx, env->win.win,
+		env->current->img->ptr, 0, 0);
 	usleep((float)1 / 60);
+	return (0);
 }

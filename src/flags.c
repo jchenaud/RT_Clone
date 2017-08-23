@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:21:41 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 22:14:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 	if (!ft_strcmp(argv[*i], "-title"))
 	{
 		if (*i + 1 < argc)
-			env->win.name = argv[++(*i)];
+		{
+			free(env->win.name);
+			env->win.name = ft_strdup(argv[++(*i)]);
+		}
 		else
 			error(18, 0, NULL);
 	}

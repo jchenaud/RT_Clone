@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 15:53:41 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 22:19:31 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	error_2(int error, void *param)
 		ft_putstr("raytracer need objects to raytrace");
 	else if (error == 51)
 		ft_putstr("raytracer need lights");
+	else if (error == 52)
+		ft_putstr("invalid command queue");
 	else if (error == 64)
 		ft_putstr("parsing error");
 	else

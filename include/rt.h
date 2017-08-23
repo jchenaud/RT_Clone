@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 16:19:29 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/23 22:01:46 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void			key_released(int k, t_env *env);
 
 void			launch_kernel(t_env *env);
 
-void			loop(t_env *env);
+int				loop(t_env *env);
 
 #endif
