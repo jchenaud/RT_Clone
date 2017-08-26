@@ -90,13 +90,26 @@ typedef struct	s_cam
 	t_img		*img;
 }				t_cam;
 
+void	rotate_point(float *x, float *y, float angle)
+{
+	float	c = cos(angle);
+	float	s = sin(angle);
+	float	t_x;
+
+	t_x = *x;
+	*x = *x * c - *y * s;
+	*y = t_x * s + *y * c;
+}
+
 __kernel void	raytracer(__global t_color *img, __global t_cam *cam,
 				__global uint *n_obj, __global t_obj *obj,
 				__global uint *n_light, __global t_light *light)
 {
+	float3	rot;
 	t_color	def;
 	int		id = get_global_id(0);
 
+	rot = cam->rot;
 	def.r = 255;
 	def.g = 0;
 	def.b = 0;

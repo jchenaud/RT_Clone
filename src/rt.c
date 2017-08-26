@@ -80,6 +80,8 @@ int		main(int argc, char **argv)
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
 	alloc_images(&env->win, env->cam);
+	env->current = env->cam->content;
+	launch_kernel(env);
 	mlx_loop(env->win.mlx);
 	return (0);
 }
