@@ -42,6 +42,8 @@ void	export_bmp(t_img *img, char *file)
 	t_bmp_dibh	dib;
 	int			fd;
 
+	if (!img)
+		return ;
 	if ((fd = open(file, O_TRUNC | O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR |
 	S_IRGRP | S_IROTH)) == -1)
 		return ;

@@ -3,7 +3,7 @@ LIBSO = libimages.so
 CC = gcc
 SRC =	export_bmp.c import_bmp.c import_png.c
 OBJ = $(SRC:%.c=src/%.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra
 INC = libimages.h types.h
 INCLUDE = $(INC:%.h=include/%.h)
 LIBFT = ../libft

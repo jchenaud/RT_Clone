@@ -13,6 +13,7 @@
 #ifndef LIBIMAGES_H
 # define LIBIMAGES_H
 
+# include <zlib.h>
 # include "libft.h"
 # include "types.h"
 
@@ -45,6 +46,8 @@ typedef struct	s_png_chunk
 
 typedef struct	s_png_ihdr
 {
+	t_uint		lenght;
+	char		name[4];
 	int			width;
 	int			height;
 	t_uchar		depth;
@@ -52,6 +55,7 @@ typedef struct	s_png_ihdr
 	t_uchar		compression;
 	t_uchar		filter;
 	t_uchar		method;
+	t_uint		crc;
 }				t_png_ihdr;
 
 typedef struct	s_bmp_fh
