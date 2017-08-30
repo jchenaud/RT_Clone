@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <scene>
 	<sphere>
-		<pos pos_x = "10" pos_y = "10" pos_z = "10" ></pos>
-		<rot rot_x = "0" rot_y = "10" rot_z = "15"> </rot>
-		<rad rad = "21.55"> </rad>
+		<pos x = "10" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<col R="255" V="0" B="255" T="128"></col>
+		<rad rad = "5"> </rad>
 	</sphere>
 
 	<pave>
-		<pos pos_x = "1000" pos_y = "0.1" pos_z = "42" ></pos>
-		<rot rot_x = "0" rot_y = "10" rot_z = "15"> </rot>
-		<size size_x = "150" size_y = "150" size_z = "150"> </size>
+		<pos x = "1000" y = "0.1" z = "42" ></pos>
+		<rot x = "0" y = "10" z = "15"> </rot>
+		<size x = "150" y = "150" z = "150"> </size>
+		<col R="255" V="0" B="0" T="0"></col>
 	</pave>
 
 	<plan>
-		<pos pos_x = "1000" pos_y = "0.1" pos_z = "42" ></pos>
-		<rot rot_x = "0" rot_y = "10" rot_z = "150"> </rot>
-		<norm norm_x = "1500" norm_y = "10" norm_z = "10"> </norm>
+		<pos x = "0" y = "-1" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "1" z = "0"> </norm>
+		<col R="255" V="255" B="0" T="128"></col>
 	</plan>
 
 	<cone>
-		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
-		<rot rot_x = "2" rot_y = "2" rot_z = "2"> </rot>
-		<norm norm_x = "3" norm_y = "3" norm_z = "3"> </norm>
+		<pos x = "1" y = "0.1" z = "1" ></pos>
+		<rot x = "2" y = "2" z = "2"> </rot>
+		<norm x = "3" y = "3" z = "3"> </norm>
 		<angle angle = "60"> </angle>
+		<col R="255" V="0" B="0" T="0"></col>
 	</cone>
 
 	<cylinder>
-		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
-		<rot rot_x = "2" rot_y = "2" rot_z = "2"> </rot>
-		<norm norm_x = "3" norm_y = "3" norm_z = "3"> </norm>
+		<pos x = "1" y = "0.1" z = "1" ></pos>
+		<rot x = "2" y = "2" z = "2"> </rot>
+		<norm x = "3" y = "3" z = "3"> </norm>
 		<rad rad = "60"> </rad>
+		<col R="255" V="0" B="0" T="0"></col>
 	</cylinder>
 
-	<cam>
-		<pos pos_x = "1" pos_y = "0.1" pos_z = "1" ></pos>
-		<dir dir_x = "2" dir_y = "2" dir_z = "2"> </dir>
-		<rot rot_x = "3" rot_y = "3" rot_z = "3"> </rot>
-		<fov fov_x = "30" fov_y = "30"> </fov>
-		<dis dis = "2503" ></dis>
-		<w w = "60"> </w>
-		<h h = "60"> </h>
+	<light>
+		<pos x = "0" y = "0" z = "0" ></pos>
+		<col R="255" V="255" B="255" T="0"></col>
+	</light>
 
+	<cam>
+		<pos x = "0" y = "0" z = "0" ></pos>
+		<dir x = "1" y = "0" z = "0"> </dir>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<fov fov_x = "1" fov_y = "0.6"> </fov>
+		<dis dis = "1" ></dis>
+		<w W = "1920"> </w>
+		<h H = "1080"> </h>
 	</cam>
 </scene>
