@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/16 12:56:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:16:58 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/27 16:59:21 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/27 17:02:31 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "private.h"
 
-int		ft_abs(int n)
+char		*get_version(void)
 {
-	return ((n < 0) ? -n : n);
+	return ("1.0");
 }
 
-float	ft_fabs(float n)
+t_uint16	get_width(t_win *win)
 {
-	return ((n < 0) ? -n : n);
+	return (win->w);
+}
+
+t_uint16	get_height(t_win *win)
+{
+	return (win->h);
+}
+
+char		*get_title(t_win *win)
+{
+	return (win->name);
 }

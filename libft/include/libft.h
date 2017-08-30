@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 16:13:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/19 15:53:05 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/27 19:17:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int					ft_isprint(int c);
 */
 
 int					ft_abs(int n);
+float				ft_fabs(float n);
 double				ft_dpower(double n, size_t power);
 size_t				ft_factorial(size_t n);
 double				ft_mod(double x, double m);

@@ -6,33 +6,11 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 22:33:15 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/29 23:16:35 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-t_img		*new_img(t_win *win, int w, int h)
-{
-	t_img	*new;
-	int		bpp;
-	int		size_l;
-	int		endian;
-
-	ft_printf("creating camera of size %dx%d\n", w, h);
-	if (!(new = (t_img*)malloc(sizeof(t_img))))
-		error(1, 1, NULL);
-	new->w = w;
-	new->h = h;
-	if (!(new->ptr = mlx_new_image(win->mlx, w, h)))
-		error(34, 1, NULL);
-	if (!(new->img = (t_color*)mlx_get_data_addr(new->ptr, &bpp, &size_l,
-	&endian)))
-		error(34, 1, NULL);
-	if (bpp != 32 || endian != 0)
-		error(35, 1, NULL);
-	return (new);
-}
 
 cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 {
@@ -50,7 +28,7 @@ cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 	tmp = clBuildProgram(program, 1, &cl->device, NULL, NULL, NULL);
 	if (tmp != CL_SUCCESS)
 	{
-		ft_printf("\033[38;5;124mkernel error %d\n", tmp);
+		ft_printf("\033[38;5;124m%s, kernel error %d\n", file, tmp);
 		clGetProgramBuildInfo(program, cl->device, CL_PROGRAM_BUILD_LOG, 4096,
 		log, NULL);
 		ft_printf("log: %s\n\033[0m", log);
@@ -73,16 +51,8 @@ void		init_opencl(t_cl *cl)
 	cl->queue = clCreateCommandQueue(cl->context, cl->device, 0, NULL);
 	clGetDeviceInfo(cl->device, CL_DEVICE_NAME, 128, name, NULL);
 	cl->raytracer = create_kernel(cl, "kernel/raytracer.cl", "raytracer");
+	cl->resize = create_kernel(cl, "kernel/resize.cl", "resize");
+	cl->antialiasing = create_kernel(cl, "kernel/antialiasing.cl",
+	"antialiasing");
 	ft_printf("device: %s\n", name);
-}
-
-void		create_window(t_env *env, t_win *win)
-{
-	if (!(win->mlx = mlx_init()))
-		error(32, 1, NULL);
-	if (!(win->win = mlx_new_window(win->mlx, win->w, win->h, win->name)))
-		error(33, 1, NULL);
-	mlx_hook(win->win, 2, (1L << 0), (void*)&key_pressed, env);
-	mlx_hook(win->win, 3, (1L << 1), (void*)&key_released, env);
-	mlx_loop_hook(win->mlx, (void*)&loop, env);
 }

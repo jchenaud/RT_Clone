@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/16 12:56:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:16:58 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/21 17:34:10 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/27 17:04:23 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef TYPES_H
+# define TYPES_H
 
-int		ft_abs(int n)
-{
-	return ((n < 0) ? -n : n);
-}
+typedef unsigned char		t_uchar;
+typedef unsigned char		t_uint8;
+typedef short unsigned int	t_uint16;
+typedef unsigned int		t_uint;
+typedef unsigned int		t_uint32;
 
-float	ft_fabs(float n)
-{
-	return ((n < 0) ? -n : n);
-}
+#endif

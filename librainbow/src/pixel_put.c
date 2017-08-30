@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images.h                                           :+:      :+:    :+:   */
+/*   pixel_put.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/23 12:35:38 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:36:39 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/27 19:07:04 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/29 23:13:32 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IMAGES_H
-# define IMAGES_H
+#include "librainbow.h"
 
-# include <OpenCL/cl.h>
-# include "types.h"
-
-typedef struct	s_color
+void	pixel_put(t_img *img, t_pixel *p)
 {
-	cl_uchar	r;
-	cl_uchar	g;
-	cl_uchar	b;
-	cl_uchar	a;
-}				t_color;
-
-typedef struct	s_img
-{
-	void		*ptr;
-	t_color		*img;
-	int			w;
-	int			h;
-}				t_img;
-
-#endif
+	if (p->pos.x < 0 || p->pos.x > 1 || p->pos.y < 0 || p->pos.y > 1)
+		return ;
+	((t_color*)img->pixels)[(int)((img->h - 1) * p->pos.y) * img->w +
+	(int)((img->w - 1) * p->pos.x)] = p->color;
+}

@@ -97,36 +97,33 @@ OBJS = $(SRCS:%.c=src/%.o)
 FLAGS = -Wall -Wextra -Werror
 INCLUDE = include
 
-.PHONY: clean fclean all re norme newline
+.PHONY: clean fclean all re norme
 
 all: $(NAME)
 
-$(LIBSO): newline $(OBJS)
-	@echo "\033[1A\033[K\033[38;5;214mmaking $@\033[0m"
+$(LIBSO): $(OBJS)
+	@echo "\033[38;5;214mmaking $@\033[0m"
 	@$(CC) $(FLAGS) -shared -o $(LIBSO) $(OBJS)
-	@echo "\033[1A\033[K\033[38;5;214m$@ done\033[0m"
+	@echo "\033[38;5;214m$@ done\033[0m"
 
-$(NAME): newline $(OBJS)
-	@echo "\033[1A\033[K\033[38;5;214mmaking $@\033[0m"
+$(NAME): $(OBJS)
+	@echo "\033[38;5;214mmaking $@\033[0m"
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
-	@echo "\033[1A\033[K\033[38;5;214m$@ done\033[0m"
-
-newline:
-	@echo "\033[38;5;166mlibft\033[0m\n"
+	@echo "\033[38;5;214m$@ done\033[0m"
 
 %.o: %.c include/libft.h
-	@echo "\033[1A\033[K\033[38;5;226mmaking $@\033[0m"
+	@echo "\033[38;5;226mmaking $@\033[0m"
 	@$(CC) $(FLAGS) -fPIC -I $(INCLUDE) -o $@ -c $<
 
-clean: newline
+clean:
 	@rm -f $(OBJS)
-	@echo "\033[1A\033[K\033[38;5;45mobject files removed\033[0m\n"
+	@echo "\033[38;5;45mobject files removed\033[0m"
 
-fclean: newline clean
+fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(LIBSO)
-	@echo "\033[1A\033[K\033[38;5;87m$(NAME) removed\033[0m\n"
+	@echo "\033[38;5;87m$(NAME) removed\033[0m"
 
 norme:
 	@norminette $(SRC) $(INCLUDE)

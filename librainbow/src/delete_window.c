@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   delete_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/16 12:56:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:16:58 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/27 16:54:11 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/27 16:58:45 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "private.h"
 
-int		ft_abs(int n)
+void	delete_window(t_win **win)
 {
-	return ((n < 0) ? -n : n);
-}
-
-float	ft_fabs(float n)
-{
-	return ((n < 0) ? -n : n);
+	if (!win || !(*win))
+		return ;
+	free((*win)->name);
+	free(*win);
+	*win = NULL;
 }

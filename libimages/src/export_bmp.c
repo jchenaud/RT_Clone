@@ -6,11 +6,12 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 22:43:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/24 01:04:40 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/29 22:26:27 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libimages.h"
+#include "private.h"
 
 void	fill_header(t_img *img, t_bmp_fh *header)
 {
@@ -51,6 +52,6 @@ void	export_bmp(t_img *img, char *file)
 	fill_dib(img, &dib);
 	write(fd, &header, sizeof(t_bmp_fh));
 	write(fd, &dib, sizeof(t_bmp_dibh));
-	write(fd, img->img, sizeof(t_color) * img->w * img->h);
+	write(fd, img->pixels, sizeof(t_color) * img->w * img->h);
 	close(fd);
 }

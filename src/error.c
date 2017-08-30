@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 22:19:31 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/27 15:28:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	print_usage(void)
 
 void	error_2(int error, void *param)
 {
-	if (error == 34)
+	if (error == 33)
+		ft_putstr("cannot create mlx window");
+	else if (error == 34)
 		ft_putstr("cannot create mlx image");
 	else if (error == 35)
 		ft_putstr("computer to old, please buy one newer");
@@ -60,10 +62,10 @@ void	error(int error, char state, void *param)
 		ft_putstr("title need 1 argument");
 	else if (error == 19)
 		ft_putstr("size need 2 arguments");
+	else if (error == 20)
+		ft_putstr("antialias need 1 argument");
 	else if (error == 32)
 		ft_putstr("cannot init mlx");
-	else if (error == 33)
-		ft_putstr("cannot create mlx window");
 	else
 		error_2(error, param);
 	ft_putstr("\033[0m\n");

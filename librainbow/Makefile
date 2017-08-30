@@ -1,12 +1,15 @@
-NAME = libimages.a
-LIBSO = libimages.so
+NAME = librainbow.a
+LIBSO = librainbow.so
 CC = gcc
-SRC =	export_bmp.c import_bmp.c import_png.c invert_image.c
+SRC =	new_window.c delete_window.c get_info.c new_image.c pixel_put.c draw_line.c\
+		get_fps.c set_fps.c
 OBJ = $(SRC:%.c=src/%.o)
 FLAGS = -Wall -Wextra
-INC = libimages.h types.h
+INC = librainbow.h private.h types.h
 INCLUDE = $(INC:%.h=include/%.h)
 LIBFT = ../libft
+LIBIMAGES = ../libimages
+LIBMATH = ../libmath
 
 .PHONY: clean fclean all re norme newline
 
@@ -25,7 +28,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c $(INCLUDE)
 	@echo "\033[38;5;226mmaking $@\033[0m"
-	@$(CC) $(FLAGS) -fPIC -I include -I $(LIBFT)/include -o $@ -c $<
+	@$(CC) $(FLAGS) -fPIC -I include -I $(LIBFT)/include -I $(LIBIMAGES)/include -I $(LIBMATH)/include -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)

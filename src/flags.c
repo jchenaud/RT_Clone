@@ -6,11 +6,29 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 22:14:26 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/29 23:22:49 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	get_param2(t_env *env, int argc, char **argv, int *i)
+{
+	if (!ft_strcmp(argv[*i], "-print_keys"))
+		env->opt += (!env->opt & PRINT_KEYS) ? PRINT_KEYS : 0;
+	else if (!ft_strcmp(argv[*i], "-debug"))
+		env->opt += (!env->opt & DEBUG_MODE) ? DEBUG_MODE : 0;
+	else if (!ft_strcmp(argv[*i], "-antialias"))
+	{
+		if (*i + 1 < argc)
+			env->antialias_level = ft_atou(argv[++(*i)]);
+		else
+			error(20, 0, NULL);
+	}
+	else
+		error(17, 0, argv[*i]);
+	argc++;
+}
 
 void	get_param(t_env *env, int argc, char **argv, int *i)
 {
@@ -18,8 +36,9 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 	{
 		if (*i + 1 < argc)
 		{
-			free(env->win.name);
-			env->win.name = ft_strdup(argv[++(*i)]);
+			free(env->win->name);
+			env->win->name = ft_strdup(argv[++(*i)]);
+			SDL_SetWindowTitle(env->win->win, env->win->name);
 		}
 		else
 			error(18, 0, NULL);
@@ -28,16 +47,15 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 	{
 		if (*i + 2 < argc)
 		{
-			env->win.w = ft_atou(argv[++(*i)]);
-			env->win.h = ft_atou(argv[++(*i)]);
+			env->win->w = ft_atou(argv[++(*i)]);
+			env->win->h = ft_atou(argv[++(*i)]);
+			SDL_SetWindowSize(env->win->win, env->win->w, env->win->h);
 		}
 		else
 			error(19, 0, NULL);
 	}
-	else if (!ft_strcmp(argv[*i], "-print_keys"))
-		env->opt += (!env->opt & PRINT_KEYS) ? PRINT_KEYS : 0;
 	else
-		error(17, 0, argv[*i]);
+		get_param2(env, argc, argv, i);
 }
 
 void	get_flags(t_env *env, int argc, char **argv)

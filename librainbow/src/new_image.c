@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   new_image.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/16 12:56:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:16:58 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/27 17:10:48 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/30 01:18:23 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "private.h"
 
-int		ft_abs(int n)
+t_img	*new_img(int w, int h)
 {
-	return ((n < 0) ? -n : n);
-}
-
-float	ft_fabs(float n)
-{
-	return ((n < 0) ? -n : n);
+	return (SDL_CreateRGBSurface(0, w, h, 32,
+	0xff0000, 0xff00, 0xff, 0xff000000));
 }

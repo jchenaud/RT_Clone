@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   get_fps.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/16 12:56:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:16:58 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/28 02:31:50 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/29 04:34:01 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "private.h"
 
-int		ft_abs(int n)
+t_uint	get_fps(void)
 {
-	return ((n < 0) ? -n : n);
-}
+	static struct timeval	prev;
+	struct timeval			now;
+	static t_uint			fps = 0;
+	static t_uint			mem = 0;
 
-float	ft_fabs(float n)
-{
-	return ((n < 0) ? -n : n);
+	mem++;
+	if (mem != 2 && !(gettimeofday(&now, NULL)))
+	{
+		fps = 1000000 * (now.tv_sec - prev.tv_sec) +
+		now.tv_usec - prev.tv_usec;
+		fps = (fps) ? (mem * 1000000) / fps : -1;
+		prev = now;
+		mem = 0;
+	}
+	return (fps);
 }

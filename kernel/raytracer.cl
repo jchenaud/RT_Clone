@@ -123,7 +123,9 @@ typedef struct	s_vec3
 #define CYLINDER	4
 #define PAVE		5
 
-static void	normalize_vector(float3 *vec)
+#define PI			3.1415926535
+
+void	normalize_vector(float3 *vec)
 {
 	float	norm = get_vector_norm(vec);
 
@@ -132,7 +134,7 @@ static void	normalize_vector(float3 *vec)
 	vec->z /= norm;
 }
 
-static void	rotate_point(float *x, float *y, float angle)
+void	rotate_point(float *x, float *y, float angle)
 {
 	float	c = cos(angle);
 	float	s = sin(angle);
@@ -143,14 +145,14 @@ static void	rotate_point(float *x, float *y, float angle)
 	*y = t_x * s + *y * c;
 }
 
-static void	rotate_vec(float3 *vec, float3 angle)
+void	rotate_vec(float3 *vec, float3 angle)
 {
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
 	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
 }
 
-static float		hit_sphere(t_ray *ray, __global t_obj *obj)
+float	hit_sphere(t_ray *ray, __global t_obj *obj)
 {
 	float3	x = sub_vectors(ray->pos, obj->pos);
 	float	a = scalar_vectors(ray->dir, ray->dir);
@@ -171,28 +173,38 @@ static float		hit_sphere(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-static t_color		raytrace_ray(t_ray *ray, __global uint *n_obj, __global t_obj *obj,
+float	hit_plan(t_ray *ray, __global t_obj *obj)
+{
+	float	h;
+
+	h = scalar_vectors(get_plan(obj).norm, ray->dir);
+	if (h == 0)
+		return (-42);
+	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
+}
+
+t_color	raytrace_ray(t_ray *ray, __global uint *n_obj, __global t_obj *obj,
 				__global uint *n_light, __global t_light *light)
 {
 	t_color	def;
 	int		i;
 	float	h;
 
-	def.r = 0;
-	def.g = 0;
-	def.b = 0;
-	def.a = 0;
+	def.r = 32;
+	def.g = 32;
+	def.b = 32;
+	def.a = 255;
 	i = 0;
-	h = -1;
 	while (i < *n_obj)
 	{
+		h = -1;
 		if (obj[i].type == SPHERE)
 			h = hit_sphere(ray, &obj[i]);
+		else if (obj[i].type == PLAN)
+			h = hit_plan(ray, &obj[i]);
 		if (h >= 0)
 		{
-			def.r = obj[i].col.a;
-			def.g = obj[i].col.b;
-			def.b = obj[i].col.g;
+			def = obj[i].col;
 		}
 		i++;
 	}
@@ -214,8 +226,9 @@ __kernel void	raytracer(__global t_color *img, __global t_cam *cam,
 	ray.dir.y *= cam->dis;
 	ray.dir.z *= cam->dis;
 	rot = cam->rot;
+	rot.x -= PI / 2;
 	rot.z += ((2 * cam->fov.x) / (cam->w - 1)) * (id % cam->w) - cam->fov.x;
-	rot.y += ((2 * cam->fov.y) / (cam->w - 1)) * (id / cam->w) - cam->fov.y;
+	rot.y += ((2 * cam->fov.y) / (cam->h - 1)) * (id / cam->w) - cam->fov.y;
 	rotate_vec(&ray.dir, rot);
 	ray.pos.x += ray.dir.x;
 	ray.pos.y += ray.dir.y;

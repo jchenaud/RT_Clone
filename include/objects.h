@@ -6,16 +6,19 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 12:37:13 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/29 05:31:02 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OBJECTS_H
 # define OBJECTS_H
 
-# include "images.h"
+# include "libimages.h"
+# include <OpenCL/cl.h>
 
-# pragma pack(1)
+/*
+** # pragma pack(1)
+*/
 
 typedef struct	s_hitbox
 {
@@ -85,7 +88,7 @@ typedef struct	s_cam
 typedef struct	s_light
 {
 	cl_float3	pos;
-	cl_uchar4	col;
+	t_color		col;
 	cl_float3	i;
 }				t_light;
 
@@ -101,7 +104,7 @@ typedef struct	s_obj
 	cl_float3	pos;
 	cl_float3	rot;
 	cl_uchar	type;
-	cl_uchar4	col;
+	t_color		col;
 	cl_float3	ref;
 	t_hitbox	hitbox;
 	t_union		obj;

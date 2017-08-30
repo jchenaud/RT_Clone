@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/23 14:49:26 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/30 01:44:48 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ t_env	*init_env(void)
 	if (!(env = (t_env*)malloc(sizeof(t_env))))
 		error(1, 1, NULL);
 	ft_bzero(env, sizeof(t_env));
-	env->win.name = "RT";
-	env->win.w = 1920;
-	env->win.h = 1080;
+	env->antialias_level = 2;
 	return (env);
 }
 
@@ -51,15 +49,41 @@ void	*alloc_array(t_list *head, t_uint *n)
 	return ((void*)new);
 }
 
-void	alloc_images(t_win *win, t_list *cam)
+void	alloc_images(t_list *cam)
 {
 	t_cam	*current;
 
 	while (cam)
 	{
 		current = (t_cam*)cam->content;
-		printf("cam %u\n", current->w);
-		current->img = new_img(win, current->w, current->h);
+		current->img = new_img(current->w, current->h);
+		cam = cam->next;
+	}
+}
+
+void	place_in_list(t_env *env)
+{
+	t_list	*cam;
+	t_uint	n;
+	t_uint	i;
+
+	n = 0;
+	cam = env->cam;
+	while (cam)
+	{
+		n++;
+		cam = cam->next;
+	}
+	env->n = n;
+	if (!(env->img = (t_img*)malloc(sizeof(t_img) * n)))
+		error(1, 1, NULL);
+	i = n - 1;
+	cam = env->cam;
+	while (cam)
+	{
+		export_bmp(((t_cam*)cam->content)->img, "test.bmp");
+		invert_image(((t_cam*)cam->content)->img);
+		ft_memcpy(&env->img[i--], ((t_cam*)cam->content)->img, sizeof(t_img));
 		cam = cam->next;
 	}
 }
@@ -71,17 +95,18 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 		error(0, 1, NULL);
 	env = init_env();
+	env->win = new_window("RT", 640, 480);
 	get_flags(env, argc, argv);
-	create_window(env, &env->win);
 	init_opencl(&env->cl);
 	if (parsing(env->file, env) == -1)
 		error(64, 1, NULL);
 	ft_printf("\n");
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
-	alloc_images(&env->win, env->cam);
-	env->current = env->cam->content;
+	alloc_images(env->cam);
 	launch_kernel(env);
-	mlx_loop(env->win.mlx);
+	place_in_list(env);
+	env->i = 0;
+	loop(env);
 	return (0);
 }
