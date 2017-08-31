@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:39:15 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 03:37:21 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/31 06:09:19 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,12 @@ char				*get_title(void *win);
 
 t_img				*new_img(int w, int h);
 
+t_color				new_color(t_uchar r, t_uchar g, t_uchar b, t_uchar a);
+
 void				pixel_put(t_img *img, t_pixel *p);
 void				draw_line(t_img *img, t_pixel *a, t_pixel *b);
 void				draw_triangle(t_img *img, t_pixel *a, t_pixel *b,
 					t_pixel *c);
+void				draw_polygone(t_img *img, t_pixel *p, int n);
 
 #endif

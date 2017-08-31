@@ -20,8 +20,8 @@
 
 typedef struct	s_color
 {
-	t_uchar	b;
 	t_uchar	g;
+	t_uchar	b;
 	t_uchar	r;
 	t_uchar	a;
 }				t_color;

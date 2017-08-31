@@ -1,7 +1,7 @@
 typedef struct	s_color
 {
-	uchar		b;
 	uchar		g;
+	uchar		b;
 	uchar		r;
 	uchar		a;
 }				t_color;
