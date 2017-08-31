@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/29 23:22:49 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/31 04:49:20 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	get_param2(t_env *env, int argc, char **argv, int *i)
 void	get_param(t_env *env, int argc, char **argv, int *i)
 {
 	if (!ft_strcmp(argv[*i], "-title"))
-	{
 		if (*i + 1 < argc)
 		{
 			free(env->win->name);
@@ -42,18 +41,17 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 		}
 		else
 			error(18, 0, NULL);
-	}
 	else if (!ft_strcmp(argv[*i], "-size"))
-	{
 		if (*i + 2 < argc)
 		{
 			env->win->w = ft_atou(argv[++(*i)]);
 			env->win->h = ft_atou(argv[++(*i)]);
 			SDL_SetWindowSize(env->win->win, env->win->w, env->win->h);
+			SDL_SetWindowPosition(env->win->win, SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED);
 		}
 		else
 			error(19, 0, NULL);
-	}
 	else
 		get_param2(env, argc, argv, i);
 }

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 03:11:30 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/31 04:28:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			loop(t_env *env)
 
 	while (1)
 	{
-		if (SDL_PollEvent(&env->win->events))
+		while (SDL_PollEvent(&env->win->events))
 			keys(env, &env->win->events);
 		if (env->i < env->n)
 		{
