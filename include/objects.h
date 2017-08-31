@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/29 05:31:02 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/31 03:39:41 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct	s_cam
 	cl_uint		w;
 	cl_uint		h;
 	t_img		*img;
+	char		*output;
 }				t_cam;
 
 /*

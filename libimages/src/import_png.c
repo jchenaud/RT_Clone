@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 01:15:55 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 01:41:58 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/30 04:32:11 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	read_text(t_png_chunk *chunk, int fd)
 
 void	if_forest(t_png_ihdr *ihdr, t_png_chunk *chunk, t_img *new, int fd)
 {
-	ft_printf("name=%c%c%c%c len=%d\n", chunk->name[0], chunk->name[1], chunk->name[2], chunk->name[3], chunk->lenght);
 	if (!ft_strncmp(chunk->name, "IDAT", 4))
 		get_idat(ihdr, chunk, new, fd);
 	else if (!ft_strncmp(chunk->name, "tEXt", 4))
@@ -85,11 +84,10 @@ t_img	*import_png(char *file)
 	sizeof(t_png_ihdr) || ft_strncmp(ihdr.name, "IHDR", 4) ||
 	!endian(&ihdr.width, 4) || !endian(&ihdr.height, 4) ||
 	!endian(&ihdr.crc, 4) || !(new = (t_img*)malloc(sizeof(t_img))) ||
-	!(new->w = ihdr.width) || !(new->h = ihdr.height) ||
+	!(new->w = ihdr.width) ||
+	!(new->h = ihdr.height) ||
 	!(new->pixels = (t_color*)malloc(sizeof(t_color) * new->w * new->h)))
 		return (NULL);
-	ft_printf("w=%d h=%d depth=%u colors=%u compression=%u filter=%u method=%u\n",
-	ihdr.width, ihdr.height, ihdr.depth, ihdr.color, ihdr.compression, ihdr.filter, ihdr.method);
 	while (read(fd, &chunk, sizeof(t_png_chunk)) == sizeof(t_png_chunk) &&
 	endian(&chunk.lenght, 4))
 	{

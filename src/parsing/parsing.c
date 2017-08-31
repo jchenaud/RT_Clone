@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:08:40 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/08/30 03:11:16 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/31 03:51:35 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ztab(int* tab, int size)
       return(0);
     i++;
   }
-  //printf("espris espris et tu la\n");
+  ////printf("espris espris et tu la\n");
   return (1);
 
 }
@@ -199,6 +199,11 @@ void    pars_sphere_anex(int * tab, xmlNode *current, t_obj *new_obj)
     new_obj->obj.sphere.rad = get_rad(current);
     tab[3] = 1;
   }
+  else if (ft_strcmp((char*)current->name,"ref")== 0)
+  {
+    new_obj->ref = get_float3(current);
+    tab[4] = 1;
+  }
   else
     exit (0);
 }
@@ -206,7 +211,7 @@ void    pars_sphere_anex(int * tab, xmlNode *current, t_obj *new_obj)
 
 int pars_sphere( xmlNode* current, t_obj *new_obj)
 {
-int tab[4] = {0};
+int tab[5] = {0};
 int i;
 
   i = 0;
@@ -214,9 +219,9 @@ int i;
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,4)==0)
+  while (ztab(tab,5)==0)
   {
-  // printf("%d\n",i);
+  // //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -228,6 +233,8 @@ int i;
     pars_sphere_anex(tab,current,new_obj);
   i++;
 }
+//printf("sphere ok\n");
+
   return (0);
 
 }
@@ -256,6 +263,11 @@ void   pars_pave_anex(int * tab, xmlNode *current, t_obj *new_obj)
     new_obj->obj.pave.size = get_float3(current);
     tab[3] = 1;
   }
+  else if (ft_strcmp((char*)current->name,"ref")== 0)
+  {
+    new_obj->ref = get_float3(current);
+    tab[4] = 1;
+  }
   else
     exit (0);
   //return(tab);
@@ -264,7 +276,7 @@ void   pars_pave_anex(int * tab, xmlNode *current, t_obj *new_obj)
 
 int pars_pave( xmlNode* current, t_obj *new_obj)
 {
-int tab[4] = {0};
+int tab[5] = {0};
 int i;
 
   i = 0;
@@ -272,9 +284,9 @@ int i;
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,4)==0)
+  while (ztab(tab,5)==0)
   {
-  //  printf("%d\n",i);
+  //  //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -284,9 +296,11 @@ int i;
       if(!(current = current->next->next))
         return (- 1);
   pars_pave_anex(tab,current,new_obj);
-  //printf("%d %d %d %d\n",tab[0],tab[1],tab[2],tab[3]);
+  ////printf("%d %d %d %d\n",tab[0],tab[1],tab[2],tab[3]);
   i++;
 }
+//printf("pave ok\n");
+
   return(0);
 }
 
@@ -316,6 +330,11 @@ void   pars_plan_anex(int *tab, xmlNode *current, t_obj *new_obj)
     new_obj->obj.plan.norm = get_float3(current);
     tab[3] = 1;
   }
+  else if (ft_strcmp((char*)current->name,"ref")== 0)
+  {
+    new_obj->ref = get_float3(current);
+    tab[4] = 1;
+  }
   else
     exit (0);
 }
@@ -323,7 +342,7 @@ void   pars_plan_anex(int *tab, xmlNode *current, t_obj *new_obj)
 int pars_plan( xmlNode* current, t_obj *new_obj)
 { 
 
-int tab[4] = {0};
+int tab[5] = {0};
 int i;
 
   i = 0;
@@ -331,9 +350,9 @@ int i;
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,4)==0)
+  while (ztab(tab,5)==0)
   {
-  //  printf("%d\n",i);
+  //  //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -346,6 +365,8 @@ int i;
 
   i++;
 }
+//printf("plan ok\n");
+
   return(0);
 }
 
@@ -365,6 +386,11 @@ void   pars_cone_anex2(int *tab, xmlNode *current, t_obj *new_obj,int find)
   {
     new_obj->obj.cone.angle =  get_ang(current);
     tab[4] = 1;
+  }
+  else if (ft_strcmp((char*)current->name,"ref")== 0)
+  {
+    new_obj->ref = get_float3(current);
+    tab[5] = 1;
   }
   else 
       exit(0);
@@ -399,7 +425,7 @@ void   pars_cone_anex(int *tab, xmlNode *current, t_obj *new_obj)
 
 int pars_cone( xmlNode* current, t_obj *new_obj)
 { 
-  int tab[5] = {0};
+  int tab[6] = {0};
   int i;
 
   i = 0;
@@ -407,9 +433,9 @@ int pars_cone( xmlNode* current, t_obj *new_obj)
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,5)==0)
+  while (ztab(tab,6)==0)
   {
-  //  printf("%d\n",i);
+  //  //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -421,6 +447,8 @@ int pars_cone( xmlNode* current, t_obj *new_obj)
     pars_cone_anex(tab,current,new_obj);
   i++;
 }
+//printf("cone ok\n");
+
   return(0);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,8 +467,13 @@ void   pars_cylinder_anex2(int *tab, xmlNode *current, t_obj *new_obj, int find)
 
   else if (ft_strcmp((char*)current->name,"rad")== 0)
   {
-    new_obj->obj.sphere.rad = get_rad(current); 
+    new_obj->obj.cylinder.rad = get_rad(current); 
     tab[4] = 1;
+  }
+  else if (ft_strcmp((char*)current->name,"ref")== 0)
+  {
+    new_obj->ref = get_float3(current);
+    tab[5] = 1;
   }
   else
     exit (0);
@@ -482,7 +515,7 @@ void   pars_cylinder_anex(int *tab, xmlNode *current, t_obj *new_obj)
 int pars_cylinder( xmlNode* current, t_obj *new_obj)
 { 
 
-   int tab[5] = {0};
+   int tab[6] = {0};
   int i;
 
   i = 0;
@@ -490,9 +523,9 @@ int pars_cylinder( xmlNode* current, t_obj *new_obj)
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,5)==0)
+  while (ztab(tab,6)==0)
   {
-  //  printf("%d\n",i);
+  //  //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -504,6 +537,7 @@ int pars_cylinder( xmlNode* current, t_obj *new_obj)
   pars_cylinder_anex(tab, current, new_obj);
   i++;
 }
+//printf("cylindeur ok\n");
   return(0);
 }
 
@@ -544,6 +578,14 @@ void   pars_cam_anex2(int *tab, xmlNode *current, t_cam *new_cam, int find)
       tab[4] = 1;
       find = 1;
     }
+    else if (ft_strcmp((char*)current->name,"export") == 0)
+    {
+      if(!(new_cam->output = (char*)xmlGetProp(current,(const xmlChar*)"PATH")))
+        exit(0);
+      //printf("path in pars = %s \n",new_cam->output);
+      find = 1;
+      tab[7] = 1; 
+    }
     pars_cam_anex3(tab,current,new_cam,find);
 }
 
@@ -556,7 +598,7 @@ void   pars_cam_anex(int *tab, xmlNode *current, t_cam *new_cam)
 
     if (ft_strcmp((char*)current->name,"pos")== 0)
     {
-      new_cam->pos = get_float3(current); //printf( "   pos_z %f\n",new_cam->pos.z);
+      new_cam->pos = get_float3(current); ////printf( "   pos_z %f\n",new_cam->pos.z);
       tab[0] = 1;
     find = 1;
     }
@@ -577,16 +619,16 @@ void   pars_cam_anex(int *tab, xmlNode *current, t_cam *new_cam)
 
 int pars_cam( xmlNode* current, t_cam *new_cam)
 { 
-  int tab[7] = {0};
+  int tab[8] = {0};
   int i;
 
   i = 0;
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,7)==0)
+  while (ztab(tab,8)==0)
   {
-  //  printf("%d\n",i);
+  //  //printf("%d\n",i);
     if (i == 0)
     {
       if (!(current = current->next))
@@ -598,6 +640,8 @@ int pars_cam( xmlNode* current, t_cam *new_cam)
    pars_cam_anex(tab,current,new_cam);
     i++;
   }
+  //printf("cam\n");
+
   return(0);
 }
 
@@ -630,13 +674,12 @@ int pars_light( xmlNode* current, t_light *new_light)
 { 
   int tab[3] = {0};
   int i;
-
   i = 0;
   //ft_bzero((void*)tab,3);
   if(!(current = current->children))
     return (-1);
-  while (ztab(tab,3))
-  {
+  while (ztab(tab,3) == 0)
+  {    
     if (i == 0)
     {
       if (!(current = current->next))
@@ -644,16 +687,28 @@ int pars_light( xmlNode* current, t_light *new_light)
     }
     else
       if(!(current = current->next->next))
-        return (- 1);
-      pars_light_anex(tab, current, new_light);
+        return (- 1);      
+    pars_light_anex(tab, current, new_light);
+    //printf("fuck\n");
     i++;
   }
+  //printf("light\n");
+
   return (0);
 }
 
 
 
-
+// int pars_export(xmlNode * current, t_env *e)
+// {
+//   if(!(current = current->children))
+//     return (-1);
+//   if (!(current = current->next))
+//         return (-1);
+//   if(!(e->output = (char*)xmlGetProp(current,(const xmlChar*)"PATH")))
+//         return (-1);
+//   return(0);
+// }
 
 
 int pars_content( xmlNode* root, t_env *e)
@@ -668,13 +723,13 @@ int pars_content( xmlNode* root, t_env *e)
   { 
      if ( current->type==XML_ELEMENT_NODE ) // sert a quoi
      {
-      //printf( "node type: %s\n", current->name );
+      ////printf( "node type: %s\n", current->name );
       if (ft_strcmp((char*)current->name,"sphere")== 0)
      {
        if(pars_sphere(current, &new_obj) == -1)
           return (-1);
         ft_lstadd(&e->obj, ft_lstnew(&new_obj, sizeof(t_obj)));
-        //printf("rad sph  = %f \n", new_obj.obj.sphere.rad);
+        ////printf("rad sph  = %f \n", new_obj.obj.sphere.rad);
      }
      else if (ft_strcmp((char*)current->name,"pave")== 0)
      {
@@ -716,8 +771,11 @@ int pars_content( xmlNode* root, t_env *e)
       ft_lstadd(&e->light, ft_lstnew(&new_light, sizeof(t_light)));
     }
   }
+  //printf("plop\n");
+
     current = current->next;
   }
+  //printf("plop\n");
   return (0);
 }
 
@@ -741,8 +799,10 @@ int parsing(char *file, t_env *e)
   xmlFreeDoc( doc );
 
  xmlCleanupParser();
-printf("end of pars\n");
+//printf("end of pars\n");
   return 0;
 }
 
 // ! posible seg si une balise se glisse entre scene et le reste en totalitée
+
+// rajouter une balise path pour exporter les image 

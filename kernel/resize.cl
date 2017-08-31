@@ -21,5 +21,5 @@ __kernel void	resize(__global t_img *img_dest, __global t_color *dest,
 	int		x = id % img_dest->w;
 	int		y = id / img_dest->w;
 
-	dest[y * img_dest->w + x] = src[(int)((int)(y * img_src->h / (float)img_dest->h) * img_src->w + x * img_src->w / (float)img_dest->w)];
+	dest[id] = src[(int)((int)(y * img_src->h / (float)img_dest->h) * img_src->w + x * img_src->w / (float)img_dest->w)];
 }

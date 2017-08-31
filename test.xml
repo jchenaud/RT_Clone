@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <scene>
 	<sphere>
+		<ref x="1" y="1" z="1"></ref>
 		<pos x = "10" y = "0" z = "0" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
-		<col R="255" V="0" B="255" T="128"></col>
-		<rad rad = "5"> </rad>
+		<col R="64" V="0" B="64" T="255"></col>
+		<rad rad = "10"> </rad>
 	</sphere>
 
 	<pave>
+		<ref x="1" y="1" z="1"></ref>
 		<pos x = "1000" y = "0.1" z = "42" ></pos>
 		<rot x = "0" y = "10" z = "15"> </rot>
 		<size x = "150" y = "150" z = "150"> </size>
-		<col R="255" V="0" B="0" T="0"></col>
+		<col R="64" V="0" B="0" T="255"></col>
 	</pave>
 
 	<plan>
-		<pos x = "0" y = "-1" z = "0" ></pos>
+		<ref x="1" y="1" z="1"></ref>
+		<pos x = "0" y = "0" z = "-2" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "0" y = "1" z = "0"> </norm>
-		<col R="255" V="255" B="0" T="128"></col>
+		<norm x = "0" y = "0" z = "1"> </norm>
+		<col R="64" V="64" B="0" T="255"></col>
 	</plan>
 
 	<cone>
-		<pos x = "1" y = "0.1" z = "1" ></pos>
-		<rot x = "2" y = "2" z = "2"> </rot>
-		<norm x = "3" y = "3" z = "3"> </norm>
-		<angle angle = "60"> </angle>
-		<col R="255" V="0" B="0" T="0"></col>
+		<ref x="1" y="1" z="1"></ref>
+		<pos x = "10" y = "10" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "1"> </norm>
+		<angle angle = "0.2"> </angle>
+		<col R="64" V="0" B="0" T="255"></col>
 	</cone>
 
 	<cylinder>
-		<pos x = "1" y = "0.1" z = "1" ></pos>
-		<rot x = "2" y = "2" z = "2"> </rot>
-		<norm x = "3" y = "3" z = "3"> </norm>
-		<rad rad = "60"> </rad>
-		<col R="255" V="0" B="0" T="0"></col>
+		<ref x="1" y="1" z="1"></ref>
+		<pos x = "10" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "1"> </norm>
+		<rad rad = "4"> </rad>
+		<col R="0" V="64" B="64" T="255"></col>
 	</cylinder>
 
 	<light>
-		<pos x = "0" y = "0" z = "0" ></pos>
-		<col R="255" V="255" B="255" T="0"></col>
+		<pos x = "-10" y = "-5" z = "1" ></pos>
+		<col R="255" V="255" B="255" T="255"></col>
+		<i amb="16" dif="20" spec="1"></i>
 	</light>
 
 	<cam>
-		<pos x = "0" y = "0" z = "0" ></pos>
+		<pos x = "-50" y = "0" z = "10" ></pos>
 		<dir x = "1" y = "0" z = "0"> </dir>
 		<rot x = "0" y = "0" z = "0"> </rot>
-		<fov fov_x = "1" fov_y = "0.6"> </fov>
+		<fov fov_x = "0.768" fov_y = "0.432"> </fov>
 		<dis dis = "1" ></dis>
+		<export PATH="test.bmp"></export>
 		<w W = "1920"> </w>
 		<h H = "1080"> </h>
 	</cam>

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:40:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 01:20:44 by pribault         ###   ########.fr       */
+/*   Updated: 2017/08/30 04:28:24 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_win	*new_window(char *title, t_uint16 w, t_uint16 h)
 {
-	t_win	*win;
+	t_win			*win;
+	SDL_DisplayMode	mode;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		return (NULL);
@@ -27,5 +28,8 @@ t_win	*new_window(char *title, t_uint16 w, t_uint16 h)
 	!(win->h = h) ||
 	!(win->name = ft_strdup(title)))
 		return (NULL);
+	SDL_SetWindowMinimumSize(win->win, 640, 360);
+	SDL_GetDisplayMode(0, 0, &mode);
+	SDL_SetWindowMaximumSize(win->win, mode.w, mode.h);
 	return (win);
 }

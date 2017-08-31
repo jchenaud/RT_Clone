@@ -65,7 +65,7 @@ void			draw_line(t_img *img, t_pixel *a, t_pixel *b)
 		{
 			i.pos.y = c * i.pos.x + d;
 			print_pixel(img, a, b, &i);
-			i.pos.x += (a->pos.x < b->pos.x) ? diff.x : -diff.x;
+			i.pos.x += (a->pos.x <= b->pos.x) ? diff.x : -diff.x;
 		}
 	else
 		while ((a->pos.y <= b->pos.y) ?
@@ -73,6 +73,6 @@ void			draw_line(t_img *img, t_pixel *a, t_pixel *b)
 		{
 			i.pos.x = (i.pos.y - d) / c;
 			print_pixel(img, a, b, &i);
-			i.pos.y += (a->pos.y < b->pos.y) ? diff.y : -diff.y;
+			i.pos.y += (a->pos.y <= b->pos.y) ? diff.y : -diff.y;
 		}
 }

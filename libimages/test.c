@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_image.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/27 17:10:48 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 03:46:39 by pribault         ###   ########.fr       */
+/*   Created: 2017/08/23 23:13:49 by pribault          #+#    #+#             */
+/*   Updated: 2017/08/23 23:32:02 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "private.h"
+#include "libimages.h"
 
-t_img	*new_img(int w, int h)
+int		main(int argc, char **argv)
 {
-	t_img	*new;
+	t_color	color;
+	t_img	*img;
+	int		i;
+	int		j;
 
-	new = SDL_CreateRGBSurface(0, w, h, 32,
-	0xff0000, 0xff00, 0xff, 0xff000000);
-	ft_bzero(new->pixels, 4 * w * h);
-	return (new);
+	if (argc == 3)
+	{
+		export_bmp(import_png(argv[1]), argv[2]);
+	}
+	else
+		return (1);
+	return (0);
 }

@@ -40,6 +40,6 @@ fclean: clean
 	@echo "\033[38;5;87m$(NAME) removed\033[0m"
 
 norme:
-	@norminette $(SRC) $(INCLUDE)
+	@norminette $(OBJ:%.o=%.c) $(INCLUDE)
 
 re: fclean all
