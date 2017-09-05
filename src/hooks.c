@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:42:46 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 03:47:34 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 08:36:17 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	keys(t_env *env, SDL_Event *event)
 	{
 		if (event->key.keysym.sym == SDLK_ESCAPE)
 			exit(0);
+		else if (event->key.keysym.sym == SDLK_LEFT)
+			env->i = (env->i) ? env->i - 1 : env->n - 1;
+		else if (event->key.keysym.sym == SDLK_RIGHT)
+			env->i = (env->i + 1) % env->n;
 	}
 	else if (event->type == SDL_WINDOWEVENT)
 	{

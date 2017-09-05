@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 03:24:12 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 09:53:56 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void	place_in_list(t_env *env)
 	while (cam)
 	{
 		invert_image(((t_cam*)cam->content)->img);
-		IMG_SavePNG(((t_cam*)cam->content)->img, "test.png");
-		ft_memcpy(&env->img[i--], ((t_cam*)cam->content)->img, sizeof(t_img));
+		IMG_SavePNG(((t_cam*)cam->content)->img,
+		((t_cam*)cam->content)->output);
+		ft_memcpy(&env->img[i--], ((t_cam*)cam->content)->img,
+		sizeof(t_img));
 		cam = cam->next;
 	}
 }
@@ -95,12 +97,12 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 		error(0, 1, NULL);
 	env = init_env();
-	env->win = new_window("RT", 640, 360);
+	env->win = new_window("RT", 1280, 720);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
 	if (parsing(env->file, env) == -1)
 		error(64, 1, NULL);
-	ft_printf("\n");
+	// ft_printf("\n");
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
 	alloc_images(env->cam);

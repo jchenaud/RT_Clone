@@ -1,0 +1,63 @@
+NAME = rt
+CC = gcc
+FLAGS = -Wall -Wextra
+FLAGS2 = -L libmath -lmath -L libft -lft -L libimages -limages -L librainbow -lrainbow -lxml2 -lm -lz -lSDL2 -lSDL2_image -lOpenCL
+INC = rt.h objects.h types.h cl_struct.h
+INCLUDE = $(INC:%.h=include/%.h)
+SRC =	rt.c error.c flags.c hooks.c loop.c window.c antialiasing.c parsing/parsing.c
+OBJ = $(SRC:%.c=src/%.o)
+INCLUDES = -I include -I libft/include -I libmath/include -I libimages/include -I librainbow/include
+
+.PHONY: all clean fclean re norme push
+
+all: $(NAME)
+
+%.o: %.c $(INCLUDE)
+	@echo "\033[38;5;204mmaking $@\033[0m"
+	@$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+libft/libft.a:
+	@make -C libft
+
+libmath/libmath.a:
+	@make -C libmath
+
+libimages/libimages.a:
+	@make -C libimages
+
+librainbow/librainbow.a:
+	@make -C librainbow
+
+$(NAME): libft/libft.a libmath/libmath.a libimages/libimages.a librainbow/librainbow.a $(OBJ)
+	@echo "\033[38;5;196mmaking $@\033[0m"
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(FLAGS2)
+
+clean:
+	@make -C libft clean
+	@make -C libmath clean
+	@make -C libimages clean
+	@make -C librainbow clean
+	@rm -f $(OBJ)
+	@echo "\033[38;5;124mobject files removed\033[0m"
+
+fclean: clean
+	@make -C libft fclean
+	@make -C libmath fclean
+	@make -C libimages fclean
+	@make -C librainbow fclean
+	@rm -f $(NAME)
+	@echo "\033[38;5;124m$(NAME) removed\033[0m"
+
+re: fclean all
+
+norme:
+	@norminette $(OBJ:%.o=%.c) $(INCLUDE)
+	@make -C libft norme
+	@make -C libmath norme
+	@make -C libimages norme
+	@make -C librainbow norme
+
+push:
+	git add -A
+	git commit -m "Push makefile"
+	git push

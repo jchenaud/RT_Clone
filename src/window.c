@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 02:39:14 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 08:47:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void		init_opencl(t_cl *cl)
 	cl->resize = create_kernel(cl, "kernel/resize.cl", "resize");
 	cl->antialiasing = create_kernel(cl, "kernel/antialiasing.cl",
 	"antialiasing");
+	cl->preview = create_kernel(cl, "kernel/preview.cl", "raytracer");
 	ft_printf("device: %s\n", name);
 }

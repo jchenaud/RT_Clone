@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:08:40 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/08/31 03:51:35 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 07:52:01 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,17 @@ cl_uint get_uint_xml(char *name, xmlNode * current)
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+cl_float4 get_float4(xmlNode *current)
+{
+  cl_float4 fl;
+
+  fl.x = get_float_xml("x",current);
+  fl.y = get_float_xml("y",current);
+  fl.z = get_float_xml("z",current);
+  fl.w = get_float_xml("w",current);
+  return (fl);
+}
 
 t_color get_color(xmlNode *current)
 {
@@ -201,7 +212,7 @@ void    pars_sphere_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float3(current);
+    new_obj->ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -265,7 +276,7 @@ void   pars_pave_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float3(current);
+    new_obj->ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -332,7 +343,7 @@ void   pars_plan_anex(int *tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float3(current);
+    new_obj->ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -389,7 +400,7 @@ void   pars_cone_anex2(int *tab, xmlNode *current, t_obj *new_obj,int find)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float3(current);
+    new_obj->ref = get_float4(current);
     tab[5] = 1;
   }
   else 
@@ -472,7 +483,7 @@ void   pars_cylinder_anex2(int *tab, xmlNode *current, t_obj *new_obj, int find)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float3(current);
+    new_obj->ref = get_float4(current);
     tab[5] = 1;
   }
   else

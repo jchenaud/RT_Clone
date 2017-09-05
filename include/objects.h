@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 03:39:41 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 07:51:31 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct	s_obj
 	cl_float3	rot;
 	cl_uchar	type;
 	t_color		col;
-	cl_float3	ref;
+	cl_float4	ref;
 	t_hitbox	hitbox;
 	t_union		obj;
 }				t_obj;

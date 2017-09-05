@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 04:28:10 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 08:58:54 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		launch_kernel(t_env *env)
 		n = ((t_cam*)cam->content)->w * ((t_cam*)cam->content)->h;
 		clEnqueueNDRangeKernel(env->cl.queue, env->cl.raytracer, 1, NULL, &n,
 		NULL, 0, NULL, NULL);
-		if (clFinish(env->cl.queue) != CL_SUCCESS)
+		if (clFinish(env->cl.queue) != CL_SUCCESS || clFlush(env->cl.queue) != CL_SUCCESS)
 			error(52, 1, NULL);
 		clEnqueueReadBuffer(env->cl.queue, env->cl.img_mem, CL_TRUE, 0,
 		n * sizeof(t_color), ((t_cam*)cam->content)->img->pixels, 0, NULL,
@@ -90,7 +90,6 @@ void		launch_kernel(t_env *env)
 		if (clFinish(env->cl.queue) != CL_SUCCESS)
 			error(52, 1, NULL);
 		antialiase(env->antialias_level, &env->cl, ((t_cam*)cam->content)->img);
-		export_bmp(((t_cam*)cam->content)->img, "test.bmp");
 		cam = cam->next;
 	}
 }

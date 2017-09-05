@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/26 23:20:40 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 08:46:38 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct			s_cl
 	cl_kernel			raytracer;
 	cl_kernel			resize;
 	cl_kernel			antialiasing;
+	cl_kernel			preview;
 	cl_platform_id		platform;
 	cl_device_id		device;
 	t_uint				n_obj;
