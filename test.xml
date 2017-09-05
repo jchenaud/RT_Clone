@@ -18,7 +18,7 @@
 
 	<plan>
 		<ref x="1" y="1" z="1"></ref>
-		<pos x = "0" y = "0" z = "-2" ></pos>
+		<pos x = "0" y = "0" z = "-5" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
 		<norm x = "0" y = "0" z = "1"> </norm>
 		<col R="64" V="64" B="0" T="255"></col>
@@ -43,9 +43,15 @@
 	</cylinder>
 
 	<light>
-		<pos x = "-10" y = "-5" z = "1" ></pos>
+		<pos x = "-8" y = "-20" z = "100" ></pos>
 		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="16" dif="20" spec="1"></i>
+		<i amb="0.1" dif="1" spec="1"></i>
+	</light>
+
+	<light>
+		<pos x = "-6" y = "20" z = "10" ></pos>
+		<col R="255" V="255" B="255" T="255"></col>
+		<i amb="0.1" dif="1" spec="1"></i>
 	</light>
 
 	<cam>

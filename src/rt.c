@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 03:47:09 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 03:24:12 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	place_in_list(t_env *env)
 	cam = env->cam;
 	while (cam)
 	{
-		export_bmp(((t_cam*)cam->content)->img, "test.bmp");
 		invert_image(((t_cam*)cam->content)->img);
+		IMG_SavePNG(((t_cam*)cam->content)->img, "test.png");
 		ft_memcpy(&env->img[i--], ((t_cam*)cam->content)->img, sizeof(t_img));
 		cam = cam->next;
 	}
@@ -95,7 +95,7 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 		error(0, 1, NULL);
 	env = init_env();
-	env->win = new_window("RT", 640, 480);
+	env->win = new_window("RT", 640, 360);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
 	if (parsing(env->file, env) == -1)

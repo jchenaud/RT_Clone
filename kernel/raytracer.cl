@@ -74,7 +74,7 @@ typedef struct	s_obj
 typedef struct	s_light
 {
 	float3		pos;
-	uchar4		col;
+	t_color		col;
 	float3		i;
 }				t_light;
 
@@ -202,7 +202,7 @@ float3	get_sphere_norm(__global t_obj *obj, float3 point)
 {
 	float3	ret;
 
-	ret = sub_vectors(obj->pos, point);
+	ret = sub_vectors(point, obj->pos);
 	normalize_vector(&ret);
 	return (ret);
 }
@@ -245,7 +245,7 @@ float3	get_cylinder_norm(__global t_obj *obj, float3 point)
 	float3	tmp2;
 	float	tmp;
 
-	tmp1 = sub_vectors(obj->pos, point);
+	tmp1 = sub_vectors(point, obj->pos);
 	tmp = scalar_vectors(tmp1, get_cylinder(obj).norm);
 	norm = sub_vectors(tmp1, new_vector(tmp * get_cylinder(obj).norm.x, tmp * get_cylinder(obj).norm.y, tmp * get_cylinder(obj).norm.z));
 	return (norm);
@@ -281,7 +281,7 @@ float3	get_cone_norm(__global t_obj *obj, float3 point)
 	float3	tmp2;
 	float	tmp;
 
-	tmp1 = sub_vectors(obj->pos, point);
+	tmp1 = sub_vectors(point, obj->pos);
 	tmp = scalar_vectors(tmp1, get_cylinder(obj).norm);
 	norm = sub_vectors(tmp1, new_vector(tmp * get_cylinder(obj).norm.x, tmp * get_cylinder(obj).norm.y, tmp * get_cylinder(obj).norm.z));
 	return (norm);
@@ -295,14 +295,14 @@ t_color	render_light(__global uint *n_obj, __global t_obj *obj,
 	float3	norm;
 	t_ray	vec;
 	t_color	color = (t_color){0, 0, 0, 255};
-	float	intensity;
+	float3	intensity = (float3){0, 0, 0};
+	float	tmp = 0;
 	float	h1;
 	float	h2;
 	int		i;
 	int		k;
 
 	i = 0;
-	intensity = 0;
 	point = (float3){h * ray->dir.x + ray->pos.x, h * ray->dir.y + ray->pos.y, h * ray->dir.z + ray->pos.z};
 	if (obj[j].type == SPHERE)
 		norm = get_sphere_norm(&obj[j], point);
@@ -316,7 +316,6 @@ t_color	render_light(__global uint *n_obj, __global t_obj *obj,
 		norm = get_sphere_norm(&obj[j], point);
 	while (i < *n_light)
 	{
-		intensity += (light[i].i.x * obj[j].ref.x) / get_distance(point, light->pos);
 		k = 0;
 		while (k < *n_obj)
 		{
@@ -349,14 +348,25 @@ t_color	render_light(__global uint *n_obj, __global t_obj *obj,
 			}
 			k++;
 		}
+		tmp += (light[i].i.x * obj[j].ref.x);
 		if (k == *n_obj)
-			intensity += (light[i].i.y * obj[j].ref.y * scalar_vectors(ray->dir, norm)) / get_distance(point, light->pos);
+			tmp += (light[i].i.y * obj[j].ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
+		intensity.x += (tmp * light[i].col.r) / (float)255;
+		intensity.y += (tmp * light[i].col.g) / (float)255;
+		intensity.z += (tmp * light[i].col.b) / (float)255;
 		// else
 		// 	printf("%d/%d\n", k, *n_obj);
 		i++;
 	}
+	tmp = obj[j].col.r * intensity.x;
+	color.r = (tmp < 256) ? tmp : 255;
+	tmp = obj[j].col.g * intensity.y;
+	color.g = (tmp < 256) ? tmp : 255;
+	tmp = obj[j].col.b * intensity.z;
+	color.b = (tmp < 256) ? tmp : 255;
+	color.a = obj[j].col.a;
 	// printf("i=%d amb=%f color(%u %u %u %u) pos(%f %f %f)\n", i, light[0].i.x, light[0].col.r, light[0].col.g, light[0].col.b, light[0].col.a, light[0].pos.x, light[0].pos.y, light[0].pos.z);
-	return (mult_color(obj[j].col, intensity));
+	return (color);
 }
 
 t_color	raytrace_ray(t_ray *ray, __global uint *n_obj, __global t_obj *obj,

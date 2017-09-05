@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:39:15 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 06:09:19 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 03:22:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include "libft.h"
 # include "libimages.h"
 # include "libmath.h"
-# include "SDL2/SDL.h"
+# include <SDL2/SDL.h>
+# include <SDL2/SDL_image.h>
 
 typedef struct		s_pixel
 {
