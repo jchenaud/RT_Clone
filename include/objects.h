@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 07:51:31 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 22:13:51 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 # define OBJECTS_H
 
 # include "libimages.h"
-# include <OpenCL/cl.h>
+
+# ifdef __APPLE__
+#  include <OpenCL/cl.h>
+# endif
+# ifdef __linux__
+#  include <CL/cl.h>
+# endif
 
 /*
 ** # pragma pack(1)

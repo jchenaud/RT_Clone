@@ -6,7 +6,7 @@ INC = rt.h objects.h types.h cl_struct.h
 INCLUDE = $(INC:%.h=include/%.h)
 SRC =	rt.c error.c flags.c hooks.c loop.c window.c antialiasing.c parsing/parsing.c
 OBJ = $(SRC:%.c=src/%.o)
-INCLUDES = -I include -I libft/include -I libmath/include -I libimages/include -I librainbow/include
+INCLUDES = -I include -I libft/include -I libmath/include -I libimages/include -I librainbow/include -I /usr/include/libxml2
 
 .PHONY: all clean fclean re norme push
 

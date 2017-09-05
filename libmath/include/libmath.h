@@ -6,14 +6,20 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 16:41:55 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 07:51:41 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 22:13:44 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBMATH_H
 # define LIBMATH_H
 
-# include <OpenCL/cl.h>
+# ifdef __APPLE__
+#  include <OpenCL/cl.h>
+# endif
+# ifdef __linux__
+#  include <CL/cl.h>
+# endif
+
 # include <math.h>
 # include "libft.h"
 

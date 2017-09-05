@@ -6,14 +6,19 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 08:46:38 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/05 22:13:38 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CL_STRUCT_H
 # define CL_STRUCT_H
 
-# include <OpenCL/cl.h>
+# ifdef __APPLE__
+#  include <OpenCL/cl.h>
+# endif
+# ifdef __linux__
+#  include <CL/cl.h>
+# endif
 
 typedef struct			s_resize_buff
 {
