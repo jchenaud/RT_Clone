@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 22:15:51 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/06 10:14:13 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct	s_env
 	t_win		*win;
 	char		*file;
 	t_uchar		opt;
+	t_uchar		iterations;
 	t_uchar		antialias_level;
 	t_list		*obj;
 	t_list		*cam;
@@ -79,6 +80,10 @@ void			init_opencl(t_cl *cl);
 
 void			keys(t_env *env, SDL_Event *event);
 
+void			*create_cam_rays(t_env *env, t_cam *cam);
+void			*calculate_intersections(t_env *env, size_t n);
+void			*calculate_rays(t_cl *cl, void *rays,
+				void *intersecs, size_t p);
 void			launch_kernel(t_env *env);
 
 void			resize_images(t_env *env);

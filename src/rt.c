@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 09:53:56 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/06 06:39:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_env	*init_env(void)
 		error(1, 1, NULL);
 	ft_bzero(env, sizeof(t_env));
 	env->antialias_level = 2;
+	env->iterations = 1;
 	return (env);
 }
 
@@ -102,7 +103,6 @@ int		main(int argc, char **argv)
 	init_opencl(&env->cl);
 	if (parsing(env->file, env) == -1)
 		error(64, 1, NULL);
-	// ft_printf("\n");
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
 	alloc_images(env->cam);

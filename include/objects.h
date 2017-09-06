@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 22:13:51 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/06 05:02:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@
 /*
 ** # pragma pack(1)
 */
+
+typedef struct	s_ray
+{
+	cl_float3	pos;
+	cl_float3	dir;
+	cl_float	f;
+}				t_ray;
+
+typedef struct	s_intersec
+{
+	cl_int		obj;
+	cl_float	h;
+}				t_intersec;
 
 typedef struct	s_hitbox
 {

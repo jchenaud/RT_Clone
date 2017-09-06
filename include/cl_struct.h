@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 22:13:38 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/06 10:27:56 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,16 @@ typedef struct			s_resize_buff
 
 typedef struct			s_cl
 {
+	char				name[32];
+	cl_ulong			mem_size;
 	cl_command_queue	queue;
 	cl_context			context;
-	cl_kernel			raytracer;
-	cl_kernel			resize;
-	cl_kernel			antialiasing;
+	cl_kernel			intersection;
+	cl_kernel			cam_rays;
 	cl_kernel			preview;
+	cl_kernel			antialiasing;
+	cl_kernel			calc_rays;
+	cl_kernel			render_img;
 	cl_platform_id		platform;
 	cl_device_id		device;
 	t_uint				n_obj;
@@ -48,6 +52,8 @@ typedef struct			s_cl
 	cl_mem				obj_mem;
 	cl_mem				n_light_mem;
 	cl_mem				light_mem;
+	cl_mem				intersecs;
+	cl_mem				rays;
 	cl_int				error;
 }						t_cl;
 
