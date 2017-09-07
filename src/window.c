@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/06 10:28:30 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 08:37:33 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		init_opencl(t_cl *cl)
 {
 	if (clGetPlatformIDs(1, &cl->platform, NULL) != CL_SUCCESS)
 		return ;
-	if (clGetDeviceIDs(cl->platform, CL_DEVICE_TYPE_GPU, 1, &cl->device, NULL)
+	if (clGetDeviceIDs(cl->platform, cl->device_type, 1, &cl->device, NULL)
 	!= CL_SUCCESS)
 		return ;
 	cl->context = clCreateContext(NULL, 1, &cl->device, NULL, NULL, NULL);

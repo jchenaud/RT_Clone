@@ -1,0 +1,8 @@
+[38;5;208m./rt <flags> <xml file>[0m
+[38;5;45mavailable flags:[38;5;159m
+ -title <name>
+ -size <width> <height>
+ -print_keys
+ -debug
+ -antialias <antialiasing level>
+ -device <cpu/gpu>[0m

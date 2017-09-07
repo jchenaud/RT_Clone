@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/31 04:49:20 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 08:44:22 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,20 @@ void	get_param2(t_env *env, int argc, char **argv, int *i)
 		else
 			error(20, 0, NULL);
 	}
+	else if (!ft_strcmp(argv[*i], "-device"))
+		if (*i + 1 < argc)
+		{
+			if (!ft_strcmp(argv[++(*i)], "cpu"))
+				env->cl.device_type = CL_DEVICE_TYPE_CPU;
+			else if (!ft_strcmp(argv[*i], "gpu"))
+				env->cl.device_type = CL_DEVICE_TYPE_GPU;
+			else
+				error(22, 0, NULL);
+		}
+		else
+			error(21, 0, NULL);
 	else
 		error(17, 0, argv[*i]);
-	argc++;
 }
 
 void	get_param(t_env *env, int argc, char **argv, int *i)

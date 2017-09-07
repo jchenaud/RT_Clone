@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/06 10:27:56 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 08:36:25 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct			s_cl
 	cl_kernel			calc_rays;
 	cl_kernel			render_img;
 	cl_platform_id		platform;
+	cl_device_type		device_type;
 	cl_device_id		device;
 	t_uint				n_obj;
 	t_obj				*obj;

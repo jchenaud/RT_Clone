@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 15:28:10 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:35:30 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	print_usage(void)
 {
-	ft_putstr("./rt <flags> <file>\n");
-	ft_putstr("  -title <title>\n");
-	ft_putstr("  -size <width> <height>");
+	char	*usage;
+	int		fd;
+
+	if ((fd = open("usage.txt", O_RDONLY)) == -1)
+		return ;
+	ft_get_all_lines(fd, &usage);
+	ft_putstr(usage);
+	free(usage);
+	close(fd);
 }
 
 void	error_2(int error, void *param)
@@ -64,6 +70,10 @@ void	error(int error, char state, void *param)
 		ft_putstr("size need 2 arguments");
 	else if (error == 20)
 		ft_putstr("antialias need 1 argument");
+	else if (error == 21)
+		ft_putstr("device need 1 argument, cpu or gpu");
+	else if (error == 21)
+		ft_putstr("device can only be cpu or gpu");
 	else if (error == 32)
 		ft_putstr("cannot init mlx");
 	else
