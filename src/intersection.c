@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 07:58:40 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/06 08:04:22 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 04:51:15 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@ static void	set_args(t_cl *cl)
 	cl_int	err;
 
 	if ((err = clSetKernelArg(cl->intersection, 1, sizeof(cl_mem),
-	&cl->rays)) != CL_SUCCESS)
+	&cl->intersecs)) != CL_SUCCESS)
 		error(49, 1, &err);
 	if ((err = clSetKernelArg(cl->intersection, 2, sizeof(cl_mem),
-	&cl->n_obj_mem)) != CL_SUCCESS)
+	&cl->rays)) != CL_SUCCESS)
 		error(49, 1, &err);
 	if ((err = clSetKernelArg(cl->intersection, 3, sizeof(cl_mem),
-	&cl->obj_mem)) != CL_SUCCESS)
+	&cl->n_obj_mem)) != CL_SUCCESS)
 		error(49, 1, &err);
 	if ((err = clSetKernelArg(cl->intersection, 4, sizeof(cl_mem),
-	&cl->n_light_mem)) != CL_SUCCESS)
+	&cl->obj_mem)) != CL_SUCCESS)
 		error(49, 1, &err);
 	if ((err = clSetKernelArg(cl->intersection, 5, sizeof(cl_mem),
+	&cl->n_light_mem)) != CL_SUCCESS)
+		error(49, 1, &err);
+	if ((err = clSetKernelArg(cl->intersection, 6, sizeof(cl_mem),
 	&cl->light_mem)) != CL_SUCCESS)
 		error(49, 1, &err);
 }

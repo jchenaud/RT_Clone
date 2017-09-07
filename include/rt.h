@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/06 10:14:13 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 07:21:44 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,15 @@ int				parsing(char *file, t_env *e);
 void			get_flags(t_env *env, int argc, char **argv);
 
 void			init_opencl(t_cl *cl);
+cl_mem			create_buffer(t_cl *cl, cl_mem_flags flags,
+				size_t size, void *ptr);
+void			set_kernel_arg(cl_kernel *kernel, cl_mem *mem, cl_uint i);
+void			nd_range_kernel(t_cl *cl, cl_kernel *kernel, size_t n);
+void			read_buffer(t_cl *cl, cl_mem mem, void *ptr, size_t size);
 
 void			keys(t_env *env, SDL_Event *event);
 
+void			draw_image(t_env *env, t_cam *cam);
 void			*create_cam_rays(t_env *env, t_cam *cam);
 void			*calculate_intersections(t_env *env, size_t n);
 void			*calculate_rays(t_cl *cl, void *rays,

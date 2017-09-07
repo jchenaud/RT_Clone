@@ -178,7 +178,7 @@ __kernel void	calc_rays(__global t_ray *new, __global t_ray *ray, __global t_int
 	new[0].pos = point;
 	new[1].pos = point;
 	new[0].dir = get_reflection_vector(norm, ray->dir);
-	new[1].dir = (float3){0, 0, 0};
+	new[1].dir = ray->dir;
 	new[0].f = ray->f * obj->ref.w;
-	new[1].f = 0;
+	new[1].f = ray->f * ((255 - obj->col.a) / (float)255);
 }

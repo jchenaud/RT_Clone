@@ -180,7 +180,7 @@ inline float	hit_cone(__global t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-__kernel void	intersection(__global t_intersec *intersec, __global t_ray *ray,
+__kernel void	intersection(__global t_intersec *intersec, __global t_intersec *prev, __global t_ray *ray,
 							__global uint *n_obj, __global t_obj *obj,
 							__global uint *n_light, __global t_light *light)
 {
@@ -190,23 +190,27 @@ __kernel void	intersection(__global t_intersec *intersec, __global t_ray *ray,
 	uint		i = 0;
 
 	ray = &ray[id];
+	prev = &prev[id / 2];
 	if (ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0)
 		return ;
 	while (i < *n_obj)
 	{
 		h = -1;
-		if (obj[i].type == SPHERE)
-			h = hit_sphere(ray, &obj[i]);
-		else if (obj[i].type == PLAN)
-			h = hit_plan(ray, &obj[i]);
-		else if (obj[i].type == CYLINDER)
-			h = hit_cylinder(ray, &obj[i]);
-		else if (obj[i].type == CONE)
-			h = hit_cone(ray, &obj[i]);
-		if (h > 0.001 && (h < ret.h || ret.h == -1))
+		if (prev->obj == -1 || i != prev->obj)
 		{
-			ret.obj = i;
-			ret.h = h;
+			if (obj[i].type == SPHERE)
+				h = hit_sphere(ray, &obj[i]);
+			else if (obj[i].type == PLAN)
+				h = hit_plan(ray, &obj[i]);
+			else if (obj[i].type == CYLINDER)
+				h = hit_cylinder(ray, &obj[i]);
+			else if (obj[i].type == CONE)
+				h = hit_cone(ray, &obj[i]);
+			if (h > 0.01 && (h < ret.h || ret.h == -1))
+			{
+				ret.obj = i;
+				ret.h = h;
+			}
 		}
 		i++;
 	}
