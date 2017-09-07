@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 09:08:55 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:44:20 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env	*init_env(void)
 		error(1, 1, NULL);
 	ft_bzero(env, sizeof(t_env));
 	env->antialias_level = 2;
-	env->iterations = 6;
+	env->iterations = 3;
 	env->cl.device_type = CL_DEVICE_TYPE_GPU;
 	return (env);
 }

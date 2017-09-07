@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 09:35:30 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/07 09:39:49 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,22 @@ void	print_usage(void)
 	close(fd);
 }
 
+void	error_3(int error, void *param)
+{
+	if (error == 64)
+		ft_putstr("parsing error");
+	else
+		ft_putstr("unknown error");
+	(void)param;
+}
+
 void	error_2(int error, void *param)
 {
-	if (error == 33)
+	if (error == 21)
+		ft_putstr("device need 1 argument, cpu or gpu");
+	else if (error == 21)
+		ft_putstr("device can only be cpu or gpu");
+	else if (error == 33)
 		ft_putstr("cannot create mlx window");
 	else if (error == 34)
 		ft_putstr("cannot create mlx image");
@@ -45,10 +58,8 @@ void	error_2(int error, void *param)
 		ft_putstr("raytracer need lights");
 	else if (error == 52)
 		ft_putstr("invalid command queue");
-	else if (error == 64)
-		ft_putstr("parsing error");
 	else
-		ft_putstr("unknown error");
+		error_3(error, param);
 }
 
 void	error(int error, char state, void *param)
@@ -70,10 +81,6 @@ void	error(int error, char state, void *param)
 		ft_putstr("size need 2 arguments");
 	else if (error == 20)
 		ft_putstr("antialias need 1 argument");
-	else if (error == 21)
-		ft_putstr("device need 1 argument, cpu or gpu");
-	else if (error == 21)
-		ft_putstr("device can only be cpu or gpu");
 	else if (error == 32)
 		ft_putstr("cannot init mlx");
 	else

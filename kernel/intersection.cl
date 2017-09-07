@@ -196,7 +196,7 @@ __kernel void	intersection(__global t_intersec *intersec, __global t_intersec *p
 	while (i < *n_obj)
 	{
 		h = -1;
-		if (prev->obj == -1 || i != prev->obj)
+		if (prev->obj == -1 || (int)i != prev->obj)
 		{
 			if (obj[i].type == SPHERE)
 				h = hit_sphere(ray, &obj[i]);

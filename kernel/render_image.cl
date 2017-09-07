@@ -376,7 +376,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		k = 0;
 		while (k < *n_obj)
 		{
-			if (k != intersec->obj)
+			if ((int)k != intersec->obj)
 			{
 				if (obj[k].type == SPHERE)
 				{
