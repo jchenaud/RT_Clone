@@ -25,7 +25,17 @@ typedef struct	s_vec3
 	float		z;
 }				t_vec3;
 
+#define get_vector_norm(a)	sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
 #define add_vectors(a, b)	(float3){a.x + b.x, a.y + b.y, a.z + b.z}
+
+inline void	normalize_vector(float3 *vec)
+{
+	float	norm = get_vector_norm(vec);
+
+	vec->x /= norm;
+	vec->y /= norm;
+	vec->z /= norm;
+}
 
 inline void	rotate_point(float *x, float *y, float angle)
 {
@@ -60,5 +70,6 @@ __kernel void	cam_rays(__global t_cam *cam, __global t_ray *rays)
 	rotate_vec(&ray.dir, cam->rot);
 	ray.pos = add_vectors(cam->pos, ray.dir);
 	ray.f = 1;
+	normalize_vector(&ray.dir);
 	rays[id] = ray;
 }

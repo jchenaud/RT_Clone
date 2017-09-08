@@ -351,8 +351,9 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	t_ray	vec;
 	float3	norm;
 	float3	fact = (float3){0, 0, 0};
-	float	tmp;
+	float	alpha;
 	float	h_tmp;
+	float	tmp;
 	float	h;
 	int		id = *p * get_global_id(0) + *j;
 	uint	i = 0;
@@ -361,7 +362,6 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	img = &img[id / *p];
 	intersec = &intersec[id];
 	ray = &ray[id];
-	normalize_global_vector(&ray->dir);
 	if ((ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0) ||
 	intersec->h <= 0.01 || intersec->obj == -1 || ray->f == 0)
 	{
@@ -387,31 +387,49 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		h_tmp = (light[i].pos.x - vec.pos.x) / vec.dir.x;
 		tmp = 0;
 		k = 0;
+		alpha = 1;
 		while (k < *n_obj)
 		{
-			// if ((int)k != intersec->obj)
-			// {
-				if (obj[k].type == SPHERE)
+			if (obj[k].type == SPHERE)
+			{
+				if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					if (obj[k].col.a != 255)
+						alpha *= ((255 - obj[k].col.a) / (float)255);
+					else
 						k = *n_obj;
 				}
-				else if (obj[k].type == PLAN)
+			}
+			else if (obj[k].type == PLAN)
+			{
+				if ((h = hit_plan(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if ((h = hit_plan(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					if (obj[k].col.a != 255)
+						alpha *= ((255 - obj[k].col.a) / (float)255);
+					else
 						k = *n_obj;
 				}
-				else if (obj[k].type == CONE)
-				{
-					if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
+			}
+			else if (obj[k].type == CONE)
+			{
+			if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
+			{
+					if (obj[k].col.a != 255)
+						alpha *= ((255 - obj[k].col.a) / (float)255);
+					else
 						k = *n_obj;
 				}
-				else if (obj[k].type == CYLINDER)
+			}
+			else if (obj[k].type == CYLINDER)
+			{
+				if ((h = hit_cylinder(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if ((h = hit_cylinder(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					if (obj[k].col.a != 255)
+						alpha *= ((255 - obj[k].col.a) / (float)255);
+					else
 						k = *n_obj;
 				}
-			// }
+			}
 			k++;
 		}
 		tmp += (light[i].i.x * obj[intersec->obj].ref.x);
@@ -422,12 +440,13 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			normalize_vector(&vec.dir);
 			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].ref.z * pow(scalar_vectors(ray->dir, vec.dir), ALPHA))));
 		}
+		tmp *= alpha;
 		fact.x += (tmp * light[i].col.r) / (float)255;
 		fact.y += (tmp * light[i].col.g) / (float)255;
 		fact.z += (tmp * light[i].col.b) / (float)255;
 		i++;
 	}
-	color = mult_color(obj[intersec->obj].col, (1 - obj[intersec->obj].ref.w) * ((float)obj[intersec->obj].col.a / (float)255));
+	color = mult_color(obj[intersec->obj].col, (1 - obj[intersec->obj].ref.w) * (obj[intersec->obj].col.a / (float)255));
 	if (obj[intersec->obj].ref.w > 0)
 	{
 		if (color.r * fact.x < 256)
