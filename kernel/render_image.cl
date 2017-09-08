@@ -125,7 +125,7 @@ typedef struct	s_intersec
 #define CYLINDER	4
 #define PAVE		5
 
-#define ALPHA		100
+#define ALPHA		101
 
 inline t_color	add_colors(t_color a, t_color b)
 {
@@ -438,7 +438,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			tmp += (light[i].i.y * obj[intersec->obj].ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
 			vec.dir = sub_vectors(vec.dir, mult_vector(mult_vector(norm, scalar_vectors(vec.dir, norm)), 2));
 			normalize_vector(&vec.dir);
-			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].ref.z * pow(scalar_vectors(ray->dir, vec.dir), ALPHA))));
+			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].ref.z * pow(scalar_vectors(mult_vector(ray->dir, 0.99), vec.dir), ALPHA))));
 		}
 		tmp *= alpha;
 		fact.x += (tmp * light[i].col.r) / (float)255;
