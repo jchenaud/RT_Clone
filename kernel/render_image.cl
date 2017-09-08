@@ -125,7 +125,7 @@ typedef struct	s_intersec
 #define CYLINDER	4
 #define PAVE		5
 
-#define ALPHA		10
+#define ALPHA		100
 
 inline t_color	add_colors(t_color a, t_color b)
 {
