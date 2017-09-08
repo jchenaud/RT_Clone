@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 09:39:49 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/08 04:37:38 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	error_3(int error, void *param)
 {
 	if (error == 64)
 		ft_putstr("parsing error");
+	else if (error == 23)
+		ft_putstr("iterations need 1 argument");
 	else
 		ft_putstr("unknown error");
 	(void)param;
@@ -38,7 +40,7 @@ void	error_2(int error, void *param)
 {
 	if (error == 21)
 		ft_putstr("device need 1 argument, cpu or gpu");
-	else if (error == 21)
+	else if (error == 22)
 		ft_putstr("device can only be cpu or gpu");
 	else if (error == 33)
 		ft_putstr("cannot create mlx window");

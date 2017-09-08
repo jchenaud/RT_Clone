@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<scene>
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "0" z = "-50" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "1"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "0" z = "50" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "-1"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "-50" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "1" y = "0" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "50" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "-1" y = "0" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "-50" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "1" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "50" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "-1" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<sphere>
+		<ref x="1" y="1" z="1" w="0.5"></ref>
+		<pos x = "0" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<col R="255" V="153" B="51" T="255"></col>
+		<rad rad = "10"> </rad>
+	</sphere>
+
+	<light>
+		<pos x = "0" y = "0" z = "-40" ></pos>
+		<col R="255" V="255" B="255" T="255"></col>
+		<i amb="0.1" dif="0.6" spec="1"></i>
+	</light>
+
+	<cam>
+		<pos x = "-49" y = "-49" z = "0" ></pos>
+		<dir x = "1" y = "0" z = "0"> </dir>
+		<rot x = "0" y = "0" z = "0.78"> </rot>
+		<fov fov_x = "0.768" fov_y = "0.432"> </fov>
+		<dis dis = "1" ></dis>
+		<export PATH="cam1.png"></export>
+		<w W = "1920"> </w>
+		<h H = "1080"> </h>
+	</cam>
+</scene>

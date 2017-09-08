@@ -21,11 +21,11 @@
 		<pos x = "0" y = "0" z = "-5" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
 		<norm x = "0" y = "0" z = "1"> </norm>
-		<col R="255" V="255" B="0" T="255"></col>
+		<col R="255" V="255" B="255" T="255"></col>
 	</plan>
 
 	<plan>
-		<ref x="1" y="1" z="1" w="0.5"></ref>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
 		<pos x = "50" y = "0" z = "0" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
 		<norm x = "-1" y = "-1" z = "-0.1"> </norm>
@@ -33,7 +33,7 @@
 	</plan>
 
 	<plan>
-		<ref x="1" y="1" z="1" w="0.5"></ref>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
 		<pos x = "-60" y = "0" z = "0" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
 		<norm x = "-1.4" y = "-1" z = "0.1"> </norm>
@@ -41,7 +41,7 @@
 	</plan>
 
 	<cone>
-		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<ref x="1" y="1" z="1" w="0.8"></ref>
 		<pos x = "0" y = "10" z = "0" ></pos>
 		<rot x = "0" y = "0" z = "0"> </rot>
 		<norm x = "0" y = "0" z = "1"> </norm>
@@ -59,15 +59,21 @@
 	</cylinder>
 
 	<light>
-		<pos x = "-8" y = "-20" z = "100" ></pos>
-		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="0.1" dif="0.5" spec="1"></i>
+		<pos x = "-8" y = "-20" z = "10" ></pos>
+		<col R="255" V="255" B="0" T="255"></col>
+		<i amb="0.1" dif="0.5" spec="0.5"></i>
 	</light>
 
 	<light>
 		<pos x = "-6" y = "20" z = "10" ></pos>
-		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="0.1" dif="0.5" spec="1"></i>
+		<col R="0" V="255" B="255" T="255"></col>
+		<i amb="0.1" dif="0.5" spec="0.5"></i>
+	</light>
+
+	<light>
+		<pos x = "-7" y = "0" z = "10" ></pos>
+		<col R="255" V="0" B="255" T="255"></col>
+		<i amb="0.1" dif="0.5" spec="0.5"></i>
 	</light>
 
 	<cam>

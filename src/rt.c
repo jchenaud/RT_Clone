@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 09:44:20 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/08 09:34:08 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int		main(int argc, char **argv)
 		error(0, 1, NULL);
 	env = init_env();
 	env->win = new_window("RT", 1280, 720);
+	env->icone = IMG_Load("rt.png");
+	SDL_SetWindowIcon(env->win->win, env->icone);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
 	if (parsing(env->file, env) == -1)

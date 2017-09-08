@@ -103,11 +103,11 @@ typedef struct	s_intersec
 	float		h;
 }				t_intersec;
 
-# define get_sphere(x)		x->obj.sphere
-# define get_plan(x)		x->obj.plan
-# define get_pave(x)		x->obj.pave
-# define get_cone(x)		x->obj.cone
-# define get_cylinder(x)	x->obj.cylinder
+#define get_sphere(x)		x->obj.sphere
+#define get_plan(x)		x->obj.plan
+#define get_pave(x)		x->obj.pave
+#define get_cone(x)		x->obj.cone
+#define get_cylinder(x)	x->obj.cylinder
 
 #define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
 #define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
@@ -124,6 +124,8 @@ typedef struct	s_intersec
 #define PLAN		3
 #define CYLINDER	4
 #define PAVE		5
+
+#define ALPHA		10
 
 inline t_color	add_colors(t_color a, t_color b)
 {
@@ -196,6 +198,15 @@ inline t_color	mult_color(t_color a, float f)
 }
 
 inline void	normalize_vector(float3 *vec)
+{
+	float	norm = get_vector_norm(vec);
+
+	vec->x /= norm;
+	vec->y /= norm;
+	vec->z /= norm;
+}
+
+inline void	normalize_global_vector(__global float3 *vec)
 {
 	float	norm = get_vector_norm(vec);
 
@@ -350,6 +361,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	img = &img[id / *p];
 	intersec = &intersec[id];
 	ray = &ray[id];
+	normalize_global_vector(&ray->dir);
 	if ((ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0) ||
 	intersec->h <= 0.01 || intersec->obj == -1 || ray->f == 0)
 	{
@@ -367,6 +379,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		norm = get_cone_norm(&obj[intersec->obj], vec.pos);
 	else
 		norm = get_sphere_norm(&obj[intersec->obj], vec.pos);
+	normalize_vector(&norm);
 	while (i < *n_light)
 	{
 		vec.dir = sub_vectors(light[i].pos, vec.pos);
@@ -376,34 +389,39 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		k = 0;
 		while (k < *n_obj)
 		{
-			if ((int)k != intersec->obj)
-			{
+			// if ((int)k != intersec->obj)
+			// {
 				if (obj[k].type == SPHERE)
 				{
-					if ((h = hit_sphere(&vec, &obj[k])) >= 0 && h < h_tmp)
+					if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
 						k = *n_obj;
 				}
 				else if (obj[k].type == PLAN)
 				{
-					if ((h = hit_plan(&vec, &obj[k])) >= 0 && h < h_tmp)
+					if ((h = hit_plan(&vec, &obj[k])) > 0.01 && h < h_tmp)
 						k = *n_obj;
 				}
 				else if (obj[k].type == CONE)
 				{
-					if ((h = hit_cone(&vec, &obj[k])) >= 0 && h < h_tmp)
+					if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
 						k = *n_obj;
 				}
 				else if (obj[k].type == CYLINDER)
 				{
-					if ((h = hit_cylinder(&vec, &obj[k])) >= 0 && h < h_tmp)
+					if ((h = hit_cylinder(&vec, &obj[k])) > 0.01 && h < h_tmp)
 						k = *n_obj;
 				}
-			}
+			// }
 			k++;
 		}
 		tmp += (light[i].i.x * obj[intersec->obj].ref.x);
 		if (k == *n_obj)
+		{
 			tmp += (light[i].i.y * obj[intersec->obj].ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
+			vec.dir = sub_vectors(vec.dir, mult_vector(mult_vector(norm, scalar_vectors(vec.dir, norm)), 2));
+			normalize_vector(&vec.dir);
+			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].ref.z * pow(scalar_vectors(ray->dir, vec.dir), ALPHA))));
+		}
 		fact.x += (tmp * light[i].col.r) / (float)255;
 		fact.y += (tmp * light[i].col.g) / (float)255;
 		fact.z += (tmp * light[i].col.b) / (float)255;

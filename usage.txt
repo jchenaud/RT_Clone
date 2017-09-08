@@ -2,7 +2,8 @@
 [38;5;45mavailable flags:[38;5;159m
  -title <name>
  -size <width> <height>
- -print_keys
- -debug
+ -device <cpu/gpu>
+ -iterations <n>
  -antialias <antialiasing level>
- -device <cpu/gpu>[0m
+ -print_keys
+ -debug[0m

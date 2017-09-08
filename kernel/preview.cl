@@ -104,11 +104,11 @@ typedef struct	s_vec3
 	float		z;
 }				t_vec3;
 
-# define get_sphere(x)		x->obj.sphere
-# define get_plan(x)		x->obj.plan
-# define get_pave(x)		x->obj.pave
-# define get_cone(x)		x->obj.cone
-# define get_cylinder(x)	x->obj.cylinder
+#define get_sphere(x)		x->obj.sphere
+#define get_plan(x)		x->obj.plan
+#define get_pave(x)		x->obj.pave
+#define get_cone(x)		x->obj.cone
+#define get_cylinder(x)	x->obj.cylinder
 
 #define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
 #define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)

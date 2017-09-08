@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 07:21:00 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 07:46:56 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/08 04:23:09 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,11 @@ void		render_image(t_cl *cl, t_cam *cam, size_t p)
 	{
 		i_mem = create_buffer(cl, CL_MEM_COPY_HOST_PTR, sizeof(size_t), &i);
 		set_kernel_arg(&cl->render_img, &i_mem, 8);
-		clEnqueueNDRangeKernel(cl->queue, cl->render_img, 1, NULL, &n,
-		NULL, 0, NULL, NULL);
-		if (clFinish(cl->queue) != CL_SUCCESS)
-			error(52, 1, NULL);
+		nd_range_kernel(cl, &cl->render_img, n);
 		i++;
 	}
-	clEnqueueReadBuffer(cl->queue, img_mem, CL_TRUE, 0,
-	sizeof(t_color) * cam->w * cam->h, cam->img->pixels, 0, NULL, NULL);
-	if (clFinish(cl->queue) != CL_SUCCESS)
-		error(52, 1, NULL);
+	read_buffer(cl, img_mem, cam->img->pixels,
+	sizeof(t_color) * cam->w * cam->h);
 }
 
 void		initialize_intersecs(t_env *env, t_cam *cam)

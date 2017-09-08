@@ -83,11 +83,11 @@ typedef struct	s_intersec
 	float		h;
 }				t_intersec;
 
-# define get_sphere(x)		x->obj.sphere
-# define get_plan(x)		x->obj.plan
-# define get_pave(x)		x->obj.pave
-# define get_cone(x)		x->obj.cone
-# define get_cylinder(x)	x->obj.cylinder
+#define get_sphere(x)		x->obj.sphere
+#define get_plan(x)		x->obj.plan
+#define get_pave(x)		x->obj.pave
+#define get_cone(x)		x->obj.cone
+#define get_cylinder(x)	x->obj.cylinder
 
 #define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
 #define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
@@ -192,7 +192,10 @@ __kernel void	intersection(__global t_intersec *intersec, __global t_intersec *p
 	ray = &ray[id];
 	prev = &prev[id / 2];
 	if (ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0)
+	{
+		intersec[id] = (t_intersec){-1, -1};
 		return ;
+	}
 	while (i < *n_obj)
 	{
 		h = -1;

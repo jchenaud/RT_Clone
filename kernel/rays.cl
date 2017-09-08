@@ -76,11 +76,11 @@ typedef struct	s_intersec
 	float		h;
 }				t_intersec;
 
-# define get_sphere(x)		x->obj.sphere
-# define get_plan(x)		x->obj.plan
-# define get_pave(x)		x->obj.pave
-# define get_cone(x)		x->obj.cone
-# define get_cylinder(x)	x->obj.cylinder
+#define get_sphere(x)		x->obj.sphere
+#define get_plan(x)		x->obj.plan
+#define get_pave(x)		x->obj.pave
+#define get_cone(x)		x->obj.cone
+#define get_cylinder(x)	x->obj.cylinder
 
 #define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
 #define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
@@ -162,7 +162,11 @@ __kernel void	calc_rays(__global t_ray *new, __global t_ray *ray, __global t_int
 	intersec = &intersec[id];
 	if ((ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0) ||
 	intersec->h == -1 || intersec->obj == -1 || ray->f == 0)
+	{
+		new[0] = (t_ray){{0, 0, 0}, {0, 0, 0}, 0};
+		new[1] = (t_ray){{0, 0, 0}, {0, 0, 0}, 0};
 		return ;
+	}
 	point = (float3){intersec->h * ray->dir.x + ray->pos.x, intersec->h * ray->dir.y + ray->pos.y, intersec->h * ray->dir.z + ray->pos.z};
 	obj = &obj[intersec->obj];
 	if (obj->type == SPHERE)

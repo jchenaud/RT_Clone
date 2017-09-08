@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 07:21:44 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/08 09:05:16 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct	s_env
 	t_uint		i;
 	t_uint		n;
 	t_img		*img;
+	t_img		*icone;
 }				t_env;
 
 /*
