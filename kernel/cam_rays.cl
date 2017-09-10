@@ -1,29 +1,4 @@
-typedef struct	s_cam
-{
-	float3		pos;
-	float3		rot;
-	float3		dir;
-	float2		fov;
-	float		dis;
-	uint		w;
-	uint		h;
-	void		*img;
-	char		*output;
-}				t_cam;
-
-typedef struct	s_ray
-{
-	float3		pos;
-	float3		dir;
-	float		f;
-}				t_ray;
-
-typedef struct	s_vec3
-{
-	float		x;
-	float		y;
-	float		z;
-}				t_vec3;
+#include "kernel/kernel.hcl"
 
 #define get_vector_norm(a)	sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
 #define add_vectors(a, b)	(float3){a.x + b.x, a.y + b.y, a.z + b.z}

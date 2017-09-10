@@ -198,7 +198,7 @@ void    pars_sphere_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"col")== 0)
   {
-    new_obj->col = get_color(current);
+    new_obj->mat.col = get_color(current);
     tab[2] = 1;
   }
   else if (ft_strcmp((char*)current->name,"rad")== 0)
@@ -208,7 +208,7 @@ void    pars_sphere_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float4(current);
+    new_obj->mat.ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -262,7 +262,7 @@ void   pars_pave_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"col")== 0)
   {
-    new_obj->col = get_color(current);
+    new_obj->mat.col = get_color(current);
     tab[2] = 1;
   }
   else if (ft_strcmp((char*)current->name,"size")== 0)
@@ -272,7 +272,7 @@ void   pars_pave_anex(int * tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float4(current);
+    new_obj->mat.ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -329,7 +329,7 @@ void   pars_plan_anex(int *tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"col")== 0)
   {
-    new_obj->col = get_color(current);
+    new_obj->mat.col = get_color(current);
     tab[2] = 1;
   }
   else if (ft_strcmp((char*)current->name,"norm")== 0)
@@ -339,7 +339,7 @@ void   pars_plan_anex(int *tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float4(current);
+    new_obj->mat.ref = get_float4(current);
     tab[4] = 1;
   }
   else
@@ -396,7 +396,7 @@ void   pars_cone_anex2(int *tab, xmlNode *current, t_obj *new_obj,int find)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float4(current);
+    new_obj->mat.ref = get_float4(current);
     tab[5] = 1;
   }
   else 
@@ -423,7 +423,7 @@ void   pars_cone_anex(int *tab, xmlNode *current, t_obj *new_obj)
   }
   else if (ft_strcmp((char*)current->name,"col")== 0)
   {
-    new_obj->col = get_color(current);
+    new_obj->mat.col = get_color(current);
     tab[2] = 1;
     find = 1;
   }
@@ -479,7 +479,7 @@ void   pars_cylinder_anex2(int *tab, xmlNode *current, t_obj *new_obj, int find)
   }
   else if (ft_strcmp((char*)current->name,"ref")== 0)
   {
-    new_obj->ref = get_float4(current);
+    new_obj->mat.ref = get_float4(current);
     tab[5] = 1;
   }
   else
@@ -508,7 +508,7 @@ void   pars_cylinder_anex(int *tab, xmlNode *current, t_obj *new_obj)
 
   else if (ft_strcmp((char*)current->name,"col")== 0)
   {
-    new_obj->col = get_color(current);
+    new_obj->mat.col = get_color(current);
     tab[2] = 1;
     find = 1;
   }

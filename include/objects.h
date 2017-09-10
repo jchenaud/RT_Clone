@@ -26,6 +26,18 @@
 ** # pragma pack(1)
 */
 
+typedef union			u_name
+{
+	char				*name;
+	size_t				n;
+}						t_name;
+
+typedef struct			s_texture
+{
+	t_name				name;
+	t_img				*img;
+}						t_texture;
+
 typedef struct			s_ray
 {
 	cl_float3			pos;
@@ -119,13 +131,20 @@ typedef struct			s_light
 **	- ref.z = specular
 */
 
+typedef struct			s_mat
+{
+	t_color				col;
+	cl_float4			ref;
+	cl_float			refraction;
+	t_texture			*textures[3];
+}						t_mat;
+
 typedef struct			s_obj
 {
 	cl_float3			pos;
 	cl_float3			rot;
 	cl_uchar			type;
-	t_color				col;
-	cl_float4			ref;
+	t_mat				mat;
 	t_hitbox			hitbox;
 	t_union				obj;
 }						t_obj;

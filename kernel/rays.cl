@@ -1,80 +1,4 @@
-typedef struct	s_color
-{
-	uchar		g;
-	uchar		b;
-	uchar		r;
-	uchar		a;
-}				t_color;
-
-typedef struct	s_hitbox
-{
-	uchar		type;
-	float3		rot;
-	float3		min;
-	float3		max;
-	float3		r_min;
-	float3		r_max;
-}				t_hitbox;
-
-typedef struct	s_sphere
-{
-	float		rad;
-}				t_sphere;
-
-typedef struct	s_pave
-{
-	float3		size;
-}				t_pave;
-
-typedef struct	s_plan
-{
-	float3		norm;
-}				t_plan;
-
-typedef struct	s_cone
-{
-	float3		norm;
-	float		angle;
-}				t_cone;
-
-typedef struct	s_cylinder
-{
-	float3		norm;
-	float		rad;
-}				t_cylinder;
-
-typedef union	u_union
-{
-	t_pave		pave;
-	t_sphere	sphere;
-	t_plan		plan;
-	t_cone		cone;
-	t_cylinder	cylinder;
-}				t_union;
-
-typedef struct	s_obj
-{
-	float3		pos;
-	float3		rot;
-	uchar		type;
-	t_color		col;
-	float4		ref;
-	t_hitbox	hitbox;
-	t_union		obj;
-}				t_obj;
-
-typedef struct	s_ray
-{
-	float3		pos;
-	float3		dir;
-	float		f;
-}				t_ray;
-
-typedef struct	s_intersec
-{
-	int			obj;
-	float		h;
-}				t_intersec;
+#include "kernel/kernel.hcl"
 
 #define get_sphere(x)		x->obj.sphere
 #define get_plan(x)		x->obj.plan
@@ -194,6 +118,6 @@ __kernel void	calc_rays(__global t_ray *new, __global t_ray *ray, __global t_int
 	new[0].dir = get_reflection_vector(norm, ray->dir);
 	normalize_global_vector(&new[0].dir);
 	new[1].dir = ray->dir;
-	new[0].f = ray->f * obj->ref.w;
-	new[1].f = (ray->f * (255 - obj->col.a) / (float)255);
+	new[0].f = ray->f * obj->mat.ref.w;
+	new[1].f = (ray->f * (255 - obj->mat.col.a) / (float)255);
 }

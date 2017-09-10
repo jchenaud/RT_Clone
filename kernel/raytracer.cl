@@ -60,13 +60,20 @@ typedef union	u_union
 	t_cylinder	cylinder;
 }				t_union;
 
+typedef struct	s_mat
+{
+	t_color		col;
+	cl_float4	ref;
+	cl_float	refraction;
+	t_texture	*textures[3];
+}				t_mat;
+
 typedef struct	s_obj
 {
 	float3		pos;
 	float3		rot;
 	uchar		type;
-	t_color		col;
-	float4		ref;
+	t_mat		mat;
 	t_hitbox	hitbox;
 	t_union		obj;
 }				t_obj;

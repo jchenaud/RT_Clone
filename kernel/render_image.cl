@@ -1,107 +1,4 @@
-typedef struct	s_color
-{
-	uchar		g;
-	uchar		b;
-	uchar		r;
-	uchar		a;
-}				t_color;
-
-typedef struct	s_hitbox
-{
-	uchar		type;
-	float3		rot;
-	float3		min;
-	float3		max;
-	float3		r_min;
-	float3		r_max;
-}				t_hitbox;
-
-typedef struct	s_sphere
-{
-	float		rad;
-}				t_sphere;
-
-typedef struct	s_pave
-{
-	float3		size;
-}				t_pave;
-
-typedef struct	s_plan
-{
-	float3		norm;
-}				t_plan;
-
-typedef struct	s_cone
-{
-	float3		norm;
-	float		angle;
-}				t_cone;
-
-typedef struct	s_cylinder
-{
-	float3		norm;
-	float		rad;
-}				t_cylinder;
-
-typedef union	u_union
-{
-	t_pave		pave;
-	t_sphere	sphere;
-	t_plan		plan;
-	t_cone		cone;
-	t_cylinder	cylinder;
-}				t_union;
-
-typedef struct	s_obj
-{
-	float3		pos;
-	float3		rot;
-	uchar		type;
-	t_color		col;
-	float4		ref;
-	t_hitbox	hitbox;
-	t_union		obj;
-}				t_obj;
-
-typedef struct	s_light
-{
-	float3		pos;
-	t_color		col;
-	float3		i;
-}				t_light;
-
-typedef struct	s_cam
-{
-	float3		pos;
-	float3		rot;
-	float3		dir;
-	float2		fov;
-	float		dis;
-	uint		w;
-	uint		h;
-	void		*img;
-	char		*output;
-}				t_cam;
-
-typedef struct	s_vec3
-{
-	float		x;
-	float		y;
-	float		z;
-}				t_vec3;
-
-typedef struct	s_ray
-{
-	float3		pos;
-	float3		dir;
-	float		f;
-}				t_ray;
-
-typedef struct	s_intersec
-{
-	int			obj;
-	float		h;
-}				t_intersec;
+#include "kernel/kernel.hcl"
 
 #define get_sphere(x)		x->obj.sphere
 #define get_plan(x)		x->obj.plan
@@ -394,8 +291,8 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			{
 				if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if (obj[k].col.a != 255)
-						alpha *= ((255 - obj[k].col.a) / (float)255);
+					if (obj[k].mat.col.a != 255)
+						alpha *= ((255 - obj[k].mat.col.a) / (float)255);
 					else
 						k = *n_obj;
 				}
@@ -404,8 +301,8 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			{
 				if ((h = hit_plan(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if (obj[k].col.a != 255)
-						alpha *= ((255 - obj[k].col.a) / (float)255);
+					if (obj[k].mat.col.a != 255)
+						alpha *= ((255 - obj[k].mat.col.a) / (float)255);
 					else
 						k = *n_obj;
 				}
@@ -414,8 +311,8 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			{
 			if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
 			{
-					if (obj[k].col.a != 255)
-						alpha *= ((255 - obj[k].col.a) / (float)255);
+					if (obj[k].mat.col.a != 255)
+						alpha *= ((255 - obj[k].mat.col.a) / (float)255);
 					else
 						k = *n_obj;
 				}
@@ -424,21 +321,21 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			{
 				if ((h = hit_cylinder(&vec, &obj[k])) > 0.01 && h < h_tmp)
 				{
-					if (obj[k].col.a != 255)
-						alpha *= ((255 - obj[k].col.a) / (float)255);
+					if (obj[k].mat.col.a != 255)
+						alpha *= ((255 - obj[k].mat.col.a) / (float)255);
 					else
 						k = *n_obj;
 				}
 			}
 			k++;
 		}
-		tmp = (light[i].i.x * obj[intersec->obj].ref.x);
+		tmp = (light[i].i.x * obj[intersec->obj].mat.ref.x);
 		if (k == *n_obj)
 		{
-			tmp += (light[i].i.y * obj[intersec->obj].ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
+			tmp += (light[i].i.y * obj[intersec->obj].mat.ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
 			vec.dir = sub_vectors(vec.dir, mult_vector(mult_vector(norm, scalar_vectors(vec.dir, norm)), 2));
 			normalize_vector(&vec.dir);
-			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].ref.z * pow(scalar_vectors(mult_vector(ray->dir, 0.99), vec.dir), ALPHA))));
+			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].mat.ref.z * pow(scalar_vectors(mult_vector(ray->dir, 0.99), vec.dir), ALPHA))));
 		}
 		tmp *= alpha;
 		fact.x += (tmp * light[i].col.r) / (float)255;
@@ -446,7 +343,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		fact.z += (tmp * light[i].col.b) / (float)255;
 		i++;
 	}
-	color = mult_color(obj[intersec->obj].col, (1 - obj[intersec->obj].ref.w) * (obj[intersec->obj].col.a / (float)255));
+	color = mult_color(obj[intersec->obj].mat.col, (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
 	if (color.r * fact.x < 256)
 	{
 		if (color.r * fact.x >= 0)
