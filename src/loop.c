@@ -26,8 +26,11 @@ static void	create_buffers(t_cl *cl)
 
 void		launch_kernel(t_env *env)
 {
-	t_list	*cams;
-	t_cam	*cam;
+	struct timeval	start;
+	struct timeval	end;
+	double			diff;
+	t_list			*cams;
+	t_cam			*cam;
 
 	if (!env->cl.n_obj || !env->cl.n_light)
 		error((!env->cl.n_obj) ? 50 : 51, 1, NULL);
@@ -36,7 +39,14 @@ void		launch_kernel(t_env *env)
 	while (cams)
 	{
 		cam = (t_cam*)cams->content;
-		draw_image(env, cam);
+		gettimeofday(&start, NULL);
+		dispatch_rays(env, cam);
+		gettimeofday(&end, NULL);
+		diff = (end.tv_sec - start.tv_sec) +
+		(end.tv_usec - start.tv_usec) / (double)1000000;
+		printf("took %.2luh %.2lumin %.2lus %.3lums\n", ((size_t)diff) / 3600,
+		(((size_t)diff) % 3600) / 60, ((size_t)diff) % 60,
+		(size_t)(diff * 1000) % 1000);
 		antialiase(env->antialias_level, &env->cl, cam->img);
 		cams = cams->next;
 	}

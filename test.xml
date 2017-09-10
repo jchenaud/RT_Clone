@@ -1,89 +1,80 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <scene>
+	<Include A="DoubleSphere" B="TripleSphere"></Include>
 	<sphere>
 		<ref x="1" y="1" z="1" w="0.5"></ref>
-		<pos x = "0" y = "0" z = "0" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
 		<col R="255" V="0" B="255" T="128"></col>
-		<rad rad = "10"> </rad>
+		<rad rad="10"></rad>
 	</sphere>
-
 	<pave>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
-		<pos x = "0" y = "0.1" z = "42" ></pos>
-		<rot x = "0" y = "10" z = "15"> </rot>
-		<size x = "150" y = "150" z = "150"> </size>
+		<pos x="0" y="0.1" z="42"></pos>
+		<rot x="0" y="10" z="15"></rot>
+		<size x="150" y="150" z="150"></size>
 		<col R="255" V="0" B="0" T="255"></col>
 	</pave>
-
 	<plan>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
-		<pos x = "0" y = "0" z = "-5" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "0" y = "0" z = "1"> </norm>
+		<pos x="0" y="0" z="-5"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
 		<col R="255" V="255" B="255" T="255"></col>
 	</plan>
-
 	<plan>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
-		<pos x = "50" y = "0" z = "0" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "-1" y = "-1" z = "-0.1"> </norm>
+		<pos x= "50" y="0" z="0"></pos>
+		<rot x= "0" y="0" z="0"></rot>
+		<norm x="-1" y="-1" z="-0.1"></norm>
 		<col R="255" V="255" B="255" T="255"></col>
 	</plan>
-
 	<plan>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
-		<pos x = "-60" y = "0" z = "0" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "-1.4" y = "-1" z = "0.1"> </norm>
+		<pos x="-60" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="-1.4" y="-1" z="0.1"></norm>
 		<col R="255" V="255" B="255" T="255"></col>
 	</plan>
-
 	<cone>
 		<ref x="1" y="1" z="1" w="0.8"></ref>
-		<pos x = "0" y = "10" z = "0" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "0" y = "0" z = "1"> </norm>
-		<angle angle = "0.2"> </angle>
+		<pos x="0" y="10" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
+		<angle angle="0.2"></angle>
 		<col R="255" V="0" B="0" T="255"></col>
 	</cone>
-
 	<cylinder>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
-		<pos x = "0" y = "0" z = "0" ></pos>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<norm x = "0" y = "0" z = "1"> </norm>
-		<rad rad = "4"> </rad>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
+		<rad rad="4"></rad>
 		<col R="0" V="255" B="255" T="255"></col>
 	</cylinder>
-
 	<light>
-		<pos x = "-8" y = "-20" z = "10" ></pos>
+		<pos x="-8" y="-20" z="10"></pos>
 		<col R="255" V="255" B="0" T="255"></col>
 		<i amb="0.1" dif="0.5" spec="0.5"></i>
 	</light>
-
 	<light>
-		<pos x = "-6" y = "20" z = "10" ></pos>
+		<pos x="-6" y="20" z="10"></pos>
 		<col R="0" V="255" B="255" T="255"></col>
 		<i amb="0.1" dif="0.5" spec="0.5"></i>
 	</light>
-
 	<light>
-		<pos x = "-7" y = "0" z = "10" ></pos>
+		<pos x="-7" y="0" z="10"></pos>
 		<col R="255" V="0" B="255" T="255"></col>
 		<i amb="0.1" dif="0.5" spec="0.5"></i>
 	</light>
-
 	<cam>
-		<pos x = "-50" y = "0" z = "10" ></pos>
-		<dir x = "1" y = "0" z = "0"> </dir>
-		<rot x = "0" y = "0" z = "0"> </rot>
-		<fov fov_x = "0.768" fov_y = "0.432"> </fov>
-		<dis dis = "1" ></dis>
+		<pos x="-50" y="0" z="10"></pos>
+		<dir x="1" y="0" z="0"></dir>
+		<rot x="0" y="0" z="0"></rot>
+		<fov fov_x="0.768" fov_y="0.432"></fov>
+		<dis dis="1"></dis>
 		<export PATH="cam1.png"></export>
-		<w W = "1920"> </w>
-		<h H = "1080"> </h>
+		<w W="1920"></w>
+		<h H="1080"></h>
 	</cam>
 </scene>

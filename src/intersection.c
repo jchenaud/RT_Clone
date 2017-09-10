@@ -6,19 +6,16 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 07:58:40 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 04:30:58 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/10 03:15:05 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		*calculate_intersections(t_env *env, size_t n)
+void		calculate_intersections(t_env *env, size_t n)
 {
 	cl_mem	intersecs;
-	void	*ret;
 
-	if (!(ret = malloc(sizeof(t_intersec) * n)))
-		error(1, 1, NULL);
 	intersecs = create_buffer(&env->cl, CL_MEM_ALLOC_HOST_PTR,
 	sizeof(t_intersec) * n, NULL);
 	set_kernel_arg(&env->cl.intersection, &intersecs, 0);
@@ -29,7 +26,6 @@ void		*calculate_intersections(t_env *env, size_t n)
 	set_kernel_arg(&env->cl.intersection, &env->cl.n_light_mem, 5);
 	set_kernel_arg(&env->cl.intersection, &env->cl.light_mem, 6);
 	nd_range_kernel(&env->cl, &env->cl.intersection, n);
-	read_buffer(&env->cl, intersecs, ret, sizeof(t_intersec) * n);
+	delete_buffer(env->cl.intersecs);
 	env->cl.intersecs = intersecs;
-	return (ret);
 }

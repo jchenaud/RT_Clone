@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 07:21:00 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 04:23:09 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/10 06:12:29 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void		render_image(t_cl *cl, t_cam *cam, size_t p)
 		i_mem = create_buffer(cl, CL_MEM_COPY_HOST_PTR, sizeof(size_t), &i);
 		set_kernel_arg(&cl->render_img, &i_mem, 8);
 		nd_range_kernel(cl, &cl->render_img, n);
+		delete_buffer(i_mem);
 		i++;
 	}
 	read_buffer(cl, img_mem, cam->img->pixels,
 	sizeof(t_color) * cam->w * cam->h);
+	delete_buffer(img_mem);
 }
 
 void		initialize_intersecs(t_env *env, t_cam *cam)
@@ -71,23 +73,71 @@ void		initialize_intersecs(t_env *env, t_cam *cam)
 **	params[1]: rays
 */
 
-void		draw_image(t_env *env, t_cam *cam)
+void		draw_image(t_env *env, t_cam *cam, size_t m, size_t max)
 {
-	void	*params[2];
 	size_t	p;
 	t_uchar	i;
 
 	i = 0;
-	params[1] = create_cam_rays(env, cam);
 	initialize_intersecs(env, cam);
+	create_cam_rays(env, cam, m, max);
 	while (i < env->iterations)
 	{
 		p = cam->w * cam->h * pow(2, i);
-		params[0] = calculate_intersections(env, p);
+		calculate_intersections(env, p);
 		render_image(&env->cl, cam, pow(2, i));
-		params[1] = calculate_rays(&env->cl, params[1], params[0], p);
-		free(params[0]);
+		calculate_rays(&env->cl, p);
 		i++;
 	}
-	free(params[1]);
+	delete_buffer(env->cl.intersecs);
+	delete_buffer(env->cl.rays);
+}
+
+double		get_speed(void)
+{
+	static struct timeval	prev;
+	static size_t			i = 10;
+	static double			ret;
+	struct timeval			t;
+
+	if (i >= 10)
+	{
+		gettimeofday(&t, NULL);
+		ret = ((t.tv_usec - prev.tv_usec) + (t.tv_sec - prev.tv_sec) * 1000000)
+		/ (double)1000000;
+		ret /= 10;
+		prev = t;
+		i = 0;
+	}
+	i++;
+	return ((ret > 100) ? 0 : ret);
+}
+
+void		dispatch_rays(t_env *env, t_cam *cam)
+{
+	t_uint128	size;
+	size_t		n;
+	size_t		i;
+	void		*tmp;
+	double		t;
+
+	size = (env->cl.n_obj * sizeof(t_obj) + env->cl.n_light * sizeof(t_light) +
+	cam->w * cam->h * (sizeof(t_color) +
+	(size_t)pow(2, env->iterations) *
+	(sizeof(t_ray) + sizeof(t_intersec))));
+	n = size / env->cl.mem_size + 1;
+	n = cam->h / (cam->h / n);
+	i = 0;
+	tmp = cam->img->pixels;
+	cam->h /= n;
+	while (i < n)
+	{
+		t = (n - i) * get_speed();
+		ft_printf("\033[1A\033[0K%u/%u remaining: %.2u:%.2u:%.2u\n",
+		i, n, (size_t)(t) / 3600, ((size_t)t % 3600) / 60, (size_t)t % 60);
+		draw_image(env, cam, i++, n);
+		cam->img->pixels += (cam->w * cam->h * sizeof(t_color));
+	}
+	cam->img->pixels = tmp;
+	cam->h *= n;
 }

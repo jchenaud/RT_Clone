@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 01:17:12 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 07:16:37 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/10 03:10:43 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,12 @@ void	read_buffer(t_cl *cl, cl_mem mem, void *ptr, size_t size)
 	size, ptr, 0, NULL, NULL);
 	if (clFinish(cl->queue) != CL_SUCCESS)
 		error(52, 1, NULL);
+}
+
+void	delete_buffer(cl_mem mem)
+{
+	cl_int	err;
+
+	if ((err = clReleaseMemObject(mem)) != CL_SUCCESS)
+		error(53, 1, &err);
 }

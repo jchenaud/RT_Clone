@@ -158,7 +158,7 @@ inline t_color	add_colors(t_color a, t_color b)
 	}
 	else
 		c.b = 255;
-		c.a = 255;
+	c.a = 255;
 	return (c);
 }
 
@@ -193,7 +193,7 @@ inline t_color	mult_color(t_color a, float f)
 	}
 	else
 		c.b = 255;
-		c.a = 255;
+	c.a = 255;
 	return (c);
 }
 
@@ -432,7 +432,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			}
 			k++;
 		}
-		tmp += (light[i].i.x * obj[intersec->obj].ref.x);
+		tmp = (light[i].i.x * obj[intersec->obj].ref.x);
 		if (k == *n_obj)
 		{
 			tmp += (light[i].i.y * obj[intersec->obj].ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
@@ -447,35 +447,33 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		i++;
 	}
 	color = mult_color(obj[intersec->obj].col, (1 - obj[intersec->obj].ref.w) * (obj[intersec->obj].col.a / (float)255));
-	if (obj[intersec->obj].ref.w > 0)
+	if (color.r * fact.x < 256)
 	{
-		if (color.r * fact.x < 256)
-		{
-			if (color.r * fact.x >= 0)
-				color.r *= fact.x;
-			else
-				color.r = 0;
-		}
+		if (color.r * fact.x >= 0)
+			color.r *= fact.x;
 		else
-			color.r = 255;
-		if (color.g * fact.y < 256)
-		{
-			if (color.g * fact.y >= 0)
-				color.g *= fact.y;
-			else
-				color.g = 0;
-		}
-		else
-			color.g = 255;
-		if (color.b * fact.z < 256)
-		{
-			if (color.b * fact.z >= 0)
-				color.b *= fact.z;
-			else
-				color.b = 0;
-		}
-		else
-			color.b = 255;
+			color.r = 0;
 	}
+	else
+		color.r = 255;
+	if (color.g * fact.y < 256)
+	{
+		if (color.g * fact.y >= 0)
+			color.g *= fact.y;
+		else
+			color.g = 0;
+	}
+	else
+		color.g = 255;
+	if (color.b * fact.z < 256)
+	{
+		if (color.b * fact.z >= 0)
+			color.b *= fact.z;
+		else
+			color.b = 0;
+	}
+	else
+		color.b = 255;
+	color.a = 255;
 	*img = add_colors(*img, mult_color(color, ray->f));
 }

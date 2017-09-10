@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 04:37:38 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/10 03:11:31 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	error_3(int error, void *param)
 		ft_putstr("parsing error");
 	else if (error == 23)
 		ft_putstr("iterations need 1 argument");
+	else if (error == 53)
+		ft_printf("error deleting buffer %d", *((cl_int*)param));
 	else
 		ft_putstr("unknown error");
 	(void)param;
