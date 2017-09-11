@@ -1,97 +1,13 @@
 #include "kernel/kernel.hcl"
 
-#define get_sphere(x)		x->obj.sphere
-#define get_plan(x)		x->obj.plan
-#define get_pave(x)		x->obj.pave
-#define get_cone(x)		x->obj.cone
-#define get_cylinder(x)	x->obj.cylinder
-
-#define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
-#define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
-#define get_vector_norm(a)		sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
-#define get_vectors_angle(a, b)	scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
-#define new_vector(x, y, z)		(float3){x, y, z}
-#define add_vectors(a, b)		(float3){a.x + b.x, a.y + b.y, a.z + b.z}
-#define sub_vectors(a, b)		(float3){a.x - b.x, a.y - b.y, a.z - b.z}
-#define mult_vectors(a, b)		(float3){a.x * b.x, a.y * b.y, a.z * b.z}
-#define mult_vector(a, b)		(float3){a.x * b, a.y * b, a.z * b}
-
-#define SPHERE		1
-#define CONE		2
-#define PLAN		3
-#define CYLINDER	4
-#define PAVE		5
-
-#define ALPHA		101
-
 inline t_color	add_colors(t_color a, t_color b)
 {
-	t_color	c;
-
-	if (a.r + b.r < 256)
-	{
-		if (a.r + b.r >= 0)
-			c.r = a.r + b.r;
-		else
-			c.r = 0;
-	}
-	else
-		c.r = 255;
-	if (a.g + b.g < 256)
-	{
-		if (a.g + b.g >= 0)
-			c.g = a.g + b.g;
-		else
-			c.g = 0;
-	}
-	else
-		c.g = 255;
-	if (a.b + b.b < 256)
-	{
-		if (a.b + b.b >= 0)
-			c.b = a.b + b.b;
-		else
-			c.b = 0;
-	}
-	else
-		c.b = 255;
-	c.a = 255;
-	return (c);
+	return ((t_color){(a.g + b.g) % 256, (a.b + b.b) % 256, (a.r + b.r) % 256, 255});
 }
 
 inline t_color	mult_color(t_color a, float f)
 {
-	t_color	c;
-
-	if (a.r * f < 256)
-	{
-		if (a.r * f >= 0)
-			c.r = a.r * f;
-		else
-			c.r = 0;
-	}
-	else
-		c.r = 255;
-	if (a.g * f < 256)
-	{
-		if (a.g * f >= 0)
-			c.g = a.g * f;
-		else
-			c.g = 0;
-	}
-	else
-		c.g = 255;
-	if (a.b * f < 256)
-	{
-		if (a.b * f >= 0)
-			c.b = a.b * f;
-		else
-			c.b = 0;
-	}
-	else
-		c.b = 255;
-	c.a = 255;
-	return (c);
+	return ((t_color){(size_t)(a.g * f) % 256, (size_t)(a.b * f) % 256, (size_t)(a.r * f) % 256, 255});
 }
 
 inline void	normalize_vector(float3 *vec)
@@ -101,33 +17,6 @@ inline void	normalize_vector(float3 *vec)
 	vec->x /= norm;
 	vec->y /= norm;
 	vec->z /= norm;
-}
-
-inline void	normalize_global_vector(__global float3 *vec)
-{
-	float	norm = get_vector_norm(vec);
-
-	vec->x /= norm;
-	vec->y /= norm;
-	vec->z /= norm;
-}
-
-inline void	rotate_point(float *x, float *y, float angle)
-{
-	float	c = cos(angle);
-	float	s = sin(angle);
-	float	t_x;
-
-	t_x = *x;
-	*x = *x * c - *y * s;
-	*y = t_x * s + *y * c;
-}
-
-inline void	rotate_vec(float3 *vec, float3 angle)
-{
-	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
-	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
-	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
 }
 
 inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
@@ -151,11 +40,11 @@ inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline float3	get_sphere_norm(__global t_obj *obj, float3 point)
+inline float3	get_sphere_norm(__global t_obj *obj, float3 *point)
 {
 	float3	ret;
 
-	ret = sub_vectors(point, obj->pos);
+	ret = sub_vectors((*point), obj->pos);
 	normalize_vector(&ret);
 	return (ret);
 }
@@ -191,13 +80,13 @@ inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline float3	get_cylinder_norm(__global t_obj *obj, float3 point)
+inline float3	get_cylinder_norm(__global t_obj *obj, float3 *point)
 {
 	float3	norm;
 	float3	tmp1;
 	float	tmp;
 
-	tmp1 = sub_vectors(point, obj->pos);
+	tmp1 = sub_vectors((*point), obj->pos);
 	tmp = scalar_vectors(tmp1, get_cylinder(obj).norm);
 	norm = sub_vectors(tmp1, new_vector(tmp * get_cylinder(obj).norm.x, tmp * get_cylinder(obj).norm.y, tmp * get_cylinder(obj).norm.z));
 	return (norm);
@@ -226,13 +115,13 @@ inline float	hit_cone(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline float3	get_cone_norm(__global t_obj *obj, float3 point)
+inline float3	get_cone_norm(__global t_obj *obj, float3 *point)
 {
 	float3	norm;
 	float3	tmp1;
 	float	tmp;
 
-	tmp1 = sub_vectors(point, obj->pos);
+	tmp1 = sub_vectors((*point), obj->pos);
 	tmp = scalar_vectors(tmp1, get_cylinder(obj).norm);
 	norm = sub_vectors(tmp1, new_vector(tmp * get_cylinder(obj).norm.x, tmp * get_cylinder(obj).norm.y, tmp * get_cylinder(obj).norm.z));
 	return (norm);
@@ -262,20 +151,38 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	if ((ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0) ||
 	intersec->h <= 0.01 || intersec->obj == -1 || ray->f == 0)
 	{
-		*img = add_colors(*img, mult_color((t_color){0, 0, 0, 255}, ray->f));
+		*img = add_colors(*img, (t_color){0, 0, 0, 255});
 		return ;
 	}
 	vec.pos = (float3){intersec->h * ray->dir.x + ray->pos.x, intersec->h * ray->dir.y + ray->pos.y, intersec->h * ray->dir.z + ray->pos.z};
+#ifdef SWITCH
+	switch (obj[intersec->obj].type)
+	{
+		case SPHERE:
+			norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
+		break;
+		case PLAN:
+			norm = get_plan((&obj[intersec->obj])).norm;
+		break;
+		case CYLINDER:
+			norm = get_cylinder_norm(&obj[intersec->obj], &vec.pos);
+		break;
+		case CONE:
+			norm = get_cone_norm(&obj[intersec->obj], &vec.pos);
+		break;
+	}
+#else
 	if (obj[intersec->obj].type == SPHERE)
-		norm = get_sphere_norm(&obj[intersec->obj], vec.pos);
+		norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
 	else if (obj[intersec->obj].type == PLAN)
 		norm = get_plan((&obj[intersec->obj])).norm;
 	else if (obj[intersec->obj].type == CYLINDER)
-		norm = get_cylinder_norm(&obj[intersec->obj], vec.pos);
+		norm = get_cylinder_norm(&obj[intersec->obj], &vec.pos);
 	else if (obj[intersec->obj].type == CONE)
-		norm = get_cone_norm(&obj[intersec->obj], vec.pos);
+		norm = get_cone_norm(&obj[intersec->obj], &vec.pos);
 	else
-		norm = get_sphere_norm(&obj[intersec->obj], vec.pos);
+		norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
+#endif
 	normalize_vector(&norm);
 	while (i < *n_light)
 	{
@@ -287,6 +194,47 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		alpha = 1;
 		while (k < *n_obj)
 		{
+#ifdef SWITCH
+			switch (obj[k].type)
+			{
+				case SPHERE:
+					if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					{
+						if (obj[k].mat.col.a != 255)
+							alpha *= ((255 - obj[k].mat.col.a) / (float)255);
+						else
+							k = *n_obj;
+					}
+				break;
+				case PLAN:
+					if ((h = hit_plan(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					{
+						if (obj[k].mat.col.a != 255)
+							alpha *= ((255 - obj[k].mat.col.a) / (float)255);
+						else
+							k = *n_obj;
+					}
+				break;
+				case CYLINDER:
+					if ((h = hit_cylinder(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					{
+						if (obj[k].mat.col.a != 255)
+							alpha *= ((255 - obj[k].mat.col.a) / (float)255);
+						else
+							k = *n_obj;
+					}
+				break;
+				case CONE:
+					if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
+					{
+						if (obj[k].mat.col.a != 255)
+							alpha *= ((255 - obj[k].mat.col.a) / (float)255);
+						else
+							k = *n_obj;
+					}
+				break;
+			}
+#else
 			if (obj[k].type == SPHERE)
 			{
 				if ((h = hit_sphere(&vec, &obj[k])) > 0.01 && h < h_tmp)
@@ -309,8 +257,8 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 			}
 			else if (obj[k].type == CONE)
 			{
-			if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
-			{
+				if ((h = hit_cone(&vec, &obj[k])) > 0.01 && h < h_tmp)
+				{
 					if (obj[k].mat.col.a != 255)
 						alpha *= ((255 - obj[k].mat.col.a) / (float)255);
 					else
@@ -327,6 +275,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 						k = *n_obj;
 				}
 			}
+#endif
 			k++;
 		}
 		tmp = (light[i].i.x * obj[intersec->obj].mat.ref.x);
@@ -344,33 +293,36 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		i++;
 	}
 	color = mult_color(obj[intersec->obj].mat.col, (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
-	if (color.r * fact.x < 256)
-	{
-		if (color.r * fact.x >= 0)
-			color.r *= fact.x;
-		else
-			color.r = 0;
-	}
-	else
-		color.r = 255;
-	if (color.g * fact.y < 256)
-	{
-		if (color.g * fact.y >= 0)
-			color.g *= fact.y;
-		else
-			color.g = 0;
-	}
-	else
-		color.g = 255;
-	if (color.b * fact.z < 256)
-	{
-		if (color.b * fact.z >= 0)
-			color.b *= fact.z;
-		else
-			color.b = 0;
-	}
-	else
-		color.b = 255;
+	// if (color.r * fact.x < 256)
+	// {
+	// 	if (color.r * fact.x >= 0)
+	// 		color.r *= fact.x;
+	// 	else
+	// 		color.r = 0;
+	// }
+	// else
+	// 	color.r = 255;
+	// if (color.g * fact.y < 256)
+	// {
+	// 	if (color.g * fact.y >= 0)
+	// 		color.g *= fact.y;
+	// 	else
+	// 		color.g = 0;
+	// }
+	// else
+	// 	color.g = 255;
+	// if (color.b * fact.z < 256)
+	// {
+	// 	if (color.b * fact.z >= 0)
+	// 		color.b *= fact.z;
+	// 	else
+	// 		color.b = 0;
+	// }
+	// else
+	// 	color.b = 255;
+	color.r = (size_t)(color.r * fact.x) % 256;
+	color.g = (size_t)(color.g * fact.y) % 256;
+	color.b = (size_t)(color.b * fact.z) % 256;
 	color.a = 255;
 	*img = add_colors(*img, mult_color(color, ray->f));
 }

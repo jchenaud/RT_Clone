@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 09:05:16 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/11 03:24:35 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 # define PRINT_KEYS	1
 # define DEBUG_MODE	2
+# define PREVIEW	4
 
 # define WIN_RATIO	9/16
 
@@ -94,6 +95,7 @@ void			create_cam_rays(t_env *env, t_cam *cam, size_t m, size_t max);
 void			calculate_intersections(t_env *env, size_t n);
 void			calculate_rays(t_cl *cl, size_t p);
 void			launch_kernel(t_env *env);
+void			render_preview(t_env *env, t_cam *cam, t_img *img);
 
 void			resize_images(t_env *env);
 

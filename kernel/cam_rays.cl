@@ -1,8 +1,5 @@
 #include "kernel/kernel.hcl"
 
-#define get_vector_norm(a)	sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
-#define add_vectors(a, b)	(float3){a.x + b.x, a.y + b.y, a.z + b.z}
-
 inline void	normalize_vector(float3 *vec)
 {
 	float	norm = get_vector_norm(vec);

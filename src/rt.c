@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/10 06:13:06 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/11 05:26:42 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		main(int argc, char **argv)
 	SDL_SetWindowIcon(env->win->win, env->icone);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
+	ft_putchar('\n');
 	if (parsing(env->file, env) == -1)
 		error(64, 1, NULL);
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);

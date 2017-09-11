@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 07:21:34 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/11 05:30:11 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void		launch_kernel(t_env *env)
 		gettimeofday(&end, NULL);
 		diff = (end.tv_sec - start.tv_sec) +
 		(end.tv_usec - start.tv_usec) / (double)1000000;
-		printf("took %.2luh %.2lumin %.2lus %.3lums\n", ((size_t)diff) / 3600,
-		(((size_t)diff) % 3600) / 60, ((size_t)diff) % 60,
-		(size_t)(diff * 1000) % 1000);
+		printf("\033[1A\033[0K%s: took %.2luh %.2lumin %.2lus %.3lums\n",
+		cam->output, ((size_t)diff) / 3600, (((size_t)diff) % 3600) / 60,
+		((size_t)diff) % 60, (size_t)(diff * 1000) % 1000);
 		antialiase(env->antialias_level, &env->cl, cam->img);
 		cams = cams->next;
 	}

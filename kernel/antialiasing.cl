@@ -1,18 +1,4 @@
-typedef struct	s_color
-{
-	uchar		r;
-	uchar		g;
-	uchar		b;
-	uchar		a;
-}				t_color;
-
-typedef struct	s_img
-{
-	void		*ptr;
-	t_color		*img;
-	int			w;
-	int			h;
-}				t_img;
+#include "kernel/kernel.hcl"
 
 __kernel void	antialiasing(__global t_img *size, __global t_color *dest, __global t_color *src)
 {

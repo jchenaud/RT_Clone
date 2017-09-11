@@ -1,57 +1,6 @@
 #include "kernel/kernel.hcl"
 
-#define get_sphere(x)		x->obj.sphere
-#define get_plan(x)		x->obj.plan
-#define get_pave(x)		x->obj.pave
-#define get_cone(x)		x->obj.cone
-#define get_cylinder(x)	x->obj.cylinder
-
-#define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
-#define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
-#define get_vector_norm(a)		sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
-#define get_vectors_angle(a, b)	scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
-#define new_vector(x, y, z)		(float3){x, y, z}
-#define add_vectors(a, b)		(float3){a.x + b.x, a.y + b.y, a.z + b.z}
-#define sub_vectors(a, b)		(float3){a.x - b.x, a.y - b.y, a.z - b.z}
-#define mult_vectors(a, b)		(float3){a.x * b.x, a.y * b.y, a.z * b.z}
-#define mult_vector(a, b)		(float3){a.x * b, a.y * b, a.z * b}
-
-#define SPHERE		1
-#define CONE		2
-#define PLAN		3
-#define CYLINDER	4
-#define PAVE		5
-
-#define PI			3.1415926535
-
-inline void	normalize_vector(float3 *vec)
-{
-	float	norm = get_vector_norm(vec);
-
-	vec->x /= norm;
-	vec->y /= norm;
-	vec->z /= norm;
-}
-
-inline void	rotate_point(float *x, float *y, float angle)
-{
-	float	c = cos(angle);
-	float	s = sin(angle);
-	float	t_x;
-
-	t_x = *x;
-	*x = *x * c - *y * s;
-	*y = t_x * s + *y * c;
-}
-
-inline void	rotate_vec(float3 *vec, float3 angle)
-{
-	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
-	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
-	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
-}
-
-inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
+inline float	hit_sphere(__global t_ray *ray, __global t_obj *obj)
 {
 	float3	x = sub_vectors(ray->pos, obj->pos);
 	float	a = scalar_vectors(ray->dir, ray->dir);
@@ -72,7 +21,7 @@ inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline float	hit_plan(t_ray *ray, __global t_obj *obj)
+inline float	hit_plan(__global t_ray *ray, __global t_obj *obj)
 {
 	float	h;
 
@@ -82,7 +31,7 @@ inline float	hit_plan(t_ray *ray, __global t_obj *obj)
 	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
 }
 
-inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
+inline float	hit_cylinder(__global t_ray *ray, __global t_obj *obj)
 {
 	float3		x = sub_vectors(ray->pos, obj->pos);
 	float		a = scalar_vectors(ray->dir, ray->dir) - pown(scalar_vectors(ray->dir, get_cylinder(obj).norm), 2);
@@ -103,7 +52,7 @@ inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline float	hit_cone(t_ray *ray, __global t_obj *obj)
+inline float	hit_cone(__global t_ray *ray, __global t_obj *obj)
 {
 	float3		x = sub_vectors(ray->pos, obj->pos);
 	float		t = scalar_vectors(ray->dir, get_cone(obj).norm);
@@ -126,21 +75,17 @@ inline float	hit_cone(t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
-inline t_color	raytrace_ray(t_ray *ray, __global uint *n_obj, __global t_obj *obj,
-					__global uint *n_light, __global t_light *light, uint reflect)
+__kernel void	raytracer(__global t_color *img, __global t_ray *ray,
+				__global uint *n_obj, __global t_obj *obj)
 {
-	uint	i;
-	int		j;
-	float	h;
-	float	prev;
+	t_intersec	ret = {-1, -1};
+	float		h;
+	uint		i = 0;
+	int			id = get_global_id(0);
 
-	i = 0;
-	j = -1;
-	prev = -1;
+	ray = &ray[id];
 	while (i < *n_obj)
 	{
-		h = -1;
-
 		if (obj[i].type == SPHERE)
 			h = hit_sphere(ray, &obj[i]);
 		else if (obj[i].type == PLAN)
@@ -149,32 +94,15 @@ inline t_color	raytrace_ray(t_ray *ray, __global uint *n_obj, __global t_obj *ob
 			h = hit_cylinder(ray, &obj[i]);
 		else if (obj[i].type == CONE)
 			h = hit_cone(ray, &obj[i]);
-		if (h > 0.001 && (h < prev || prev == -1))
+		if (h > 0.01 && (h < ret.h || ret.h == -1))
 		{
-			j = i;
-			prev = h;
+			ret.obj = i;
+			ret.h = h;
 		}
 		i++;
 	}
-	if (j != -1)
-		return (obj[j].mat.col);
-	return ((t_color){0, 0, 0, 255});
-}
-
-__kernel void	raytracer(__global t_color *img, __global t_cam *cam,
-				__global uint *n_obj, __global t_obj *obj,
-				__global uint *n_light, __global t_light *light)
-{
-	t_ray	ray;
-	int		id = get_global_id(0);
-	float	l;
-
-	ray.dir = (float3){1, 0, 0};
-	l = 2 * cam->dis * tan(cam->fov.x / 2);
-	ray.dir.y = (2 * l * (id % cam->w)) / (cam->w - 1) - l;
-	l = 2 * cam->dis * tan(cam->fov.y / 2);
-	ray.dir.z = (2 * l * (id / cam->w)) / (cam->h - 1) - l;
-	rotate_vec(&ray.dir, cam->rot);
-	ray.pos = add_vectors(cam->pos, ray.dir);
-	img[id] = raytrace_ray(&ray, n_obj, obj, n_light, light, 0);
+	if (ret.obj >= 0 && ret.obj < *(__global int*)n_obj)
+		img[id] = obj[ret.obj].mat.col;
+	else
+		img[id] = (t_color){0, 0, 0, 255};
 }

@@ -1,6 +1,32 @@
 #ifndef lol_nik_la_norme
 # define lol_nik_la_norme
 
+// #define SWITCH
+
+#define get_sphere(x)	x->obj.sphere
+#define get_plan(x)		x->obj.plan
+#define get_pave(x)		x->obj.pave
+#define get_cone(x)		x->obj.cone
+#define get_cylinder(x)	x->obj.cylinder
+
+#define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
+#define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
+#define get_vector_norm(a)		sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
+#define get_vectors_angle(a, b)	scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
+#define new_vector(x, y, z)		(float3){x, y, z}
+#define add_vectors(a, b)		(float3){a.x + b.x, a.y + b.y, a.z + b.z}
+#define sub_vectors(a, b)		(float3){a.x - b.x, a.y - b.y, a.z - b.z}
+#define mult_vectors(a, b)		(float3){a.x * b.x, a.y * b.y, a.z * b.z}
+#define mult_vector(a, b)		(float3){a.x * b, a.y * b, a.z * b}
+
+#define SPHERE		1
+#define CONE		2
+#define PLAN		3
+#define CYLINDER	4
+#define PAVE		5
+
+#define ALPHA		100
+
 typedef struct	s_color
 {
 	uchar		g;
@@ -8,6 +34,14 @@ typedef struct	s_color
 	uchar		r;
 	uchar		a;
 }				t_color;
+
+typedef struct	s_img
+{
+	void		*ptr;
+	t_color		*img;
+	int			w;
+	int			h;
+}				t_img;
 
 typedef union	u_name
 {
