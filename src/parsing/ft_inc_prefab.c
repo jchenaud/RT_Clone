@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 01:51:45 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/10 04:25:32 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/09/14 01:56:39 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ int ft_inc_prefab(xmlNode* root, t_env *e)
 		e->pref->prefab_name = p_name;
 	
 	data = ft_joinf("%s/%s.xml",path,p_name);
-	doc = xmlReadFile( data,NULL,0);   		
+	if(!(doc = xmlReadFile( data,NULL,0)))
+		return (-1);  		
 	free(data);
 	current = xmlDocGetRootElement( doc );
 

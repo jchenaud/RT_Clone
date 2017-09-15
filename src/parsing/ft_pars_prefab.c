@@ -17,11 +17,11 @@
 
 int ft_pars_prefab(t_env *e, xmlNode* current)
 {
-
-
  	 t_obj  new_obj;
  	 e->pref->p_obj = NULL;
 
+ 	ft_bzero(&new_obj, sizeof(t_obj));
+ 	ft_init_obj_default(&new_obj);
  	 t_list *tmp_af;
 
  	 tmp_af = e->pref->p_obj;

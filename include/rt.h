@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/11 03:24:35 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/15 09:59:33 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@
 # define PLAN		3
 # define CYLINDER	4
 # define PAVE		5
+# define TRIANGLE	6
 
 # define HITBOX		1
 # define HITMODE	2
+
+# define VISIBLE	0
+# define INVISIBLE	1
 
 # define PRINT_KEYS	1
 # define DEBUG_MODE	2
@@ -62,6 +66,8 @@ typedef struct	s_env
 	t_list		*cam;
 	t_list		*light;
 	t_prefab	*pref;
+	t_prefab 	*pf_o;
+	t_vector	*textures;
 	t_uint		i;
 	t_uint		n;
 	t_img		*img;
@@ -80,6 +86,8 @@ int				parsing(char *file, t_env *e);
 
 void			get_flags(t_env *env, int argc, char **argv);
 
+void			allocate_textures(t_env *env);
+void			alloc_images(t_list *cam);
 void			init_opencl(t_cl *cl);
 cl_mem			create_buffer(t_cl *cl, cl_mem_flags flags,
 				size_t size, void *ptr);
@@ -103,6 +111,7 @@ void			antialiase(t_uchar antialias, t_cl *cl, t_img *img);
 
 int				loop(t_env *env);
 
+void			ft_init_obj_default(t_obj *new_obj);
 int 			ft_inc_prefab(xmlNode* root, t_env *e);
 char 			*get_path_prefab(xmlNode *current);
 char*			get_p_name(xmlNode *current,int i);
@@ -112,12 +121,34 @@ int 			ft_add_modifier_to_prefab(t_env *e,xmlNode* current);
 
 t_prefab 		*are_prefab(xmlNode* current,t_prefab *tmp);
 void			modi_pos(t_prefab *tmp, xmlNode *current);
-cl_float 		get_float_xml(char *name, xmlNode * current);
 int 			ft_pars_prefab(t_env *e, xmlNode* current);
+int				pars_triangle(xmlNode *current, t_obj *new_obj);
 int 			pars_cylinder( xmlNode* current, t_obj *new_obj);
-int 			pars_cone( xmlNode* current, t_obj *new_obj);
-int 			pars_plan( xmlNode* current, t_obj *new_obj);
-int 			pars_pave( xmlNode* current, t_obj *new_obj);
-int 			pars_sphere( xmlNode* current, t_obj *new_obj);
+int 			pars_cone(xmlNode* current, t_obj *new_obj);
+int 			pars_plan(xmlNode* current, t_obj *new_obj);
+int 			pars_pave(xmlNode* current, t_obj *new_obj);
+int 			pars_sphere(xmlNode* current, t_obj *new_obj);
+int				pars_cam(xmlNode* current, t_cam *new_cam);
+int 			pars_light(xmlNode* current, t_light *new_light);
+
+
+void 			get_box(xmlNode *current, t_obj *new_obj);
+cl_float3		get_float3(xmlNode *current);
+cl_float3 		get_float3_normal(xmlNode *current);
+cl_float4 		get_float4(xmlNode *current);
+cl_float 		get_float_xml(char *name, xmlNode *current);
+cl_uchar		get_uchar_xml(char *name, xmlNode *current);
+cl_uint			get_uint_xml(char *name, xmlNode *current);
+
+
+t_color 		get_color(xmlNode *current);
+cl_float3		get_light_fac(xmlNode *current);
+void 			get_texture(xmlNode *current, t_obj *new_obj);
+cl_float 		get_rad (xmlNode *current);
+cl_float 		get_ang(xmlNode *current);
+cl_uint			get_w(xmlNode *current);
+cl_uint			get_h(xmlNode *current);
+cl_float		get_dis(xmlNode *current);
+cl_float2		get_fov(xmlNode *current);
 
 #endif

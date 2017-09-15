@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <prefab>
 	<sphere>
-			<pos x="50" y="0" z="0"></pos>
+			<pos x="0" y="0" z="0"></pos>
 			<rot x="0" y="0" z="0"></rot>
-			<col R="255" V="0" B="255" T="255"></col>
-			<rad rad="5"></rad>
-			<ref x="2" y="5" z="1" w="5"></ref>
+			<col R="255" V="0" B="0" T="255"></col>
+			<rad rad="0"></rad>
+			<ref x="1" y="1" z="1" w="0"></ref>
 	</sphere>
 	<sphere>
-			<pos x="10" y="0" z="10"></pos>
+			<pos x="0" y="10" z="0"></pos>
 			<rot x="0" y="0" z="0"></rot>
-			<col R="122" V="0" B="255" T="128"></col>
-			<rad rad="5"></rad>
-			<ref x="2" y="2" z="2" w="2"></ref>
+			<col R="0" V="0" B="255" T="255"></col>
+			<rad rad="0"></rad>
+			<ref x="1" y="1" z="1" w="0"></ref>
 	</sphere>
 </prefab>

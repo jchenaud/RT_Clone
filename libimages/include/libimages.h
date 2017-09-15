@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 22:42:18 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 01:37:05 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/14 05:45:54 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,7 @@
 # include "types.h"
 # include "SDL2/SDL.h"
 
-typedef struct	s_color
-{
-	t_uchar	g;
-	t_uchar	b;
-	t_uchar	r;
-	t_uchar	a;
-}				t_color;
+typedef SDL_Color	t_color;
 
 typedef SDL_Surface	t_img;
 

@@ -1,5 +1,37 @@
 #include "kernel/kernel.hcl"
 
+inline void	rotate_point(float *x, float *y, float angle)
+{
+	float	c = cos(angle);
+	float	s = sin(angle);
+	float	t_x;
+
+	t_x = *x;
+	*x = *x * c - *y * s;
+	*y = t_x * s + *y * c;
+}
+
+inline void	rotate_vec(float3 *vec, float3 angle)
+{
+	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
+	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
+	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
+}
+
+inline char		check_hitbox(__global t_hitbox *hitbox, __global float3 *center, __global t_ray *ray, float *h)
+{
+	float3	point = (float3){ray->dir.x * *h + ray->pos.x, ray->dir.y * *h + ray->pos.y, ray->dir.z * *h + ray->pos.z};
+
+	point = sub_vectors(point, (*center));
+	rotate_vec(&point, (float3){-hitbox->rot.x, -hitbox->rot.y, -hitbox->rot.z});
+	point = add_vectors(point, (*center));
+	if (point.x < hitbox->min.x || point.x > hitbox->max.x ||
+		point.y < hitbox->min.y || point.y > hitbox->max.y ||
+		point.z < hitbox->min.z || point.z > hitbox->max.z)
+		return ((hitbox->type & INVISIBLE) ? 1 : 0);
+	return ((hitbox->type & INVISIBLE) ? 0 : 1);
+}
+
 inline float	hit_sphere(__global t_ray *ray, __global t_obj *obj)
 {
 	float3	x = sub_vectors(ray->pos, obj->pos);
@@ -14,9 +46,11 @@ inline float	hit_sphere(__global t_ray *ray, __global t_obj *obj)
 		return (-1);
 	h1 = (-b - sqrt(delta)) / (2 * a);
 	h2 = (-b + sqrt(delta)) / (2 * a);
-	if (h1 < 0)
+	h1 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h1)) ? h1 : -1;
+	h2 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h2)) ? h2 : -1;
+	if (h1 < MARGE)
 		return (h2);
-	if (h2 < 0)
+	if (h2 < MARGE)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
@@ -26,6 +60,7 @@ inline float	hit_plan(__global t_ray *ray, __global t_obj *obj)
 	float	h;
 
 	h = scalar_vectors(get_plan(obj).norm, ray->dir);
+	h = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h)) ? h : -1;
 	if (h == 0)
 		return (-42);
 	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
@@ -45,9 +80,11 @@ inline float	hit_cylinder(__global t_ray *ray, __global t_obj *obj)
 		return (-1);
 	h1 = (-b - sqrt(delta)) / (2 * a);
 	h2 = (-b + sqrt(delta)) / (2 * a);
-	if (h1 < 0)
+	h1 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h1)) ? h1 : -1;
+	h2 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h2)) ? h2 : -1;
+	if (h1 < MARGE)
 		return (h2);
-	if (h2 < 0)
+	if (h2 < MARGE)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
@@ -68,6 +105,8 @@ inline float	hit_cone(__global t_ray *ray, __global t_obj *obj)
 		return (-1);
 	h1 = (-b - sqrt(delta)) / (2 * a);
 	h2 = (-b + sqrt(delta)) / (2 * a);
+	h1 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h1)) ? h1 : -1;
+	h2 = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h2)) ? h2 : -1;
 	if (h1 < 0)
 		return (h2);
 	if (h2 < 0)
@@ -93,22 +132,20 @@ __kernel void	intersection(__global t_intersec *intersec, __global t_intersec *p
 	}
 	while (i < *n_obj)
 	{
-		h = -1;
-		if (prev->obj == -1 || (int)i != prev->obj)
+		if (obj[i].type == SPHERE)
+			h = hit_sphere(ray, &obj[i]);
+		else if (obj[i].type == PLAN)
+			h = hit_plan(ray, &obj[i]);
+		else if (obj[i].type == CYLINDER)
+			h = hit_cylinder(ray, &obj[i]);
+		else if (obj[i].type == CONE)
+			h = hit_cone(ray, &obj[i]);
+		else
+			h = -1;
+		if (h > MARGE && (h < ret.h || ret.h == -1))
 		{
-			if (obj[i].type == SPHERE)
-				h = hit_sphere(ray, &obj[i]);
-			else if (obj[i].type == PLAN)
-				h = hit_plan(ray, &obj[i]);
-			else if (obj[i].type == CYLINDER)
-				h = hit_cylinder(ray, &obj[i]);
-			else if (obj[i].type == CONE)
-				h = hit_cone(ray, &obj[i]);
-			if (h > 0.01 && (h < ret.h || ret.h == -1))
-			{
-				ret.obj = i;
-				ret.h = h;
-			}
+			ret.obj = i;
+			ret.h = h;
 		}
 		i++;
 	}

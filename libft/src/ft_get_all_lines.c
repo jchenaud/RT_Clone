@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 16:06:11 by pribault          #+#    #+#             */
-/*   Updated: 2017/06/17 16:46:59 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/03 23:38:18 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	ft_get_all_lines(int fd, char **str)
 	*str = NULL;
 	while ((r = read(fd, buffer, BUFF_SIZE)))
 	{
-		*str = realloc(*str, size + r);
+		ft_realloc((void**)str, size, size + r);
 		ft_memcpy(*str + size, buffer, r);
 		size += r;
 	}

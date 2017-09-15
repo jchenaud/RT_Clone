@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 15:42:02 by pribault          #+#    #+#             */
-/*   Updated: 2017/07/16 12:05:47 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/01 02:57:15 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_atoi(char *str)
 	negative = 1;
 	number = 0;
 	i = 0;
-	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14) || str[i] == 0)
+	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 		negative = 44 - str[i++];
@@ -42,7 +42,7 @@ int		ft_atoi_base(char *str, char *base)
 	number = 0;
 	len = ft_strlen(base);
 	i = 0;
-	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14) || str[i] == 0)
+	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
 		i++;
 	if (str[i] == '+' || str[i] == '-')
 		negative = 44 - str[i++];

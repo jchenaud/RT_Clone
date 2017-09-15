@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/11 05:26:42 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/15 09:03:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,26 @@ void	*alloc_array(t_list *head, t_uint *n)
 	return ((void*)new);
 }
 
-void	alloc_images(t_list *cam)
+void	add_prefabs(t_env *env)
 {
-	t_cam	*current;
+	t_prefab	*prefab;
+	void		*new;
+	t_uint		n;
+	t_uint		i;
 
-	while (cam)
+	n = 0;
+	prefab = env->pref;
+	while (prefab)
 	{
-		current = (t_cam*)cam->content;
-		current->img = new_img(current->w, current->h);
-		cam = cam->next;
+		new = alloc_array(prefab->p_obj, &i);
+		ft_realloc((void**)&env->cl.obj, sizeof(t_obj) * env->cl.n_obj,
+		sizeof(t_obj) * (env->cl.n_obj + i));
+		ft_memcpy(&env->cl.obj[env->cl.n_obj],
+		new, sizeof(t_obj) * i);
+		env->cl.n_obj += i;
+		free(new);
+		n++;
+		prefab = prefab->next;
 	}
 }
 
@@ -104,11 +115,13 @@ int		main(int argc, char **argv)
 	SDL_SetWindowIcon(env->win->win, env->icone);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
-	ft_putchar('\n');
 	if (parsing(env->file, env) == -1)
 		error(64, 1, NULL);
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
+	add_prefabs(env);
+	allocate_textures(env);
+	ft_putchar('\n');
 	alloc_images(env->cam);
 	launch_kernel(env);
 	place_in_list(env);

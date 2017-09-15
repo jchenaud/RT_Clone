@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 16:13:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/27 19:17:10 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/15 00:44:46 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /*
 ** includes
 */
+
+# define ENABLE_REALLOC
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -27,7 +29,8 @@
 ** macros
 */
 
-# define BUFF_SIZE 		4096
+# define VECTOR_SIZE	1024
+# define BUFF_SIZE 		32
 # define SIZE 			4096
 # define COS_MAX		30
 
@@ -41,6 +44,14 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_vector
+{
+	size_t			size;
+	size_t			type;
+	size_t			n;
+	void			*ptr;
+}					t_vector;
 
 /*
 ** prototypes
@@ -59,6 +70,8 @@ size_t				ft_nbrlen(int nbr);
 size_t				ft_nbrlen_base(int nbr, int base);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+void				ft_strtolower(char *str);
+void				ft_strtoupper(char *str);
 
 /*
 **	write functions
@@ -116,6 +129,7 @@ void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				ft_memdel(void **ap);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memset(void *b, int c, size_t len);
+void				ft_realloc(void **ptr, size_t prev_size, size_t new_size);
 
 /*
 **	array functions
@@ -136,6 +150,17 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstswap(t_list **lst1, t_list **lst2);
+
+/*
+**	vector functions
+*/
+
+void				ft_vector_add(t_vector *vector, void *ptr);
+void				ft_vector_del(t_vector **vector);
+void				*ft_vector_get(t_vector *vector, size_t n);
+t_vector			*ft_vector_new(size_t type, size_t n);
+void				ft_vector_printhex(t_vector *vector);
+void				ft_vector_resize(t_vector *vector, size_t new_size);
 
 /*
 **	string functions

@@ -6,17 +6,29 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 08:37:33 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/14 05:07:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+void	alloc_images(t_list *cam)
+{
+	t_cam	*current;
+
+	while (cam)
+	{
+		current = (t_cam*)cam->content;
+		current->img = new_img(current->w, current->h);
+		cam = cam->next;
+	}
+}
+
 cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 {
 	cl_program	program;
 	cl_int		tmp;
-	char		log[16384];
+	char		log[32768];
 	char		*line;
 	int			fd[2];
 
@@ -26,9 +38,9 @@ cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 	program = clCreateProgramWithSource(cl->context, 1, (const char**)&line,
 	NULL, NULL);
 	tmp = clBuildProgram(program, 1, &cl->device, NULL, NULL, NULL);
-	clGetProgramBuildInfo(program, cl->device, CL_PROGRAM_BUILD_LOG, 16384,
+	clGetProgramBuildInfo(program, cl->device, CL_PROGRAM_BUILD_LOG, 32768,
 	log, NULL);
-	if (!tmp)
+	if (tmp == CL_SUCCESS)
 		fd[1] = (ft_strlen(log)) ? 208 : 154;
 	else
 		fd[1] = 124;

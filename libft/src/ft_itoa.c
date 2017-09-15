@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:41:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/07/16 13:00:54 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/01 07:21:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char			*ft_itoa_base(int n, char *base)
 	while (len > 0)
 	{
 		result[i++] = base[ft_abs(n / ft_power(b, len - 1))];
-		n = n - (n / ft_power(b, len - 1)) * ft_power(b, len - 1);
+		n = n % ft_power(b, len - 1);
 		len--;
 	}
 	result[i] = '\0';

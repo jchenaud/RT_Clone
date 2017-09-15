@@ -61,6 +61,7 @@ SRCS = ft_joinf.c\
 	   ft_putstr.c\
 	   ft_putstr_fd.c\
 	   ft_rand.c\
+	   ft_realloc.c\
 	   ft_showtab.c\
 	   ft_showtab_fd.c\
 	   ft_sqrt.c\
@@ -92,9 +93,15 @@ SRCS = ft_joinf.c\
 	   ft_strsub.c\
 	   ft_strtrim.c\
 	   ft_tolower.c\
-	   ft_toupper.c
+	   ft_toupper.c\
+	   ft_vector_add.c\
+	   ft_vector_del.c\
+	   ft_vector_get.c\
+	   ft_vector_new.c\
+	   ft_vector_printhex.c\
+	   ft_vector_resize.c
 OBJS = $(SRCS:%.c=src/%.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra
 INCLUDE = include
 
 .PHONY: clean fclean all re norme

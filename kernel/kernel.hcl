@@ -8,16 +8,19 @@
 #define get_pave(x)		x->obj.pave
 #define get_cone(x)		x->obj.cone
 #define get_cylinder(x)	x->obj.cylinder
+#define get_triangle(x)	x->obj.triangle
 
-#define get_distance(a, b)		(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
-#define scalar_vectors(a, b)	(float)(a.x * b.x + a.y * b.y + a.z * b.z)
-#define get_vector_norm(a)		sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
-#define get_vectors_angle(a, b)	scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
-#define new_vector(x, y, z)		(float3){x, y, z}
-#define add_vectors(a, b)		(float3){a.x + b.x, a.y + b.y, a.z + b.z}
-#define sub_vectors(a, b)		(float3){a.x - b.x, a.y - b.y, a.z - b.z}
-#define mult_vectors(a, b)		(float3){a.x * b.x, a.y * b.y, a.z * b.z}
-#define mult_vector(a, b)		(float3){a.x * b, a.y * b, a.z * b}
+#define get_distance(a, b)				(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
+#define scalar_vectors(a, b)			(float)(a.x * b.x + a.y * b.y + a.z * b.z)
+#define get_vector_norm(a)				sqrt(a->x * a->x + a->y * a->y + a->z * a->z)
+#define get_vectors_angle(a, b)			scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
+#define new_vector(x, y, z)				((float3){x, y, z})
+#define add_vectors(a, b)				((float3){a.x + b.x, a.y + b.y, a.z + b.z})
+#define sub_vectors(a, b)				((float3){a.x - b.x, a.y - b.y, a.z - b.z})
+#define mult_vectors(a, b)				((float3){a.x * b.x, a.y * b.y, a.z * b.z})
+#define mult_vector(a, b)				((float3){a.x * b, a.y * b, a.z * b})
+#define invert_color(c)					((t_color){c.g, c.b, c.r, c.a})
+#define ft_abs(x)						((x < 0) ? -x : x)
 
 #define SPHERE		1
 #define CONE		2
@@ -26,27 +29,48 @@
 #define PAVE		5
 
 #define ALPHA		100
+#define MARGE		0.001
+
+#define INVISIBLE	1
+
+#define PI			3.1415926535
 
 typedef struct	s_color
 {
-	uchar		g;
-	uchar		b;
 	uchar		r;
+	uchar		b;
+	uchar		g;
 	uchar		a;
 }				t_color;
 
-typedef struct	s_img
+typedef struct	s_rect
 {
-	void		*ptr;
-	t_color		*img;
+	int			x;
+	int			y;
 	int			w;
 	int			h;
+}				t_rect;
+
+typedef struct	s_img
+{
+	uint		flags;
+	void		*format;
+	int			w;
+	int			h;
+	int			pitch;
+	void		*pixels;
+	void		*userdata;
+	int			locked;
+	void		*lock_data;
+	t_rect		clip_rect;
+	void		*map;
+	int			refcount;
 }				t_img;
 
 typedef union	u_name
 {
 	char		*name;
-	size_t		n;
+	int			n;
 }				t_name;
 
 typedef struct	s_texture
@@ -92,6 +116,12 @@ typedef struct	s_cylinder
 	float		rad;
 }				t_cylinder;
 
+typedef struct	s_triangle
+{
+	float3		point[3];
+	float3		norm[3];
+}				t_triangle;
+
 typedef union	u_union
 {
 	t_pave		pave;
@@ -99,6 +129,7 @@ typedef union	u_union
 	t_plan		plan;
 	t_cone		cone;
 	t_cylinder	cylinder;
+	t_triangle	triangle;
 }				t_union;
 
 typedef struct	s_mat
@@ -106,7 +137,8 @@ typedef struct	s_mat
 	t_color		col;
 	float4		ref;
 	float		refraction;
-	t_texture	*textures[3];
+	t_name		textures[3];
+	float2		size;
 }				t_mat;
 
 typedef struct	s_obj

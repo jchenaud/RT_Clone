@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:15:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/07 08:36:25 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/13 07:44:55 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,15 @@ typedef struct			s_cl
 	t_obj				*obj;
 	t_uint				n_light;
 	t_light				*light;
+	void				*textures;
+	size_t				textures_size;
 	cl_mem				img_mem;
 	cl_mem				cam_mem;
 	cl_mem				n_obj_mem;
 	cl_mem				obj_mem;
 	cl_mem				n_light_mem;
 	cl_mem				light_mem;
+	cl_mem				textures_mem;
 	cl_mem				intersecs;
 	cl_mem				rays;
 	cl_int				error;

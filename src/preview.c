@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 02:50:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/11 03:25:56 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/13 00:47:28 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	launch_preview(t_cl *cl, t_cam *cam, t_color *img)
 	delete_buffer(img_mem);
 }
 
-void	render_preview(t_env *env, t_cam *cam, t_img *img)
+void		render_preview(t_env *env, t_cam *cam, t_img *img)
 {
 	SDL_Texture	*texture;
 	t_cam		tmp;

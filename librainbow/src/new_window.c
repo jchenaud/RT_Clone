@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:40:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/30 04:28:24 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/15 01:22:07 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_win	*new_window(char *title, t_uint16 w, t_uint16 h)
 	t_win			*win;
 	SDL_DisplayMode	mode;
 
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO) < 0 || !IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG))
 		return (NULL);
 	if (!(win = (t_win*)malloc(sizeof(t_win))) ||
 	!(win->win = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/06 05:02:10 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/15 04:13:42 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@
 typedef union			u_name
 {
 	char				*name;
-	size_t				n;
+	int					n;
 }						t_name;
 
 typedef struct			s_texture
 {
-	t_name				name;
+	char				*name;
 	t_img				*img;
 }						t_texture;
 
@@ -88,6 +88,12 @@ typedef struct			s_cylinder
 	cl_float			rad;
 }						t_cylinder;
 
+typedef struct			s_triangle
+{
+	cl_float3			point[3];
+	cl_float3			norm[3];
+}						t_triangle;
+
 typedef union			u_union
 {
 	t_pave				pave;
@@ -95,6 +101,7 @@ typedef union			u_union
 	t_plan				plan;
 	t_cone				cone;
 	t_cylinder			cylinder;
+	t_triangle			triangle;
 }						t_union;
 
 typedef struct			s_cam
@@ -135,8 +142,9 @@ typedef struct			s_mat
 {
 	t_color				col;
 	cl_float4			ref;
-	cl_float			refraction;
-	t_texture			*textures[3];
+	cl_float			refrac;
+	t_name				textures[3];
+	cl_float2			size;
 }						t_mat;
 
 typedef struct			s_obj
