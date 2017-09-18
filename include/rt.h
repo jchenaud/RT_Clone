@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 11:01:03 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 11:17:00 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 
 # define VISIBLE	0
 # define INVISIBLE	1
+
+# define PARALLELE	1
 
 # define PRINT_KEYS	0x1
 # define DEBUG_MODE	0x2

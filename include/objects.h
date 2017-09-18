@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 10:56:05 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 11:18:58 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ typedef struct			s_light
 	cl_float3			pos;
 	t_color				col;
 	cl_float3			i;
+	cl_float3			norm;
+	cl_uchar			type;
 }						t_light;
 
 /*
@@ -151,10 +153,10 @@ typedef struct			s_obj
 {
 	cl_float3			pos;
 	cl_float3			rot;
-	cl_uchar			type;
 	t_mat				mat;
 	t_hitbox			hitbox;
 	t_union				obj;
+	cl_uchar			type;
 }						t_obj;
 
 typedef struct			s_prefab

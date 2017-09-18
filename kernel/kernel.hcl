@@ -146,10 +146,10 @@ typedef struct	s_obj
 {
 	float3		pos;
 	float3		rot;
-	uchar		type;
 	t_mat		mat;
 	t_hitbox	hitbox;
 	t_union		obj;
+	uchar		type;
 }				t_obj;
 
 typedef struct	s_light
@@ -157,6 +157,8 @@ typedef struct	s_light
 	float3		pos;
 	t_color		col;
 	float3		i;
+	float3		norm;
+	uchar		type;
 }				t_light;
 
 typedef struct	s_cam
