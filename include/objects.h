@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 04:13:42 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 09:52:20 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct			s_mat
 	t_color				col;
 	cl_float4			ref;
 	cl_float			refrac;
-	t_name				textures[3];
+	t_name				textures[4];
 	cl_float2			size;
 }						t_mat;
 

@@ -4,8 +4,8 @@ inline t_color	add_colors(t_color a, t_color b)
 {
 	return ((t_color){
 	(a.r + b.r < 0) ? 0 : ((a.r + b.r > 255) ? 255 : a.r + b.r),
-	(a.b + b.b < 0) ? 0 : ((a.b + b.b > 255) ? 255 : a.b + b.b),
 	(a.g + b.g < 0) ? 0 : ((a.g + b.g > 255) ? 255 : a.g + b.g),
+	(a.b + b.b < 0) ? 0 : ((a.b + b.b > 255) ? 255 : a.b + b.b),
 	255});
 }
 
@@ -196,16 +196,20 @@ float2			get_plan_uv(__global t_obj *obj, float3 point, __global t_img *img)
 	float2	uv;
 	float	norm = get_vector_norm((&get_plan(obj).norm));
 
+	point = sub_vectors(point, obj->pos);
 	rotate_vec(&point, (float3){
-	0 - acos(get_plan(obj).norm.z / norm),
-	PI / 2 - acos(get_plan(obj).norm.x / norm),
-	PI / 2 - acos(get_plan(obj).norm.y / norm)});
+	0 - acos(get_plan(obj).norm.z / norm) + obj->rot.x,
+	PI / 2 - acos(get_plan(obj).norm.x / norm) + obj->rot.y,
+	PI / 2 - acos(get_plan(obj).norm.y / norm) + obj->rot.z});
+	point = add_vectors(point, obj->pos);
+	point.x /= obj->mat.size.x;
+	point.y /= obj->mat.size.y;
 	uv.x = (point.x >= 0) ?
-	fmod(ft_abs(point.x / 10), 1) :
-	1 - fmod(ft_abs(point.x / 10), 1);
+	fmod(ft_abs(point.x), 1) :
+	1 - fmod(ft_abs(point.x), 1);
 	uv.y = (point.y >= 0) ?
-	fmod(ft_abs(point.y / 10), 1) :
-	1 - fmod(ft_abs(point.y / 10), 1);
+	fmod(ft_abs(point.y), 1) :
+	1 - fmod(ft_abs(point.y), 1);
 	return (uv);
 }
 
@@ -214,15 +218,17 @@ float2			get_cylinder_uv(__global t_obj *obj, float3 point, __global t_img *img)
 	float2	uv;
 	float	norm = get_vector_norm((&get_plan(obj).norm));
 
+	point = sub_vectors(point, obj->pos);
 	rotate_vec(&point, (float3){
 	0 - acos(get_plan(obj).norm.z / norm),
 	PI / 2 - acos(get_plan(obj).norm.x / norm),
 	PI / 2 - acos(get_plan(obj).norm.y / norm)});
+	point = add_vectors(point, obj->pos);
 	uv.x = (point.y - obj->pos.y >= 0) ?
 	0.5 - acos((point.x - obj->pos.x) / get_cylinder(obj).rad) / (2 * PI) :
 	0.5 - (2 * PI - acos((point.x - obj->pos.x) / get_cylinder(obj).rad)) / (2 * PI);
 	uv.x += (uv.x < 0) ? 1 : 0;
-	point.z /= 10;
+	point.z /= obj->mat.size.y;
 	uv.y = fmod(ft_abs(point.z), 1);
 	return (uv);
 }
@@ -233,16 +239,18 @@ float2			get_cone_uv(__global t_obj *obj, float3 point, __global t_img *img)
 	float	norm = get_vector_norm((&get_plan(obj).norm));
 	float	r;
 
+	point = sub_vectors(point, obj->pos);
 	rotate_vec(&point, (float3){
 	0 - acos(get_plan(obj).norm.z / norm),
 	PI / 2 - acos(get_plan(obj).norm.x / norm),
 	PI / 2 - acos(get_plan(obj).norm.y / norm)});
+	point = add_vectors(point, obj->pos);
 	r = sqrt(pown(point.x - obj->pos.x, 2) + pown(point.y - obj->pos.y, 2));
 	uv.x = (point.y - obj->pos.y >= 0) ?
 	0.5 - acos((point.x - obj->pos.x) / r) / (2 * PI) :
 	0.5 - (2 * PI - acos((point.x - obj->pos.x) / r)) / (2 * PI);
 	uv.x += (uv.x < 0) ? 1 : 0;
-	point.z /= 10;
+	point.z /= obj->mat.size.y;
 	uv.y = fmod(ft_abs(point.z), 1);
 	return (uv);
 }
@@ -267,7 +275,8 @@ t_color			get_color(__global t_img *textures, __global t_obj *obj, float3 *point
 	float2			uv;
 
 	if (obj->mat.textures[i].n < 0)
-		return (obj->mat.col);
+		return ((t_color){obj->mat.col.r, obj->mat.col.b, obj->mat.col.g, obj->mat.col.a});
+	// printf("size=(%f %f)\n", obj->mat.size.x, obj->mat.size.y);
 	img = get_texture(textures, obj->mat.textures[i].n);
 	if (obj->type == SPHERE)
 		uv = get_sphere_uv(obj, *point);
@@ -285,16 +294,86 @@ t_color			get_color(__global t_img *textures, __global t_obj *obj, float3 *point
 	return (color);
 }
 
+float3			get_normal_map(__global t_img *textures, __global t_obj *obj, float3 *point)
+{
+	__global t_img	*img;
+	t_color			color;
+	float3			norm = (float3){0, 0, 0};
+	float2			uv;
+
+	if (obj->mat.textures[3].n < 0)
+		return ((float3){0, 0, 1});
+	img = get_texture(textures, obj->mat.textures[3].n);
+	if (obj->type == SPHERE)
+		uv = get_sphere_uv(obj, *point);
+	else if (obj->type == PLAN)
+		uv = get_plan_uv(obj, *point, img);
+	else if (obj->type == CYLINDER)
+		uv = get_cylinder_uv(obj, *point, img);
+	else if (obj->type == CONE)
+		uv = get_cone_uv(obj, *point, img);
+	else
+		uv = (float2){0, 0};
+	uv.x = (isnan(uv.x)) ? 0 : (isinf(uv.x) ? 0 : uv.x);
+	uv.y = (isnan(uv.y)) ? 0 : (isinf(uv.y) ? 0 : uv.y);
+	color = ((__global t_color*)((__global void*)img + sizeof(t_img)))[(int)(uv.y * (img->h - 1)) * img->w + (int)(uv.x * (img->w - 1))];
+	norm = (float3){(color.r - 128) / (float)255, (color.g - 128) / (float)255, (color.b - 128) / (float)255};
+	normalize_vector(&norm);
+	return (norm);
+}
+
+float3			get_norm(__global t_img *textures, __global t_obj *obj, float3 *point)
+{
+	float3	norm_obj;
+	float3	norm_map;
+
+#ifdef SWITCH
+	switch (obj->type)
+	{
+		case SPHERE:
+			norm_obj = get_sphere_norm(obj, point);
+		break;
+		case PLAN:
+			norm_obj = get_plan(obj).norm;
+		break;
+		case CYLINDER:
+			norm_obj = get_cylinder_norm(obj, point);
+		break;
+		case CONE:
+			norm_obj = get_cone_norm(obj, point);
+		break;
+	}
+#else
+	if (obj->type == SPHERE)
+		norm_obj = get_sphere_norm(obj, point);
+	else if (obj->type == PLAN)
+		norm_obj = get_plan(obj).norm;
+	else if (obj->type == CYLINDER)
+		norm_obj = get_cylinder_norm(obj, point);
+	else if (obj->type == CONE)
+		norm_obj = get_cone_norm(obj, point);
+	else
+		norm_obj = get_sphere_norm(obj, point);
+#endif
+	normalize_vector(&norm_obj);
+	norm_map = get_normal_map(textures, obj, point);
+	rotate_vec(&norm_obj, (float3){
+	0 - acos(norm_map.z),
+	PI / 2 - acos(norm_map.x),
+	PI / 2 - acos(norm_map.y)});
+	return (norm_obj);
+}
+
 __kernel void	render_img(__global t_color *img, __global size_t *p,
 				__global t_ray *ray, __global t_intersec *intersec,
 				__global uint *n_obj, __global t_obj *obj,
 				__global uint *n_light, __global t_light *light,
 				__global t_img *textures, __global size_t *j)
 {
-	t_color	color = (t_color){0, 0, 0, 255};
+	t_color	color[3];
 	t_ray	vec;
 	float3	norm;
-	float3	fact = (float3){0, 0, 0};
+	float3	fact[3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 	float	alpha;
 	float	h_tmp;
 	float	tmp;
@@ -313,34 +392,7 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 		return ;
 	}
 	vec.pos = (float3){intersec->h * ray->dir.x + ray->pos.x, intersec->h * ray->dir.y + ray->pos.y, intersec->h * ray->dir.z + ray->pos.z};
-#ifdef SWITCH
-	switch (obj[intersec->obj].type)
-	{
-		case SPHERE:
-			norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
-		break;
-		case PLAN:
-			norm = get_plan((&obj[intersec->obj])).norm;
-		break;
-		case CYLINDER:
-			norm = get_cylinder_norm(&obj[intersec->obj], &vec.pos);
-		break;
-		case CONE:
-			norm = get_cone_norm(&obj[intersec->obj], &vec.pos);
-		break;
-	}
-#else
-	if (obj[intersec->obj].type == SPHERE)
-		norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
-	else if (obj[intersec->obj].type == PLAN)
-		norm = get_plan((&obj[intersec->obj])).norm;
-	else if (obj[intersec->obj].type == CYLINDER)
-		norm = get_cylinder_norm(&obj[intersec->obj], &vec.pos);
-	else if (obj[intersec->obj].type == CONE)
-		norm = get_cone_norm(&obj[intersec->obj], &vec.pos);
-	else
-		norm = get_sphere_norm(&obj[intersec->obj], &vec.pos);
-#endif
+	norm = get_norm(textures, &obj[intersec->obj], &vec.pos);
 	while (i < *n_light)
 	{
 		vec.dir = sub_vectors(light[i].pos, vec.pos);
@@ -435,27 +487,41 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 #endif
 			k++;
 		}
-		tmp = (light[i].i.x * obj[intersec->obj].mat.ref.x);
+		fact[0] = add_vectors(fact[0], mult_vector(((float3){light[i].col.r / (float)255, light[i].col.g / (float)255, light[i].col.b / (float)255}), light[i].i.x * obj[intersec->obj].mat.ref.x));
 		if (k == *n_obj)
 		{
-			tmp += (light[i].i.y * obj[intersec->obj].mat.ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0));
+			fact[1] = add_vectors(fact[1], mult_vector(((float3){light[i].col.r / (float)255, light[i].col.g / (float)255, light[i].col.b / (float)255}), alpha * light[i].i.y * obj[intersec->obj].mat.ref.y * ((scalar_vectors(vec.dir, norm) >= 0) ? scalar_vectors(vec.dir, norm) : 0)));
 			vec.dir = sub_vectors(vec.dir, mult_vector(mult_vector(norm, scalar_vectors(vec.dir, norm)), 2));
 			normalize_vector(&vec.dir);
-			fact = add_vectors(fact, mult_vector(new_vector(1, 1, 1), (light[i].i.z * obj[intersec->obj].mat.ref.z * pow(scalar_vectors(mult_vector(ray->dir, 0.99), vec.dir), ALPHA))));
+			fact[2] = add_vectors(fact[2], mult_vector(((float3){light[i].col.r / (float)255, light[i].col.g / (float)255, light[i].col.b / (float)255}), alpha * (light[i].i.z * obj[intersec->obj].mat.ref.z * pow(scalar_vectors(mult_vector(ray->dir, 0.99), vec.dir), ALPHA))));
 		}
-		tmp *= alpha;
-		fact.x += (tmp * light[i].col.r) / (float)255;
-		fact.y += (tmp * light[i].col.g) / (float)255;
-		fact.z += (tmp * light[i].col.b) / (float)255;
 		i++;
 	}
-	color = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 0), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
-	fact.x = (isnan(fact.x)) ? 0 : ((isinf(fact.x)) ? 0 : fact.x);
-	fact.y = (isnan(fact.y)) ? 0 : ((isinf(fact.y)) ? 0 : fact.y);
-	fact.z = (isnan(fact.z)) ? 0 : ((isinf(fact.z)) ? 0 : fact.z);
-	color.r = (color.r * fact.x < 0) ? 0 : ((color.r * fact.x > 255) ? 255 : color.r * fact.x);
-	color.g = (color.g * fact.y < 0) ? 0 : ((color.g * fact.y > 255) ? 255 : color.g * fact.y);
-	color.b = (color.b * fact.z < 0) ? 0 : ((color.b * fact.z > 255) ? 255 : color.b * fact.z);
-	color.a = 255;
-	*img = add_colors(*img, invert_color(mult_color(color, ray->f)));
+	fact[0].x = (isnan(fact[0].x)) ? 0 : ((isinf(fact[0].x)) ? 0 : fact[0].x) / 3;
+	fact[0].y = (isnan(fact[0].y)) ? 0 : ((isinf(fact[0].y)) ? 0 : fact[0].y) / 3;
+	fact[0].z = (isnan(fact[0].z)) ? 0 : ((isinf(fact[0].z)) ? 0 : fact[0].z) / 3;
+	fact[1].x = (isnan(fact[1].x)) ? 0 : ((isinf(fact[1].x)) ? 0 : fact[1].x) / 3;
+	fact[1].y = (isnan(fact[1].y)) ? 0 : ((isinf(fact[1].y)) ? 0 : fact[1].y) / 3;
+	fact[1].z = (isnan(fact[1].z)) ? 0 : ((isinf(fact[1].z)) ? 0 : fact[1].z) / 3;
+	fact[2].x = (isnan(fact[2].x)) ? 0 : ((isinf(fact[2].x)) ? 0 : fact[2].x) / 3;
+	fact[2].y = (isnan(fact[2].y)) ? 0 : ((isinf(fact[2].y)) ? 0 : fact[2].y) / 3;
+	fact[2].z = (isnan(fact[2].z)) ? 0 : ((isinf(fact[2].z)) ? 0 : fact[2].z) / 3;
+	color[0] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 0), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
+	color[1] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 1), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
+	color[2] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 2), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
+	color[0].r = (color[0].r * fact[0].x < 0) ? 0 : ((color[0].r * fact[0].x > 255) ? 255 : color[0].r * fact[0].x);
+	color[0].g = (color[0].g * fact[0].y < 0) ? 0 : ((color[0].g * fact[0].y > 255) ? 255 : color[0].g * fact[0].y);
+	color[0].b = (color[0].b * fact[0].z < 0) ? 0 : ((color[0].b * fact[0].z > 255) ? 255 : color[0].b * fact[0].z);
+	color[0].a = 255;
+
+	color[1].r = (color[1].r * fact[1].x < 0) ? 0 : ((color[1].r * fact[1].x > 255) ? 255 : color[1].r * fact[1].x);
+	color[1].g = (color[1].g * fact[1].y < 0) ? 0 : ((color[1].g * fact[1].y > 255) ? 255 : color[1].g * fact[1].y);
+	color[1].b = (color[1].b * fact[1].z < 0) ? 0 : ((color[1].b * fact[1].z > 255) ? 255 : color[1].b * fact[1].z);
+	color[1].a = 255;
+
+	color[2].r = (color[2].r * fact[2].x < 0) ? 0 : ((color[2].r * fact[2].x > 255) ? 255 : color[2].r * fact[2].x);
+	color[2].g = (color[2].g * fact[2].y < 0) ? 0 : ((color[2].g * fact[2].y > 255) ? 255 : color[2].g * fact[2].y);
+	color[2].b = (color[2].b * fact[2].z < 0) ? 0 : ((color[2].b * fact[0].z > 255) ? 255 : color[2].b * fact[2].z);
+	color[2].a = 255;
+	*img = add_colors(*img, invert_color(mult_color(add_colors(color[0], add_colors(color[1], color[2])), ray->f)));
 }

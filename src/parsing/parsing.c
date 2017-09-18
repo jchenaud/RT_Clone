@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:08:40 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/14 04:53:03 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/09/17 04:52:19 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ static int	pars_obj(xmlNode *current, t_obj new_obj, t_env *e)
 
 static int	pars_cam_light(xmlNode *current, t_cam cam, t_light light, t_env *e)
 {
+	e->find_cam_light = 0;
 	if (ft_strcmp((char*)current->name, "cam") == 0)
 	{
 		if (pars_cam(current, &cam) == -1)
 			return (-1);
 		ft_lstadd(&e->cam, ft_lstnew(&cam, sizeof(t_cam)));
+		e->find_cam_light = 1;
 		return (1);
 	}
 	else if (ft_strcmp((char*)current->name, "light") == 0)
@@ -97,6 +99,7 @@ static int	pars_cam_light(xmlNode *current, t_cam cam, t_light light, t_env *e)
 		if (pars_light(current, &light) == -1)
 			return (-1);
 		ft_lstadd(&e->light, ft_lstnew(&light, sizeof(t_light)));
+		e->find_cam_light = 1;
 		return (1);
 	}
 	return (0);
@@ -117,7 +120,7 @@ int			pars_content(xmlNode *root, t_env *e)
 			ft_bzero_init(&new_obj, &new_cam, &new_light);
 			if (pars_cam_light(current, new_cam, new_light, e) == -1)
 				return (-1);
-			else
+			else if (e->find_cam_light == 0)
 			{
 				if (pars_obj(current, new_obj, e) == -1)
 					return (-1);

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 09:59:33 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/17 10:47:17 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@
 # define VISIBLE	0
 # define INVISIBLE	1
 
-# define PRINT_KEYS	1
-# define DEBUG_MODE	2
-# define PREVIEW	4
+# define PRINT_KEYS	0x1
+# define DEBUG_MODE	0x2
+# define PREVIEW	0x4
+# define DEGREES	0x8
 
 # define WIN_RATIO	9/16
+
+#define PI			3.1415926535
 
 # define GET_SPHERE(x)		x.obj.sphere
 # define GET_PLAN(x)		x.obj.plan
@@ -72,6 +75,7 @@ typedef struct	s_env
 	t_uint		n;
 	t_img		*img;
 	t_img		*icone;
+	int 		find_cam_light;
 }				t_env;
 
 /*
@@ -86,6 +90,8 @@ int				parsing(char *file, t_env *e);
 
 void			get_flags(t_env *env, int argc, char **argv);
 
+void			convert_to_radians(t_obj *obj, t_uint n);
+void			convert_rotations_to_normals(t_obj *obj, t_uint n);
 void			allocate_textures(t_env *env);
 void			alloc_images(t_list *cam);
 void			init_opencl(t_cl *cl);

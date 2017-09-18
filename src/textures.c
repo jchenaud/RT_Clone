@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 07:45:52 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 07:39:22 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 09:53:23 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void			allocate_textures(t_env *env)
 	while (i < env->cl.n_obj)
 	{
 		j = 0;
-		while (j < 3)
+		while (j < 4)
 		{
 			tmp = env->cl.obj[i].mat.textures[j].name;
 			env->cl.obj[i].mat.textures[j].n = find_texture(env->textures,

@@ -5,10 +5,12 @@
 		<ref x="1" y="1" z="1" w="0.25"></ref>
 		<pos x="0" y="0" z="0"></pos>
 		<rot x="0" y="-0.7" z="3.14"></rot>
-		<col R="255" V="0" B="255" T="255"></col>
+		<col R="255" V="255" B="255" T="255"></col>
 		<rad rad="10"></rad>
 		<refrac x="1"></refrac>
 		<texture type="amb" src="textures/terre.png"></texture>
+		<texture type="dif" src="textures/terre.png"></texture>
+		<texture type="normal" src="textures/terre_nm.png"></texture>
 		<hitbox type = "invisible">
 			<rot x="0" y="0" z="0"></rot>
 			<min x= "-100" y = "0" z = "0"></min>
@@ -29,6 +31,9 @@
 		<norm x="0" y="0" z="1"></norm>
 		<col R="255" V="255" B="255" T="255"></col>
 		<texture type="amb" src="textures/wood.png"></texture>
+		<texture type="dif" src="textures/wood.png"></texture>
+		<texture type="normal" src="textures/wood_nm.png"></texture>
+		<texture type="size" x="10" y="10"></texture>
 	</plan>
 	<plan>
 		<ref x="1" y="1" z="1" w="0.7"></ref>
@@ -50,33 +55,39 @@
 		<rot x="0" y="0" z="0"></rot>
 		<norm x="0" y="0" z="1"></norm>
 		<angle angle="0.2"></angle>
-		<col R="255" V="0" B="0" T="255"></col>
+		<col R="255" V="255" B="255" T="255"></col>
 		<texture type="amb" src="textures/brick.png"></texture>
+		<texture type="dif" src="textures/brick.png"></texture>
+		<texture type="normal" src="textures/brick_nm2.png"></texture>
+		<texture type="size" x="10" y="10"></texture>
 	</cone>
 	<cylinder>
 		<ref x="1" y="1" z="1" w="0"></ref>
 		<pos x="0" y="0" z="0"></pos>
-		<rot x="0" y="0" z="0"></rot>
-		<norm x="0" y="1" z="1"></norm>
+		<rot x="-0.7853" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
 		<rad rad="4"></rad>
-		<col R="0" V="255" B="255" T="64"></col>
+		<col R="255" V="255" B="255" T="64"></col>
 		<refrac x="1.3"></refrac>
 		<texture type="amb" src="textures/water.png"></texture>
+		<texture type="dif" src="textures/water.png"></texture>
+		<texture type="normal" src="textures/water_nm.png"></texture>
+		<texture type="size" x="10" y="10"></texture>
 	</cylinder>
 	<light>
 		<pos x="-8" y="-20" z="10"></pos>
 		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="0.1" dif="0.5" spec="0.5"></i>
+		<i amb="0.2" dif="1" spec="2"></i>
 	</light>
 	<light>
 		<pos x="-6" y="20" z="10"></pos>
 		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="0.1" dif="0.5" spec="0.5"></i>
+		<i amb="0.2" dif="1" spec="2"></i>
 	</light>
 	<light>
 		<pos x="-7" y="0" z="10"></pos>
 		<col R="255" V="255" B="255" T="255"></col>
-		<i amb="0.1" dif="0.5" spec="0.5"></i>
+		<i amb="0.2" dif="1" spec="2"></i>
 	</light>
 	<cam>
 		<pos x="-50" y="0" z="10"></pos>
@@ -85,7 +96,7 @@
 		<fov fov_x="0.768" fov_y="0.432"></fov>
 		<dis dis="1"></dis>
 		<export PATH="cam1.png"></export>
-		<w W="3840"></w>
-		<h H="2160"></h>
+		<w W="1920"></w>
+		<h H="1080"></h>
 	</cam>
 </scene>

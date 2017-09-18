@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 07:21:00 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 07:36:47 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 09:48:08 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		dispatch_rays(t_env *env, t_cam *cam)
 	(sizeof(t_ray) + sizeof(t_intersec))) - env->cl.textures_size -
 	env->cl.n_obj * sizeof(t_obj) + env->cl.n_light * sizeof(t_light);
 	n = size / env->cl.mem_size + 1;
-	n = cam->h / (cam->h / n);
+	n = (n == 0) ? cam->h / (cam->h / n) : 1;
 	i = 0;
 	tmp = cam->img->pixels;
 	cam->h /= n;

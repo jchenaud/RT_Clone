@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 04:36:54 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/14 05:06:27 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/09/17 04:44:16 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,14 @@ void  modi_pos(t_prefab *tmp, xmlNode *current)
 	while(tmp_list)
 	{
 		((t_obj*)tmp_list->content)->pos.x += get_float_xml("x",current);
+		((t_obj*)tmp_list->content)->hitbox.min.x += get_float_xml("x",current);
+		((t_obj*)tmp_list->content)->hitbox.max.x += get_float_xml("x",current);
 		((t_obj*)tmp_list->content)->pos.y += get_float_xml("y",current);
+		((t_obj*)tmp_list->content)->hitbox.min.y += get_float_xml("y",current);
+		((t_obj*)tmp_list->content)->hitbox.max.y += get_float_xml("y",current);
 		((t_obj*)tmp_list->content)->pos.z += get_float_xml("z",current);
+		((t_obj*)tmp_list->content)->hitbox.min.z += get_float_xml("z",current);
+		((t_obj*)tmp_list->content)->hitbox.max.z += get_float_xml("z",current);
 		tmp_list = tmp_list->next;
 	}
 	
@@ -46,8 +52,11 @@ void modi_rot(t_prefab *tmp, xmlNode *current)
 	while(tmp_list)
 	{
 		((t_obj*)tmp_list->content)->rot.x += get_float_xml("x",current);
+		((t_obj*)tmp_list->content)->hitbox.rot.x += get_float_xml("x",current);
 		((t_obj*)tmp_list->content)->rot.y += get_float_xml("y",current);
+		((t_obj*)tmp_list->content)->hitbox.rot.y += get_float_xml("y",current);
 		((t_obj*)tmp_list->content)->rot.z += get_float_xml("z",current);
+		((t_obj*)tmp_list->content)->hitbox.rot.z += get_float_xml("z",current);
 		tmp_list = tmp_list->next;
 	}
 
@@ -122,16 +131,17 @@ void ft_add_to_prefab(t_prefab *new_pref,t_env *e)
 
 int cp_prefab(t_prefab *tmp_pref,t_env *e, xmlNode *current)
 {
-	t_prefab new_pref;
+	t_prefab *new_pref;
 
-	ft_memcpy((&new_pref),tmp_pref,sizeof(t_prefab));
+	new_pref = malloc(sizeof(t_prefab));
+	ft_memcpy(new_pref,tmp_pref,sizeof(t_prefab));
 
 //	t_obj *tmp_aff;
 //	tmp_aff = ((t_obj*)((t_list*)new_pref.p_obj)->content);
 
 //	printf("x[%f] y [%f] z[%f]\n\n",tmp_aff->pos.x,tmp_aff->pos.y,tmp_aff->pos.z);
-	ft_add_to_prefab(&new_pref,e);
-  	ft_add_modi(current,&new_pref);
+	ft_add_to_prefab(new_pref,e);
+  	ft_add_modi(current,new_pref);
 	//tmp_aff = ((t_obj*)((t_list*)e->pf_o->p_obj)->content);
 //	printf("x[%f] y [%f] z[%f]\n\n",tmp_aff->pos.x,tmp_aff->pos.y,tmp_aff->pos.z);
 //	printf("adresse  %p \n", (e->pf_o->p_obj));
@@ -150,7 +160,7 @@ void  	ft_include_to_pref(t_prefab *tmp,t_env *e, xmlNode *current)
   {
   	t_prefab *tmp;
 
-
+// printf("je doit pas etre la !!!\n\n");
   	if (!(tmp = are_prefab(current,e->pref)))
   		return (0);
   ft_include_to_pref(tmp,e,current);

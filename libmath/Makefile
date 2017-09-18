@@ -2,7 +2,7 @@ NAME = libmath.a
 LIBSO = libmath.so
 CC = gcc
 SRC =	vector/add.c vector/cross.c vector/debug.c vector/mult.c vector/new.c\
-		vector/normalize.c vector/scalar.c vector/sub.c\
+		vector/normalize.c vector/scalar.c vector/sub.c vector/rotate.c\
 		matrix/clean.c matrix/debug.c matrix/lookat.c matrix/mat_x_mat.c\
 		matrix/mat_x_vec.c matrix/new.c matrix/perspective.c matrix/set_id.c
 OBJ = $(SRC:%.c=src/%.o)

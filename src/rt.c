@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 09:03:06 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 09:53:27 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_env	*init_env(void)
 	env->antialias_level = 2;
 	env->iterations = 3;
 	env->cl.device_type = CL_DEVICE_TYPE_GPU;
+	env->i = 0;
 	return (env);
 }
 
@@ -59,7 +60,7 @@ void	add_prefabs(t_env *env)
 	t_uint		i;
 
 	n = 0;
-	prefab = env->pref;
+	prefab = env->pf_o;
 	while (prefab)
 	{
 		new = alloc_array(prefab->p_obj, &i);
@@ -120,12 +121,14 @@ int		main(int argc, char **argv)
 	env->cl.obj = alloc_array(env->obj, &env->cl.n_obj);
 	env->cl.light = alloc_array(env->light, &env->cl.n_light);
 	add_prefabs(env);
+	if (env->opt & DEGREES)
+		convert_to_radians(env->cl.obj, env->cl.n_obj);
+	convert_rotations_to_normals(env->cl.obj, env->cl.n_obj);
 	allocate_textures(env);
 	ft_putchar('\n');
 	alloc_images(env->cam);
 	launch_kernel(env);
 	place_in_list(env);
-	env->i = 0;
 	loop(env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 04:36:55 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/16 12:03:16 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ void	get_param3(t_env *env, int argc, char **argv, int *i)
 			env->iterations = ft_atou(argv[++(*i)]);
 		else
 			error(23, 0, NULL);
+	else if (!ft_strcmp(argv[*i], "-angle"))
+		if (*i + 1 < argc)
+		{
+			if (!ft_strcmp(argv[++(*i)], "radians"))
+				env->opt -= (env->opt & DEGREES) ? DEGREES : 0;
+			else if (!ft_strcmp(argv[*i], "degrees"))
+				env->opt += (!(env->opt & DEGREES)) ? DEGREES : 0;
+			else
+				error(24, 1, NULL);
+		}
+		else
+			error(24, 1, NULL);
 	else
 		error(17, 0, argv[*i]);
 }
@@ -26,9 +38,9 @@ void	get_param3(t_env *env, int argc, char **argv, int *i)
 void	get_param2(t_env *env, int argc, char **argv, int *i)
 {
 	if (!ft_strcmp(argv[*i], "-print_keys"))
-		env->opt += (!env->opt & PRINT_KEYS) ? PRINT_KEYS : 0;
+		env->opt += (!(env->opt & PRINT_KEYS)) ? PRINT_KEYS : 0;
 	else if (!ft_strcmp(argv[*i], "-debug"))
-		env->opt += (!env->opt & DEBUG_MODE) ? DEBUG_MODE : 0;
+		env->opt += (!(env->opt & DEBUG_MODE)) ? DEBUG_MODE : 0;
 	else if (!ft_strcmp(argv[*i], "-antialias"))
 	{
 		if (*i + 1 < argc)

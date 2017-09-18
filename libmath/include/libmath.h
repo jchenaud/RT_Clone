@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 16:41:55 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/05 22:13:44 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/16 11:15:24 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void			debug_vec3(t_vec3 *vec);
 void			debug_vec4(t_vec4 *vec);
 
 t_vec3			cross_vec3(t_vec3 a, t_vec3 b);
+
+void			rotate_vec2(t_vec2 *vec, t_type angle);
+void			rotate_vec3(t_vec3 *vec, t_vec3 angle);
 
 t_mat2			new_mat2(t_vec2 x, t_vec2 y);
 t_mat3			new_mat3(t_vec3 x, t_vec3 y, t_vec3 z);

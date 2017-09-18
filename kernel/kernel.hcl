@@ -16,10 +16,11 @@
 #define get_vectors_angle(a, b)			scalar_vectors(a, b) / (get_vector_norm(a) * get_vector_norm(b))
 #define new_vector(x, y, z)				((float3){x, y, z})
 #define add_vectors(a, b)				((float3){a.x + b.x, a.y + b.y, a.z + b.z})
+#define add_vector(a, b)				((float3){a.x + b, a.y + b, a.z + b})
 #define sub_vectors(a, b)				((float3){a.x - b.x, a.y - b.y, a.z - b.z})
 #define mult_vectors(a, b)				((float3){a.x * b.x, a.y * b.y, a.z * b.z})
 #define mult_vector(a, b)				((float3){a.x * b, a.y * b, a.z * b})
-#define invert_color(c)					((t_color){c.g, c.b, c.r, c.a})
+#define invert_color(c)					((t_color){c.b, c.g, c.r, c.a})
 #define ft_abs(x)						((x < 0) ? -x : x)
 
 #define SPHERE		1
@@ -38,8 +39,8 @@
 typedef struct	s_color
 {
 	uchar		r;
-	uchar		b;
 	uchar		g;
+	uchar		b;
 	uchar		a;
 }				t_color;
 
@@ -137,7 +138,7 @@ typedef struct	s_mat
 	t_color		col;
 	float4		ref;
 	float		refraction;
-	t_name		textures[3];
+	t_name		textures[4];
 	float2		size;
 }				t_mat;
 

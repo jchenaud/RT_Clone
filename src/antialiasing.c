@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 23:39:24 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/08 04:14:15 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/16 10:43:48 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void		antialiase(t_uchar antialias, t_cl *cl, t_img *img)
 		set_kernel_arg(&cl->antialiasing, &mem.src, 2);
 		nd_range_kernel(cl, &cl->antialiasing, n);
 		read_buffer(cl, mem.dest, img->pixels, n * sizeof(t_color));
+		delete_buffer(mem.img_src);
+		delete_buffer(mem.src);
+		delete_buffer(mem.dest);
 	}
 }
