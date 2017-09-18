@@ -6,11 +6,31 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 07:37:34 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 10:53:44 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+double		get_speed(void)
+{
+	static struct timeval	prev;
+	static size_t			i = 10;
+	static double			ret;
+	struct timeval			t;
+
+	if (i >= 10)
+	{
+		gettimeofday(&t, NULL);
+		ret = ((t.tv_usec - prev.tv_usec) + (t.tv_sec - prev.tv_sec) * 1000000)
+		/ (double)1000000;
+		ret /= 10;
+		prev = t;
+		i = 0;
+	}
+	i++;
+	return ((ret > 100) ? 0 : ret);
+}
 
 static void	create_buffers(t_cl *cl)
 {

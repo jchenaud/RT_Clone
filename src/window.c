@@ -6,13 +6,13 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/14 05:07:26 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 10:47:18 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	alloc_images(t_list *cam)
+void		alloc_images(t_list *cam)
 {
 	t_cam	*current;
 
@@ -75,4 +75,6 @@ void		init_opencl(t_cl *cl)
 	cl->cam_rays = create_kernel(cl, "kernel/cam_rays.cl", "cam_rays");
 	cl->calc_rays = create_kernel(cl, "kernel/rays.cl", "calc_rays");
 	cl->render_img = create_kernel(cl, "kernel/render_image.cl", "render_img");
+	cl->colors_efect = create_kernel(cl, "kernel/colors_efect.cl",
+	"colors_efect");
 }

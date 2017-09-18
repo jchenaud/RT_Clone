@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/16 11:03:58 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/16 12:02:12 by pribault         ###   ########.fr       */
+/*   Created: 2017/09/18 10:36:23 by pribault          #+#    #+#             */
+/*   Updated: 2017/09/18 10:51:40 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	convert_to_radians(t_obj *obj, t_uint n)
 	i = 0;
 	while (i < n)
 	{
-		obj[i].rot.x *= ((2 * PI) / (t_type)360);
-		obj[i].rot.y *= ((2 * PI) / (t_type)360);
-		obj[i].rot.z *= ((2 * PI) / (t_type)360);
+		obj[i].rot.x *= ((2 * PI) / (float)360);
+		obj[i].rot.y *= ((2 * PI) / (float)360);
+		obj[i].rot.z *= ((2 * PI) / (float)360);
 		i++;
 	}
 }
@@ -34,11 +34,11 @@ void	convert_rotations_to_normals(t_obj *obj, t_uint n)
 	while (i < n)
 	{
 		if (obj[i].type == CONE)
-			rotate_vec3(&GET_CONE(obj[i]).norm, obj[i].rot);
+			rotate_vec3(&obj[i].obj.cone.norm, obj[i].rot);
 		else if (obj[i].type == CYLINDER)
-			rotate_vec3(&GET_CYLINDER(obj[i]).norm, obj[i].rot);
+			rotate_vec3(&obj[i].obj.cylinder.norm, obj[i].rot);
 		else if (obj[i].type == PLAN)
-			rotate_vec3(&GET_PLAN(obj[i]).norm, obj[i].rot);
+			rotate_vec3(&obj[i].obj.plan.norm, obj[i].rot);
 		i++;
 	}
 }

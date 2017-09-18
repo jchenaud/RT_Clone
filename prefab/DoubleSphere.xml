@@ -3,15 +3,15 @@
 	<sphere>
 			<pos x="0" y="0" z="0"></pos>
 			<rot x="0" y="0" z="0"></rot>
-			<col R="255" V="0" B="0" T="255"></col>
-			<rad rad="0"></rad>
+			<col R="255" V="0" B="0" T="50"></col>
+			<rad rad="10"></rad>
 			<ref x="1" y="1" z="1" w="0"></ref>
 	</sphere>
 	<sphere>
 			<pos x="0" y="10" z="0"></pos>
 			<rot x="0" y="0" z="0"></rot>
-			<col R="0" V="0" B="255" T="255"></col>
-			<rad rad="0"></rad>
-			<ref x="1" y="1" z="1" w="0"></ref>
+			<col R="0" V="0" B="255" T="3"></col>
+			<rad rad="10"></rad>
+			<ref x="1" y="1" z="1" w="1"></ref>
 	</sphere>
 </prefab>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<scene>
+	<Include A="cross"></Include>
+	<plan>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<pos x="0" y="0" z="-10"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
+		<col R="255" V="255" B="255" T="255"></col>
+		<texture type="amb" src="textures/wood.png"></texture>
+	</plan>
+	<light>
+		<pos x="-20" y="0" z="10"></pos>
+		<col R="255" V="255" B="255" T="255"></col>
+		<i amb="0.1" dif="0.5" spec="0.5"></i>
+	</light>
+	<cam>
+		<pos x="-50" y="0" z="10"></pos>
+		<dir x="1" y="0" z="0"></dir>
+		<rot x="0" y="0" z="0"></rot>
+		<fov fov_x="0.768" fov_y="0.432"></fov>
+		<dis dis="1"></dis>
+		<export PATH="cam1.png"></export>
+		<w W="1840"></w>
+		<h H="1160"></h>
+	</cam>
+</scene>

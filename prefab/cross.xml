@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<prefab>
+<cylinder>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="0" z="1"></norm>
+		<rad rad="3"></rad>
+		<col R="0" V="255" B="255" T="255"></col>
+		<hitbox type = "visible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-10" y = "-10" z = "0"></min>
+			<max x= "10" y = "10" z = "26"></max>
+		</hitbox>
+	</cylinder>
+	<cylinder>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<pos x="0" y="0" z="13"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<norm x="0" y="1" z="0"></norm>
+		<rad rad="3"></rad>
+		<col R="0" V="255" B="255" T="255"></col>
+		<hitbox type = "visible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-13" y = "-13" z = "0"></min>
+			<max x= "13" y = "13" z = "100"></max>
+		</hitbox>
+	</cylinder>
+
+
+</prefab>

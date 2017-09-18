@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 07:21:00 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 09:48:08 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 10:53:36 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,26 +92,6 @@ void		draw_image(t_env *env, t_cam *cam, size_t m, size_t max)
 	}
 	delete_buffer(env->cl.intersecs);
 	delete_buffer(env->cl.rays);
-}
-
-double		get_speed(void)
-{
-	static struct timeval	prev;
-	static size_t			i = 10;
-	static double			ret;
-	struct timeval			t;
-
-	if (i >= 10)
-	{
-		gettimeofday(&t, NULL);
-		ret = ((t.tv_usec - prev.tv_usec) + (t.tv_sec - prev.tv_sec) * 1000000)
-		/ (double)1000000;
-		ret /= 10;
-		prev = t;
-		i = 0;
-	}
-	i++;
-	return ((ret > 100) ? 0 : ret);
 }
 
 void		dispatch_rays(t_env *env, t_cam *cam)

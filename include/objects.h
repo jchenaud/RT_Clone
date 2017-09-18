@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 09:52:20 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/18 10:56:05 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct			s_obj
 
 typedef struct			s_prefab
 {
-	char 				*prefab_name;
+	char				*prefab_name;
 	cl_float3			pos;
 	cl_float3			rot;
 	t_list				*p_obj;
