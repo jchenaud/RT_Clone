@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 02:56:14 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/15 04:39:58 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 00:59:55 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	pars_cone_anex2(xmlNode *current, t_obj *new_obj, int find)
 	else if (ft_strcmp((char*)current->name, "hitbox") == 0)
 		get_box(current, new_obj);
 	else
-		exit(0);
+		ft_printf("Warning not valid Node on cone [%s]\n", current->name);
 }
 
 static void	pars_cone_anex(xmlNode *current, t_obj *new_obj)
@@ -57,7 +57,7 @@ static void	pars_cone_anex(xmlNode *current, t_obj *new_obj)
 	pars_cone_anex2(current, new_obj, find);
 }
 
-int		pars_cone(xmlNode *current, t_obj *new_obj)
+int			pars_cone(xmlNode *current, t_obj *new_obj)
 {
 	new_obj->type = CONE;
 	if (!(current = current->children))

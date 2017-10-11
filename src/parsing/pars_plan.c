@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 02:49:33 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/12 04:15:41 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 01:02:25 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	pars_plan_anex(xmlNode *current, t_obj *new_obj)
 	else if (ft_strcmp((char*)current->name, "texture") == 0)
 		get_texture(current, new_obj);
 	else
-		exit(0);
+		ft_printf("Warning not valid Node on plan[%s]\n", current->name);
 }
 
 int		pars_plan(xmlNode *current, t_obj *new_obj)

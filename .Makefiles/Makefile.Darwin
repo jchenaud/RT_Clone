@@ -16,7 +16,10 @@ SRC =	rt.c error.c flags.c hooks.c loop.c window.c\
 		parsing/get_cam.c parsing/get_hitbox.c\
 		parsing/get_u_char_int.c parsing/get_textures.c\
 		parsing/get_other.c parsing/pars_cam.c\
-		parsing/pars_light.c parsing/pars_triangle.c
+		parsing/pars_light.c parsing/pars_triangle.c\
+		parsing/char_pref.c parsing/pref_modi_func.c\
+		parsing/init_pars.c\
+		colors_efect.c
 OBJ = $(SRC:%.c=src/%.o)
 INCLUDES = -I include -I libft/include -I libmath/include -I libimages/include -I librainbow/include
 

@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 01:59:17 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/12 02:42:26 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 01:02:27 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	pars_sphere_anex(xmlNode *current, t_obj *new_obj)
 	else if (ft_strcmp((char*)current->name, "texture") == 0)
 		get_texture(current, new_obj);
 	else
-		exit(0);
+		ft_printf("Warning not valid Node on sphere[%s]\n", current->name);
 }
 
 int		pars_sphere(xmlNode *current, t_obj *new_obj)

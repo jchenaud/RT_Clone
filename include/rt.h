@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 19:25:50 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/11 15:34:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void			move(cl_float3 *pos, cl_float3 dir, float step);
 double			get_speed(void);
 void			dispatch_rays(t_env *env, t_cam *cam);
 void			create_cam_rays(t_env *env, t_cam *cam, size_t m, size_t max);
-void			initialize_intersecs(t_env *env, t_cam *cam, size_t m, size_t max);
+void			initialize_intersecs(t_env *env, t_cam *cam, size_t m,
+				size_t max);
 void			calculate_intersections(t_env *env, size_t n);
 void			calculate_rays(t_cl *cl, size_t p);
 void			launch_kernel(t_env *env);
@@ -129,14 +130,12 @@ void			antialiase(t_uchar antialias, t_cl *cl, t_img *img);
 int				loop(t_env *env);
 
 void			ft_init_obj_default(t_obj *new_obj);
+void			ft_init_cam(t_cam *new_cam);
 int				ft_inc_prefab(xmlNode *root, t_env *e);
 char			*get_path_prefab(xmlNode *current);
 char			*get_p_name(xmlNode *current, int i);
-int				number_of_prefab(xmlNode *current);
 int				ft_inc_prefab(xmlNode *root, t_env *e);
 int				ft_add_modifier_to_prefab(t_env *e, xmlNode *current);
-
-t_prefab		*are_prefab(xmlNode *current, t_prefab *tmp);
 void			modi_pos(t_prefab *tmp, xmlNode *current);
 int				ft_pars_prefab(t_env *e, xmlNode *current);
 int				pars_triangle(xmlNode *current, t_obj *new_obj);
@@ -147,7 +146,6 @@ int				pars_pave(xmlNode *current, t_obj *new_obj);
 int				pars_sphere(xmlNode *current, t_obj *new_obj);
 int				pars_cam(xmlNode *current, t_cam *new_cam);
 int				pars_light(xmlNode *current, t_light *new_light);
-
 void			get_box(xmlNode *current, t_obj *new_obj);
 cl_float3		get_float3(xmlNode *current);
 cl_float3		get_float3_normal(xmlNode *current);
@@ -155,7 +153,6 @@ cl_float4		get_float4(xmlNode *current);
 cl_float		get_float_xml(char *name, xmlNode *current);
 cl_uchar		get_uchar_xml(char *name, xmlNode *current);
 cl_uint			get_uint_xml(char *name, xmlNode *current);
-
 t_color			get_color(xmlNode *current);
 cl_float3		get_light_fac(xmlNode *current);
 void			get_texture(xmlNode *current, t_obj *new_obj);
@@ -165,5 +162,14 @@ cl_uint			get_w(xmlNode *current);
 cl_uint			get_h(xmlNode *current);
 cl_float		get_dis(xmlNode *current);
 cl_float2		get_fov(xmlNode *current);
+xmlNode			*ft_initial_pars(xmlDoc **doc, xmlNode *root, t_env *e,
+				char *file);
+void			ft_bzero_init(t_obj *new_obj, t_cam *new_cam,
+				t_light *new_light);
+void			modi_pos(t_prefab *tmp, xmlNode *current);
+void			modi_rot(t_prefab *tmp, xmlNode *current);
+void			modi_size(t_prefab *tmp, xmlNode *current);
+
+void			colors_efect(t_cl *cl, t_img *image, int effect);
 
 #endif

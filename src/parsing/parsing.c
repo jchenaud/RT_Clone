@@ -6,29 +6,11 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:08:40 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/17 04:52:19 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 01:11:27 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-void	ft_init_obj_default(t_obj *new_obj)
-{
-	new_obj->hitbox.min.x = -1000000.0;
-	new_obj->hitbox.min.y = -1000000.0;
-	new_obj->hitbox.min.z = -1000000.0;
-	new_obj->hitbox.max.x = 1000000.0;
-	new_obj->hitbox.max.y = 1000000.0;
-	new_obj->hitbox.max.z = 1000000.0;
-}
-
-void	ft_bzero_init(t_obj *new_obj, t_cam *new_cam, t_light *new_light)
-{
-	ft_bzero(new_obj, sizeof(t_obj));
-	ft_bzero(new_cam, sizeof(t_cam));
-	ft_bzero(new_light, sizeof(t_light));
-	ft_init_obj_default(new_obj);
-}
 
 static int	pars_obj2(xmlNode *current, t_obj new_obj, t_env *e)
 {
@@ -131,32 +113,6 @@ int			pars_content(xmlNode *root, t_env *e)
 	return (0);
 }
 
-xmlNode		*ft_initial_pars(xmlDoc **doc, xmlNode *root, t_env *e, char *file)
-{
-	e->pref = NULL;
-	e->pf_o = NULL;
-	*doc = xmlReadFile(file, NULL, 0);
-	if (*doc == NULL)
-		return (NULL);
-	root = xmlDocGetRootElement(*doc);
-	if (ft_strcmp((char*)root->name, "scene") != 0)
-		return (NULL);
-	if ((root = root->children))
-	{
-		if (!(root = root->next))
-			return (NULL);
-	}
-	else
-		return (NULL);
-	if (ft_strcmp((char*)root->name, "Include") == 0)
-	{
-		if (ft_inc_prefab(root, e) == -1)
-			return (NULL);
-		root = root->next;
-	}
-	return (root);
-}
-
 int			parsing(char *file, t_env *e)
 {
 	xmlDoc	*doc;
@@ -169,5 +125,6 @@ int			parsing(char *file, t_env *e)
 		return (-1);
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
+	ft_printf("\n");
 	return (0);
 }

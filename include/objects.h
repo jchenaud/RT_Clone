@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 19:05:42 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 11:18:58 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/11 15:31:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,17 @@ typedef struct			s_prefab
 	t_list				*p_obj;
 	struct s_prefab		*next;
 }						t_prefab;
+
+typedef struct			s_pref
+{
+	t_prefab			*tmp;
+	xmlDoc				*doc;
+	xmlNode				*current;
+	char				*data;
+	char				*p_name;
+	char				*path;
+	int					i;
+	int					have_free_path;
+}						t_pref;
 
 #endif

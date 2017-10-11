@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 02:05:05 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/13 02:17:37 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 01:18:35 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ static void	pars_cam_anex2(xmlNode *current, t_cam *new_cam, int find)
 		new_cam->dis = get_dis(current);
 	else if (ft_strcmp((char*)current->name, "export") == 0)
 	{
-		if (!(new_cam->output = (char*)xmlGetProp(current,
-			(const xmlChar*)"PATH")))
-			exit(0);
+		new_cam->output = (char*)xmlGetProp(current,
+			(const xmlChar*)"PATH");
 	}
 	else
-		exit(0);
+		ft_printf("Warning not valid Node on cam [%s]\n", current->name);
 }
 
 static void	pars_cam_anex(xmlNode *current, t_cam *new_cam)
@@ -61,6 +60,7 @@ int			pars_cam(xmlNode *current, t_cam *new_cam)
 {
 	if (!(current = current->children))
 		return (-1);
+	ft_init_cam(new_cam);
 	while (current != NULL)
 	{
 		if (current->type == XML_ELEMENT_NODE)

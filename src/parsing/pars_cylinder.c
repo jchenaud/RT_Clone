@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 03:32:08 by jchenaud          #+#    #+#             */
-/*   Updated: 2017/09/12 04:16:36 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/01 01:02:56 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	pars_cylinder_anex2(xmlNode *current, t_obj *new_obj, int find)
 	else if (ft_strcmp((char*)current->name, "hitbox") == 0)
 		get_box(current, new_obj);
 	else
-		exit(0);
+		ft_printf("Warning not valid Node on cylinder[%s]\n", current->name);
 }
 
 void	pars_cylinder_anex(xmlNode *current, t_obj *new_obj)
