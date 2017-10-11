@@ -83,7 +83,7 @@
 		<rot x="0" y="0" z="0"></rot>
 		<fov fov_x="0.768" fov_y="0.432"></fov>
 		<dis dis="1"></dis>
-		<export PATH="/Volumes/Storage/goinfre/pribault/cam1.png"></export>
+		<export PATH="cam1.png"></export>
 		<w W="1920"></w>
 		<h H="1080"></h>
 	</cam>
