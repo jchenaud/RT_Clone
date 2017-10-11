@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 10:53:44 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 17:24:39 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void		launch_kernel(t_env *env)
 	create_buffers(&env->cl);
 	while (cams)
 	{
+		ft_putchar('\n');
 		cam = (t_cam*)cams->content;
 		gettimeofday(&start, NULL);
 		dispatch_rays(env, cam);
@@ -72,22 +73,31 @@ void		launch_kernel(t_env *env)
 	}
 }
 
+t_list		*get_list_n(t_list *list, int n)
+{
+	int		i;
+
+	i = 0;
+	while (i < n && list)
+	{
+		i++;
+		list = list->next;
+	}
+	return (list);
+}
+
 int			loop(t_env *env)
 {
-	SDL_Texture	*texture;
-
+	if (env->opt & PREVIEW)
+		render_preview(env, get_list_n(env->cam, env->n - env->i - 1)->content,
+		env->preview);
+	else
+		render_texture(env->win->render, env->img[env->i]);
 	while (1)
 	{
 		while (SDL_PollEvent(&env->win->events))
 			keys(env, &env->win->events);
-		if (env->i < env->n)
-		{
-			texture = SDL_CreateTextureFromSurface(env->win->render,
-			&env->img[env->i]);
-			SDL_RenderCopy(env->win->render, texture, NULL, NULL);
-			SDL_DestroyTexture(texture);
-		}
-		SDL_RenderPresent(env->win->render);
+		ft_printf("\033[1A\033[Kw=%d h=%d\n", env->win->w, env->win->h);
 	}
 	return (0);
 }

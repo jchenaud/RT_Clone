@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 07:45:52 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 09:53:23 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 11:38:41 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ static int		find_texture(t_vector *textures, char *file)
 	return (i);
 }
 
+void			free_texture_name(t_texture *texture)
+{
+	free(texture->name);
+}
+
 void			convert_for_graphic(t_cl *cl, t_vector *vector)
 {
 	t_img	*img;
@@ -72,7 +77,7 @@ void			convert_for_graphic(t_cl *cl, t_vector *vector)
 	cl->textures_size = 0;
 	while (i < vector->n)
 	{
-		img = ((t_texture*)ft_vector_get(vector, i))->img;
+		img = ((t_texture*)ft_vector_get(vector, i++))->img;
 		size = sizeof(t_img) + sizeof(t_color) * img->w * img->h;
 		ft_realloc(&cl->textures, cl->textures_size, cl->textures_size + size);
 		ft_memcpy(cl->textures + cl->textures_size, img, sizeof(t_img));
@@ -80,7 +85,6 @@ void			convert_for_graphic(t_cl *cl, t_vector *vector)
 		img->pixels, size - sizeof(t_img));
 		cl->textures_size += size;
 		SDL_FreeSurface(img);
-		i++;
 	}
 	if (vector->n)
 	{
@@ -88,6 +92,7 @@ void			convert_for_graphic(t_cl *cl, t_vector *vector)
 		cl->textures_size, cl->textures);
 		free(cl->textures);
 	}
+	ft_vector_iter(vector, (void*)&free_texture_name);
 	ft_vector_del(&vector);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 17:34:10 by pribault          #+#    #+#             */
-/*   Updated: 2017/08/24 01:25:01 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/09 17:51:13 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,13 @@ typedef unsigned int			t_uint;
 typedef unsigned int			t_uint32;
 typedef unsigned long int		t_uint64;
 typedef unsigned long long int	t_uint128;
+
+typedef char					t_char;
+typedef char					t_int8;
+typedef short int				t_int16;
+typedef int						t_int;
+typedef int						t_int32;
+typedef long int				t_int64;
+typedef long long int			t_int128;
 
 #endif

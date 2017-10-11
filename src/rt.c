@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 09:53:27 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 17:37:11 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ t_env	*init_env(void)
 	env->iterations = 3;
 	env->cl.device_type = CL_DEVICE_TYPE_GPU;
 	env->i = 0;
+	env->win = new_window("RT", 1280, 720);
+	env->icone = IMG_Load("rt.png");
+	env->preview = new_img(1280, 720);
+	env->step = 1;
+	env->rot_angle = PI / 32;
 	return (env);
 }
 
@@ -89,7 +94,7 @@ void	place_in_list(t_env *env)
 		cam = cam->next;
 	}
 	env->n = n;
-	if (!(env->img = (t_img*)malloc(sizeof(t_img) * n)))
+	if (!(env->img = (SDL_Texture**)malloc(sizeof(SDL_Texture*) * n)))
 		error(1, 1, NULL);
 	i = n - 1;
 	cam = env->cam;
@@ -98,8 +103,8 @@ void	place_in_list(t_env *env)
 		invert_image(((t_cam*)cam->content)->img);
 		IMG_SavePNG(((t_cam*)cam->content)->img,
 		((t_cam*)cam->content)->output);
-		ft_memcpy(&env->img[i--], ((t_cam*)cam->content)->img,
-		sizeof(t_img));
+		env->img[i--] = SDL_CreateTextureFromSurface(env->win->render,
+		((t_cam*)cam->content)->img);
 		cam = cam->next;
 	}
 }
@@ -111,8 +116,6 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 		error(0, 1, NULL);
 	env = init_env();
-	env->win = new_window("RT", 1280, 720);
-	env->icone = IMG_Load("rt.png");
 	SDL_SetWindowIcon(env->win->win, env->icone);
 	get_flags(env, argc, argv);
 	init_opencl(&env->cl);
@@ -125,7 +128,6 @@ int		main(int argc, char **argv)
 		convert_to_radians(env->cl.obj, env->cl.n_obj);
 	convert_rotations_to_normals(env->cl.obj, env->cl.n_obj);
 	allocate_textures(env);
-	ft_putchar('\n');
 	alloc_images(env->cam);
 	launch_kernel(env);
 	place_in_list(env);

@@ -97,6 +97,7 @@ SRCS = ft_joinf.c\
 	   ft_vector_add.c\
 	   ft_vector_del.c\
 	   ft_vector_get.c\
+	   ft_vector_iter.c\
 	   ft_vector_new.c\
 	   ft_vector_printhex.c\
 	   ft_vector_resize.c

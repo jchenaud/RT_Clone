@@ -1,8 +1,11 @@
 NAME = librainbow.a
 LIBSO = librainbow.so
 CC = gcc
-SRC =	new_window.c delete_window.c get_info.c new_image.c pixel_put.c draw_line.c\
-		get_fps.c set_fps.c draw_triangle.c draw_polygone.c new_color.c button.c button2.c
+SRC =	new_window.c delete_window.c get_info.c\
+		new_image.c pixel_put.c draw_line.c\
+		get_fps.c set_fps.c draw_triangle.c\
+		draw_polygone.c new_color.c button.c\
+		button2.c resize_img.c
 OBJ = $(SRC:%.c=src/%.o)
 FLAGS = -Wall -Wextra
 INC = librainbow.h private.h types.h

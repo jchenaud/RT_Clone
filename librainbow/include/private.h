@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:56:46 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 01:22:34 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 15:41:40 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ typedef struct		s_win
 	SDL_Renderer	*render;
 	SDL_Event		events;
 	char			*name;
-	t_uint16		w;
-	t_uint16		h;
+	int				w;
+	int				h;
 }					t_win;
 
-t_win				*new_window(char *title, t_uint16 w, t_uint16 h);
+t_win				*new_window(char *title, int w, int h);
 void				delete_window(t_win **win);
 
 t_uint				get_fps(void);

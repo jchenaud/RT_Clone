@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 11:17:00 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/09 19:25:50 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,12 @@ typedef struct	s_env
 	t_vector	*textures;
 	t_uint		i;
 	t_uint		n;
-	t_img		*img;
+	SDL_Texture	**img;
 	t_img		*icone;
+	t_img		*preview;
 	int			find_cam_light;
+	float		step;
+	float		rot_angle;
 }				t_env;
 
 /*
@@ -106,13 +109,18 @@ void			delete_buffer(cl_mem mem);
 
 void			keys(t_env *env, SDL_Event *event);
 
+void			move(cl_float3 *pos, cl_float3 dir, float step);
+
 double			get_speed(void);
 void			dispatch_rays(t_env *env, t_cam *cam);
 void			create_cam_rays(t_env *env, t_cam *cam, size_t m, size_t max);
+void			initialize_intersecs(t_env *env, t_cam *cam, size_t m, size_t max);
 void			calculate_intersections(t_env *env, size_t n);
 void			calculate_rays(t_cl *cl, size_t p);
 void			launch_kernel(t_env *env);
 void			render_preview(t_env *env, t_cam *cam, t_img *img);
+void			render_texture(SDL_Renderer *renderer, SDL_Texture *texture);
+t_list			*get_list_n(t_list *list, int n);
 
 void			resize_images(t_env *env);
 

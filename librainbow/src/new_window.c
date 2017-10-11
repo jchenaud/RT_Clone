@@ -6,13 +6,13 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 16:40:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 01:22:07 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 15:39:51 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private.h"
 
-t_win	*new_window(char *title, t_uint16 w, t_uint16 h)
+t_win	*new_window(char *title, int w, int h)
 {
 	t_win			*win;
 	SDL_DisplayMode	mode;

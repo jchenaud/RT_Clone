@@ -96,10 +96,11 @@ inline float	hit_plan(t_ray *ray, __global t_obj *obj)
 	float	h;
 
 	h = scalar_vectors(get_plan(obj).norm, ray->dir);
-	h = (check_hitbox(&obj->hitbox, ray, &obj->pos, &h)) ? h : -1;
 	if (h == 0)
 		return (-42);
-	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
+	h = -(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h;
+	h = (check_hitbox(&obj->hitbox, ray, &obj->pos, &h)) ? h : -1;
+	return (h);
 }
 
 inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
@@ -385,10 +386,10 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	img = &img[id / *p];
 	intersec = &intersec[id];
 	ray = &ray[id];
+		*img = add_colors(*img, (t_color){0, 0, 0, 255});
 	if ((ray->dir.x == 0 && ray->dir.y == 0 && ray->dir.z == 0) ||
 	intersec->h <= MARGE || intersec->obj == -1 || ray->f == 0)
 	{
-		*img = add_colors(*img, (t_color){0, 0, 0, 255});
 		return ;
 	}
 	vec.pos = (float3){intersec->h * ray->dir.x + ray->pos.x, intersec->h * ray->dir.y + ray->pos.y, intersec->h * ray->dir.z + ray->pos.z};
@@ -506,9 +507,11 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	fact[2].x = (isnan(fact[2].x)) ? 0 : ((isinf(fact[2].x)) ? 0 : fact[2].x) / 3;
 	fact[2].y = (isnan(fact[2].y)) ? 0 : ((isinf(fact[2].y)) ? 0 : fact[2].y) / 3;
 	fact[2].z = (isnan(fact[2].z)) ? 0 : ((isinf(fact[2].z)) ? 0 : fact[2].z) / 3;
+	
 	color[0] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 0), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
 	color[1] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 1), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
 	color[2] = mult_color(get_color(textures, &obj[intersec->obj], &vec.pos, 2), (1 - obj[intersec->obj].mat.ref.w) * (obj[intersec->obj].mat.col.a / (float)255));
+	
 	color[0].r = (color[0].r * fact[0].x < 0) ? 0 : ((color[0].r * fact[0].x > 255) ? 255 : color[0].r * fact[0].x);
 	color[0].g = (color[0].g * fact[0].y < 0) ? 0 : ((color[0].g * fact[0].y > 255) ? 255 : color[0].g * fact[0].y);
 	color[0].b = (color[0].b * fact[0].z < 0) ? 0 : ((color[0].b * fact[0].z > 255) ? 255 : color[0].b * fact[0].z);
@@ -523,5 +526,6 @@ __kernel void	render_img(__global t_color *img, __global size_t *p,
 	color[2].g = (color[2].g * fact[2].y < 0) ? 0 : ((color[2].g * fact[2].y > 255) ? 255 : color[2].g * fact[2].y);
 	color[2].b = (color[2].b * fact[2].z < 0) ? 0 : ((color[2].b * fact[0].z > 255) ? 255 : color[2].b * fact[2].z);
 	color[2].a = 255;
+	
 	*img = add_colors(*img, invert_color(mult_color(add_colors(color[0], add_colors(color[1], color[2])), ray->f)));
 }

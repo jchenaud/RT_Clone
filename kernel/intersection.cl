@@ -60,10 +60,11 @@ inline float	hit_plan(__global t_ray *ray, __global t_obj *obj)
 	float	h;
 
 	h = scalar_vectors(get_plan(obj).norm, ray->dir);
-	h = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h)) ? h : -1;
 	if (h == 0)
 		return (-42);
-	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
+	h = -(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h;
+	h = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h)) ? h : -1;
+	return (h);
 }
 
 inline float	hit_cylinder(__global t_ray *ray, __global t_obj *obj)

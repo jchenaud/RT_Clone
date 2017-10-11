@@ -7,7 +7,7 @@ INCLUDE = $(INC:%.h=include/%.h)
 SRC =	rt.c error.c flags.c hooks.c loop.c window.c\
 		antialiasing.c cam_rays.c intersection.c\
 		calc_rays.c shortcuts.c draw_image.c preview.c\
-		textures.c clean.c\
+		textures.c clean.c hooks2.c\
 		parsing/parsing.c parsing/ft_inc_prefab.c\
 		parsing/ft_pars_prefab.c parsing/prefab_modi.c\
 		parsing/pars_cone.c parsing/pars_cylinder.c\

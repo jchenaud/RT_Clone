@@ -6,7 +6,7 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 16:13:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/15 00:44:46 by pribault         ###   ########.fr       */
+/*   Updated: 2017/09/29 11:36:08 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void				ft_lstswap(t_list **lst1, t_list **lst2);
 void				ft_vector_add(t_vector *vector, void *ptr);
 void				ft_vector_del(t_vector **vector);
 void				*ft_vector_get(t_vector *vector, size_t n);
+void				ft_vector_iter(t_vector *vector, void (*f)(void*));
 t_vector			*ft_vector_new(size_t type, size_t n);
 void				ft_vector_printhex(t_vector *vector);
 void				ft_vector_resize(t_vector *vector, size_t new_size);
