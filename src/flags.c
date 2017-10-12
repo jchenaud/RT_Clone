@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/29 14:09:28 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/12 12:32:33 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	get_param4(t_env *env, int argc, char **argv, int *i)
+{
+	if (!ft_strcmp(argv[*i], "-filtre"))
+		if (*i + 1 < argc)
+			env->filtre = ft_atou(argv[++(*i)]);
+		else
+			error(25, 0, NULL);
+	else if (!ft_strcmp(argv[*i], "-preview"))
+		env->opt += (!(env->opt & PREVIEW)) ? PREVIEW : 0;
+	else
+		error(17, 0, argv[*i]);
+}
 
 void	get_param3(t_env *env, int argc, char **argv, int *i)
 {
@@ -31,10 +44,8 @@ void	get_param3(t_env *env, int argc, char **argv, int *i)
 		}
 		else
 			error(24, 1, NULL);
-	else if (!ft_strcmp(argv[*i], "-preview"))
-		env->opt += (!(env->opt & PREVIEW)) ? PREVIEW : 0;
 	else
-		error(17, 0, argv[*i]);
+		get_param4(env, argc, argv, i);
 }
 
 void	get_param2(t_env *env, int argc, char **argv, int *i)
@@ -84,7 +95,7 @@ void	get_param(t_env *env, int argc, char **argv, int *i)
 			env->win->h = ft_atou(argv[++(*i)]);
 			SDL_SetWindowSize(env->win->win, env->win->w, env->win->h);
 			SDL_SetWindowPosition(env->win->win, SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED);
+					SDL_WINDOWPOS_CENTERED);
 		}
 		else
 			error(19, 0, NULL);

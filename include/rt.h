@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/11 15:34:26 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/12 12:34:24 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct	s_env
 	int			find_cam_light;
 	float		step;
 	float		rot_angle;
+	int			filtre;
 }				t_env;
 
 /*
@@ -128,6 +129,7 @@ void			resize_images(t_env *env);
 void			antialiase(t_uchar antialias, t_cl *cl, t_img *img);
 
 int				loop(t_env *env);
+void			efect(t_env *env, t_cam *cam);
 
 void			ft_init_obj_default(t_obj *new_obj);
 void			ft_init_cam(t_cam *new_cam);
