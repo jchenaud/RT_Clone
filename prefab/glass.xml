@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<prefab>
+	<sphere>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<col R="255" V="255" B="255" T="64"></col>
+		<rad rad="5"></rad>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<hitbox type = "invisible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-10" y = "-10" z = "-10"></min>
+			<max x= "10" y = "10" z = "0"></max>
+		</hitbox>
+	</sphere>
+	<cylinder>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<col R="255" V="255" B="255" T="64"></col>
+		<rad rad="2"></rad>
+		<norm x="0" y="0" z="1"></norm>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<hitbox type = "visible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-10" y = "-10" z = "4.5"></min>
+			<max x= "10" y = "10" z = "20.5"></max>
+		</hitbox>
+	</cylinder>
+	<sphere>
+		<pos x="0" y="0" z="30"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<col R="153" V="51" B="0" T="200"></col>
+		<rad rad="10"></rad>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<hitbox type = "visible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-10" y = "-10" z = "20"></min>
+			<max x= "10" y = "10" z = "30"></max>
+		</hitbox>
+	</sphere>
+	<cylinder>
+		<pos x="0" y="0" z="0"></pos>
+		<rot x="0" y="0" z="0"></rot>
+		<col R="255" V="255" B="255" T="64"></col>
+		<rad rad="10"></rad>
+		<norm x="0" y="0" z="1"></norm>
+		<ref x="1" y="1" z="1" w="0"></ref>
+		<hitbox type = "visible">
+			<rot x="0" y="0" z="0"></rot>
+			<min x= "-10" y = "-10" z = "30"></min>
+			<max x= "10" y = "10" z = "40"></max>
+		</hitbox>
+	</cylinder>
+</prefab>

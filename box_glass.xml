@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<scene>
+	<Include A ="glass_ref"></Include>
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "0" z = "-50" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "1"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+		<refrac x="0.3"></refrac>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "0" z = "50" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "0" z = "-1"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "-50" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "1" y = "0" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "50" y = "0" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "-1" y = "0" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "-50" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "1" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<plan>
+		<ref x="1" y="1" z="1" w="0.7"></ref>
+		<pos x = "0" y = "50" z = "0" ></pos>
+		<rot x = "0" y = "0" z = "0"> </rot>
+		<norm x = "0" y = "-1" z = "0"> </norm>
+		<col R="255" V="255" B="255" T="255"></col>
+	</plan>
+
+	<glass_ref>
+		<pos z = "-25" ></pos>
+	</glass_ref>
+
+	<light>
+		<pos x = "0" y = "0" z = "-40" ></pos>
+		<col R="255" V="255" B="255" T="255"></col>
+		<i amb="1" dif="1" spec="0.1"></i>
+	</light>
+
+	<cam>
+		<pos x = "-49" y = "-49" z = "0" ></pos>
+		<dir x = "1" y = "0" z = "0"> </dir>
+		<rot x = "0" y = "0" z = "0.78"> </rot>
+		<fov fov_x = "0.768" fov_y = "0.432"> </fov>
+		<dis dis = "1" ></dis>
+		<export PATH="box.png"></export>
+		<w W = "1280"> </w>
+		<h H = "720"> </h>
+	</cam>
+</scene>
