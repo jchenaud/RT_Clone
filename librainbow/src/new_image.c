@@ -16,8 +16,9 @@ t_img	*new_img(int w, int h)
 {
 	t_img	*new;
 
-	new = SDL_CreateRGBSurface(0, w, h, 32,
-	0xff0000, 0xff00, 0xff, 0xff000000);
+	if (!(new = SDL_CreateRGBSurface(0, w, h, 32,
+	0xff0000, 0xff00, 0xff, 0xff000000)))
+		return (NULL);
 	ft_bzero(new->pixels, 4 * w * h);
 	return (new);
 }

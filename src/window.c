@@ -19,7 +19,8 @@ void		alloc_images(t_list *cam)
 	while (cam)
 	{
 		current = (t_cam*)cam->content;
-		current->img = new_img(current->w, current->h);
+		if (!(current->img = new_img(current->w, current->h)))
+			error(1, 1, NULL);
 		cam = cam->next;
 	}
 }

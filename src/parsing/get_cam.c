@@ -17,7 +17,7 @@ cl_uint		get_w(xmlNode *current)
 	cl_uint w;
 
 	w = get_uint_xml("W", current);
-	if ((int)w <= 0)
+	if ((int)w == 0)
 		w = 1280;
 	return (w);
 }
@@ -27,7 +27,7 @@ cl_uint		get_h(xmlNode *current)
 	cl_uint h;
 
 	h = get_uint_xml("H", current);
-	if ((int)h <= 0)
+	if ((int)h == 0)
 		h = 720;
 	return (h);
 }

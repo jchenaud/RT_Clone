@@ -33,7 +33,7 @@ cl_uint		get_uint_xml(char *name, xmlNode *current)
 	data = (char*)xmlGetProp(current, (const xmlChar*)name);
 	if (!data)
 		return (0);
-	i = ft_atoi(data);
+	i = ft_atou(data);
 	free(data);
 	return (i);
 }
