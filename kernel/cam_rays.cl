@@ -9,6 +9,10 @@ inline void	normalize_vector(float3 *vec)
 	vec->z /= norm;
 }
 
+/*
+**	rotate x and y in 2d
+*/
+
 inline void	rotate_point(float *x, float *y, float angle)
 {
 	float	c = cos(angle);
@@ -20,12 +24,20 @@ inline void	rotate_point(float *x, float *y, float angle)
 	*y = t_x * s + *y * c;
 }
 
+/*
+**	rotate in 3d by multiple rotations in 2d
+*/
+
 inline void	rotate_vec(float3 *vec, float3 angle)
 {
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
 	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
 }
+
+/*
+**	create one ray per cam pixel
+*/
 
 __kernel void	cam_rays(__global t_cam *cam, __global t_ray *rays,
 				__global size_t *m, __global size_t *max)

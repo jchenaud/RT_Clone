@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 07:58:40 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 20:29:25 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:10:57 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	calculate rays intersections with objects
+*/
 
 void		calculate_intersections(t_env *env, size_t n)
 {
@@ -29,6 +33,10 @@ void		calculate_intersections(t_env *env, size_t n)
 	delete_buffer(env->cl.intersecs);
 	env->cl.intersecs = intersecs;
 }
+
+/*
+**	initialize intersections, firsts rays aren't intersecting anything yet
+*/
 
 void		initialize_intersecs(t_env *env, t_cam *cam, size_t m, size_t max)
 {

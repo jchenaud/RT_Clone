@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 10:13:26 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/10 03:13:38 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 14:55:10 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	this function use rays.cl to calculate reflection and refraction rays 
+*/
 
 void		calculate_rays(t_cl *cl, size_t p)
 {

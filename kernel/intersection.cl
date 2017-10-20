@@ -1,5 +1,9 @@
 #include "kernel/kernel.hcl"
 
+/*
+**	rotate x and y in 2d
+*/
+
 inline void	rotate_point(float *x, float *y, float angle)
 {
 	float	c = cos(angle);
@@ -11,12 +15,21 @@ inline void	rotate_point(float *x, float *y, float angle)
 	*y = t_x * s + *y * c;
 }
 
+/*
+**	rotate in 3d by multiple rotations in 2d
+*/
+
 inline void	rotate_vec(float3 *vec, float3 angle)
 {
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
 	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
 }
+
+/*
+**	check if a ray hit an object in it's hitbox
+**	this function allow hitbox rotation around the object center
+*/
 
 inline char		check_hitbox(__global t_hitbox *hitbox, __global float3 *center, __global t_ray *ray, float *h)
 {
@@ -31,6 +44,10 @@ inline char		check_hitbox(__global t_hitbox *hitbox, __global float3 *center, __
 		return ((hitbox->type & INVISIBLE) ? 1 : 0);
 	return ((hitbox->type & INVISIBLE) ? 0 : 1);
 }
+
+/*
+**	check if a ray hit a given sphere
+*/
 
 inline float	hit_sphere(__global t_ray *ray, __global t_obj *obj)
 {
@@ -55,6 +72,10 @@ inline float	hit_sphere(__global t_ray *ray, __global t_obj *obj)
 	return ((h1 < h2) ? h1 : h2);
 }
 
+/*
+**	check if a ray hit a given plan
+*/
+
 inline float	hit_plan(__global t_ray *ray, __global t_obj *obj)
 {
 	float	h;
@@ -66,6 +87,10 @@ inline float	hit_plan(__global t_ray *ray, __global t_obj *obj)
 	h = (check_hitbox(&obj->hitbox, &obj->pos, ray, &h)) ? h : -1;
 	return (h);
 }
+
+/*
+**	check if a ray hit a given cylinder
+*/
 
 inline float	hit_cylinder(__global t_ray *ray, __global t_obj *obj)
 {
@@ -89,6 +114,10 @@ inline float	hit_cylinder(__global t_ray *ray, __global t_obj *obj)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
+
+/*
+**	check if a ray hit a given cone
+*/
 
 inline float	hit_cone(__global t_ray *ray, __global t_obj *obj)
 {
@@ -114,6 +143,10 @@ inline float	hit_cone(__global t_ray *ray, __global t_obj *obj)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
+
+/*
+**	find for each ray the nearest intersection with an object and write it in a buffer
+*/
 
 __kernel void	intersection(__global t_intersec *intersec, __global t_intersec *prev, __global t_ray *ray,
 							__global uint *n_obj, __global t_obj *obj,

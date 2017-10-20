@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:42:46 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 13:12:07 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:08:59 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	those functions are used to get inputs and events
+*/
 
 void	normal_keys(t_env *env, SDL_Event *event)
 {

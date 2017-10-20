@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/12 12:32:33 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:07:51 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	all those functions are used to get the flags passed to the program
+*/
 
 void	get_param4(t_env *env, int argc, char **argv, int *i)
 {

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 18:46:43 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/12 12:33:29 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:14:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	returning time for one image part to be calculated
+*/
 
 double		get_speed(void)
 {
@@ -32,6 +36,10 @@ double		get_speed(void)
 	return ((ret > 100) ? 0 : ret);
 }
 
+/*
+**	create basic buffers used to store objects and lights
+*/
+
 static void	create_buffers(t_cl *cl)
 {
 	cl->n_obj_mem = create_buffer(cl, CL_MEM_COPY_HOST_PTR,
@@ -43,6 +51,10 @@ static void	create_buffers(t_cl *cl)
 	cl->light_mem = create_buffer(cl, CL_MEM_COPY_HOST_PTR,
 	sizeof(t_light) * cl->n_light, cl->light);
 }
+
+/*
+**	render image for each cam and print time took to calculate it
+*/
 
 void		launch_kernel(t_env *env)
 {
@@ -73,6 +85,10 @@ void		launch_kernel(t_env *env)
 	}
 }
 
+/*
+**	used to get list element
+*/
+
 t_list		*get_list_n(t_list *list, int n)
 {
 	int		i;
@@ -85,6 +101,10 @@ t_list		*get_list_n(t_list *list, int n)
 	}
 	return (list);
 }
+
+/*
+**	loop, entering here after calculating images
+*/
 
 int			loop(t_env *env)
 {

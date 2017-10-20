@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/23 13:09:03 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 10:47:18 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:30:26 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	for each cam allocate an image to write
+*/
 
 void		alloc_images(t_list *cam)
 {
@@ -24,6 +28,13 @@ void		alloc_images(t_list *cam)
 		cam = cam->next;
 	}
 }
+
+/*
+**	create a kernel binary from a file, kernel will be used to to execute
+**	program on gpu
+**
+**	write a log if cannot compile
+*/
 
 cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 {
@@ -51,6 +62,11 @@ cl_kernel	create_kernel(t_cl *cl, char *file, char *name)
 	close(fd[0]);
 	return (clCreateKernel(program, name, NULL));
 }
+
+/*
+**	initialize opencl struct and create kernels that
+**	will be used in the program
+*/
 
 void		init_opencl(t_cl *cl)
 {

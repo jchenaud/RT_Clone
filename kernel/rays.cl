@@ -1,11 +1,19 @@
 #include "kernel/kernel.hcl"
 
+/*
+**	return a reflected vector
+*/
+
 inline float3	get_reflection_vector(float3 norm, float3 dir)
 {
 	if (scalar_vectors(norm, dir) > 0)
 		norm = mult_vector(norm, -1);
 	return (sub_vectors(dir, mult_vector(mult_vector(norm, scalar_vectors(dir, norm)), 2)));
 }
+
+/*
+**	return a refracted vector
+*/
 
 inline float3	get_refraction_vector(float3 norm, float3 dir, float i)
 {
@@ -34,6 +42,10 @@ inline void	normalize_vector(float3 *vec)
 	vec->z /= norm;
 }
 
+/*
+**	same function as previous but working in different memory space (global)
+*/
+
 inline void	normalize_global_vector(__global float3 *vec)
 {
 	float	norm = get_vector_norm(vec);
@@ -43,6 +55,10 @@ inline void	normalize_global_vector(__global float3 *vec)
 	vec->z /= norm;
 }
 
+/*
+**	get the sphere normal on a point
+*/
+
 inline float3	get_sphere_norm(__global t_obj *obj, float3 point)
 {
 	float3	ret;
@@ -51,10 +67,18 @@ inline float3	get_sphere_norm(__global t_obj *obj, float3 point)
 	return (ret);
 }
 
+/*
+**	get the plan norme on a point
+*/
+
 inline float3	get_plan_norm(__global t_obj *obj, float3 point)
 {
 	return (get_plan(obj).norm);
 }
+
+/*
+**	get the cylinder norme on a point
+*/
 
 inline float3	get_cylinder_norm(__global t_obj *obj, float3 point)
 {
@@ -68,6 +92,10 @@ inline float3	get_cylinder_norm(__global t_obj *obj, float3 point)
 	return (norm);
 }
 
+/*
+**	get the cone normal on a point
+*/
+
 inline float3	get_cone_norm(__global t_obj *obj, float3 point)
 {
 	float3	norm;
@@ -79,6 +107,10 @@ inline float3	get_cone_norm(__global t_obj *obj, float3 point)
 	norm = sub_vectors(tmp1, new_vector(tmp * get_cylinder(obj).norm.x, tmp * get_cylinder(obj).norm.y, tmp * get_cylinder(obj).norm.z));
 	return (norm);
 }
+
+/*
+**	calculate a reflective and a refractive ray from an origin ray and an intersection
+*/
 
 __kernel void	calc_rays(__global t_ray *new, __global t_ray *ray, __global t_intersec *intersec,
 						__global uint *n_obj, __global t_obj *obj)

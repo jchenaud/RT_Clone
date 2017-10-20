@@ -1,7 +1,15 @@
 #ifndef lol_nik_la_norme
 # define lol_nik_la_norme
 
-// #define SWITCH
+/*
+**	the header 😮
+**
+**	AND THAT IS ALL NORMED MUAHAHAHAHAH
+*/
+
+/*
+**	shortcuts to get an object
+*/
 
 #define get_sphere(x)	x->obj.sphere
 #define get_plan(x)		x->obj.plan
@@ -9,6 +17,10 @@
 #define get_cone(x)		x->obj.cone
 #define get_cylinder(x)	x->obj.cylinder
 #define get_triangle(x)	x->obj.triangle
+
+/*
+**	functions like macros, always fasteeeeeeeer :D
+*/
 
 #define get_distance(a, b)				(float)(sqrt(pown(a.x - b.x, 2) + pown(a.y - b.y, 2) + pown(a.z - b.z, 2)))
 #define scalar_vectors(a, b)			(float)(a.x * b.x + a.y * b.y + a.z * b.z)
@@ -23,11 +35,19 @@
 #define invert_color(c)					((t_color){c.b, c.g, c.r, c.a})
 #define ft_abs(x)						((x < 0) ? -x : x)
 
+/*
+**	objects ids
+*/
+
 #define SPHERE		1
 #define CONE		2
 #define PLAN		3
 #define CYLINDER	4
 #define PAVE		5
+
+/*
+**	other defines
+*/
 
 #define ALPHA		100
 #define MARGE		0.001
@@ -35,6 +55,10 @@
 #define INVISIBLE	1
 
 #define PI			3.1415926535
+
+/*
+**	structures
+*/
 
 typedef struct	s_color
 {

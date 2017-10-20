@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 10:36:23 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/18 10:51:40 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 14:57:58 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	convert object rotation to radians if degrees flag is set
+*/
 
 void	convert_to_radians(t_obj *obj, t_uint n)
 {
@@ -25,6 +29,11 @@ void	convert_to_radians(t_obj *obj, t_uint n)
 		i++;
 	}
 }
+
+/*
+**	convert rotation to normals, object equation is only
+**	calculated with its normal
+*/
 
 void	convert_rotations_to_normals(t_obj *obj, t_uint n)
 {

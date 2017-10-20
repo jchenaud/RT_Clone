@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 23:39:24 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/16 10:43:48 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 14:53:45 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	antialise function 🙀
+*/
 
 void		antialiase(t_uchar antialias, t_cl *cl, t_img *img)
 {

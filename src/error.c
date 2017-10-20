@@ -6,11 +6,17 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/22 17:18:47 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/16 11:39:14 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:07:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	this file is very explicite... 😓
+**
+**		please i don't want to let a comment noooooooo 😭
+*/
 
 void	print_usage(void)
 {

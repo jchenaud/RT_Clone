@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/06 06:22:56 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 20:28:38 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 14:55:53 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	used to calculate the firsts rays starting from the camera
+*/
 
 void	create_cam_rays(t_env *env, t_cam *cam, size_t m, size_t max)
 {

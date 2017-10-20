@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/11 02:50:57 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 14:17:37 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:15:06 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	render an image in preview mod
+*/
 
 static void	launch_preview(t_cl *cl, t_cam *cam, t_color *img)
 {
@@ -36,6 +40,10 @@ static void	launch_preview(t_cl *cl, t_cam *cam, t_color *img)
 	delete_buffer(cam_mem);
 	ft_memcpy(&mem, cam, sizeof(t_cam));
 }
+
+/*
+**	render and print the preview
+*/
 
 void		render_preview(t_env *env, t_cam *cam, t_img *img)
 {

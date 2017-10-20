@@ -6,11 +6,16 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 07:45:52 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/29 11:38:41 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:33:35 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	convert a random image in its rgba equivalent
+**	(program only use rgba)
+*/
 
 static t_img	*convert(t_img *img)
 {
@@ -34,6 +39,10 @@ static t_img	*convert(t_img *img)
 	SDL_FreeSurface(img);
 	return (new);
 }
+
+/*
+**	return a texture already loaded, else load it
+*/
 
 static int		find_texture(t_vector *textures, char *file)
 {
@@ -62,10 +71,18 @@ static int		find_texture(t_vector *textures, char *file)
 	return (i);
 }
 
+/*
+**	too complicated for you 💩
+*/
+
 void			free_texture_name(t_texture *texture)
 {
 	free(texture->name);
 }
+
+/*
+**	allocate an array of textures to send them to the graphic card
+*/
 
 void			convert_for_graphic(t_cl *cl, t_vector *vector)
 {
@@ -95,6 +112,11 @@ void			convert_for_graphic(t_cl *cl, t_vector *vector)
 	ft_vector_iter(vector, (void*)&free_texture_name);
 	ft_vector_del(&vector);
 }
+
+/*
+**	object only contains the texture's name, this function allocate texture
+**	and give an id to the object to find it
+*/
 
 void			allocate_textures(t_env *env)
 {

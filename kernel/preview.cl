@@ -1,5 +1,6 @@
 #include "kernel/kernel.hcl"
 
+
 inline void	normalize_vector(float3 *vec)
 {
 	float	norm = get_vector_norm(vec);
@@ -8,6 +9,9 @@ inline void	normalize_vector(float3 *vec)
 	vec->y /= norm;
 	vec->z /= norm;
 }
+/*
+**	rotate x and y in 2d
+*/
 
 inline void	rotate_point(float *x, float *y, float angle)
 {
@@ -20,12 +24,20 @@ inline void	rotate_point(float *x, float *y, float angle)
 	*y = t_x * s + *y * c;
 }
 
+/*
+**	rotate in 3d by multiple rotations in 2d
+*/
+
 inline void	rotate_vec(float3 *vec, float3 angle)
 {
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->y, angle.z);
 	rotate_point(&((t_vec3*)vec)->x, &((t_vec3*)vec)->z, angle.y);
 	rotate_point(&((t_vec3*)vec)->y, &((t_vec3*)vec)->z, angle.x);
 }
+
+/*
+**	check if a ray hit a given sphere
+*/
 
 inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
 {
@@ -47,6 +59,9 @@ inline float	hit_sphere(t_ray *ray, __global t_obj *obj)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
+/*
+**	check if a ray hit a given plan
+*/
 
 inline float	hit_plan(t_ray *ray, __global t_obj *obj)
 {
@@ -57,6 +72,10 @@ inline float	hit_plan(t_ray *ray, __global t_obj *obj)
 		return (-42);
 	return (-(scalar_vectors(get_plan(obj).norm, sub_vectors(ray->pos, obj->pos))) / h);
 }
+
+/*
+**	check if a ray hit a given cylinder
+*/
 
 inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
 {
@@ -78,6 +97,10 @@ inline float	hit_cylinder(t_ray *ray, __global t_obj *obj)
 		return (h1);
 	return ((h1 < h2) ? h1 : h2);
 }
+
+/*
+**	check if a ray hit a given cone
+*/
 
 inline float	hit_cone(t_ray *ray, __global t_obj *obj)
 {
@@ -103,21 +126,7 @@ inline float	hit_cone(t_ray *ray, __global t_obj *obj)
 }
 
 /*
-	t_ray		ray;
-	int			id = get_global_id(0);
-	float		l;
-
-	ray.dir = (float3){1, 0, 0};
-	l = 2 * cam->dis * tan(cam->fov.x / 2);
-	ray.dir.y = (2 * l * (id % cam->w)) / (cam->w - 1) - l;
-	l = 2 * cam->dis * tan(cam->fov.y / 2);
-	ray.dir.z = (2 * l * ((id / cam->w) + *m * cam->h)) / (cam->h * *max - 1) - l;
-
-	rotate_vec(&ray.dir, cam->rot);
-	ray.pos = add_vectors(cam->pos, ray.dir);
-	ray.f = 1;
-	normalize_vector(&ray.dir);
-	rays[id] = ray;
+**	basic raytracer, rendering only basic colors for faster rendering
 */
 
 __kernel void	raytracer(__global t_color *img, __global t_cam *cam,

@@ -1,5 +1,9 @@
 #include "kernel/kernel.hcl"
 
+/*
+**	antialise by an average of the pixels around
+*/
+
 __kernel void	antialiasing(__global t_img *size, __global t_color *dest, __global t_color *src)
 {
 	t_color	color;

@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:31 by pribault          #+#    #+#             */
-/*   Updated: 2017/09/29 17:37:11 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:21:30 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	initializing env struct
+*/
 
 t_env	*init_env(void)
 {
@@ -30,6 +34,10 @@ t_env	*init_env(void)
 	env->rot_angle = PI / 32;
 	return (env);
 }
+
+/*
+**	transforming object or light list into an array to send it to the gpu later
+*/
 
 void	*alloc_array(t_list *head, t_uint *n)
 {
@@ -57,6 +65,10 @@ void	*alloc_array(t_list *head, t_uint *n)
 	return ((void*)new);
 }
 
+/*
+**	add prefabs in object array
+*/
+
 void	add_prefabs(t_env *env)
 {
 	t_prefab	*prefab;
@@ -79,6 +91,15 @@ void	add_prefabs(t_env *env)
 		prefab = prefab->next;
 	}
 }
+
+/*
+**	export images in files, convert them into textures
+**	and place them in cam list.
+**
+**	you can notice that images are inverted,
+**	sdl don't know how to export in the right sens
+**	.____________________________________________.
+*/
 
 void	place_in_list(t_env *env)
 {
@@ -108,6 +129,10 @@ void	place_in_list(t_env *env)
 		cam = cam->next;
 	}
 }
+
+/*
+**	do i really need to explain a main ? REALLY KEVIN ?!? 😡
+*/
 
 int		main(int argc, char **argv)
 {

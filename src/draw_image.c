@@ -6,11 +6,15 @@
 /*   By: pribault <pribault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 07:21:00 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/09 20:29:06 by pribault         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:05:55 by pribault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+/*
+**	used to set kernel arg in render_image function
+*/
 
 static void	set_args(t_cl *cl, size_t p)
 {
@@ -26,6 +30,12 @@ static void	set_args(t_cl *cl, size_t p)
 	set_kernel_arg(&cl->render_img, &cl->light_mem, 7);
 	set_kernel_arg(&cl->render_img, &cl->textures_mem, 8);
 }
+
+/*
+**	render a pixel for p rays.
+**	each ray generate two rays, one reflected and one refracted,
+**	with a big iteration one ray can finally generate 16, 32, 64 etc... rays
+*/
 
 void		render_image(t_cl *cl, t_cam *cam, size_t p, size_t max)
 {
@@ -53,6 +63,10 @@ void		render_image(t_cl *cl, t_cam *cam, size_t p, size_t max)
 	delete_buffer(img_mem);
 }
 
+/*
+**	iterate and render image for each iteration
+*/
+
 void		draw_image(t_env *env, t_cam *cam, size_t m, size_t max)
 {
 	size_t	p;
@@ -74,6 +88,10 @@ void		draw_image(t_env *env, t_cam *cam, size_t m, size_t max)
 	delete_buffer(env->cl.rays);
 }
 
+/*
+**	used to printf time remaining and number of image parts already calculated
+*/
+
 void		print_datas(size_t n, size_t i)
 {
 	double		t;
@@ -82,6 +100,10 @@ void		print_datas(size_t n, size_t i)
 	ft_printf("\033[1A\033[0K%u/%u remaining: %.2u:%.2u:%.2u\n",
 	i, n, (size_t)(t) / 3600, ((size_t)t % 3600) / 60, (size_t)t % 60);
 }
+
+/*
+**	dispatch the image in pieces if the memory required is too big
+*/
 
 void		dispatch_rays(t_env *env, t_cam *cam)
 {
