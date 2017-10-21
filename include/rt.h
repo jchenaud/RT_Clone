@@ -6,7 +6,7 @@
 /*   By: jchenaud <jchenaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 16:42:34 by pribault          #+#    #+#             */
-/*   Updated: 2017/10/12 12:34:24 by jchenaud         ###   ########.fr       */
+/*   Updated: 2017/10/21 14:00:10 by jchenaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void			ft_bzero_init(t_obj *new_obj, t_cam *new_cam,
 void			modi_pos(t_prefab *tmp, xmlNode *current);
 void			modi_rot(t_prefab *tmp, xmlNode *current);
 void			modi_size(t_prefab *tmp, xmlNode *current);
+void			modi_size_hitbox(t_list *tl, xmlNode *current);
 
 void			colors_efect(t_cl *cl, t_img *image, int effect);
 
